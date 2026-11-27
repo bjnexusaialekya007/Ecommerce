@@ -1,0 +1,145 @@
+/* Section M9 Tier 0 Effects — CSS & compositor-only rules (<= 3 KB gz) */
+
+/* M9.4 Performance wins (independent of animation) */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+.contain-card {
+  contain: layout paint;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* M9.2.4 Scroll-driven section reveals */
+  @supports (animation-timeline: view()) {
+    html[data-fx="on"] .reveal {
+      animation: tier0-reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+
+  /* M9.2.5 Header condense on scroll (opacity, border, shadow, brand transform only) */
+  @supports (animation-timeline: scroll()) {
+    html[data-fx="on"] .header-condense {
+      animation: tier0-header-condense linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 80px;
+    }
+
+    html[data-fx="on"] .header-condense .header-brand {
+      transform-origin: left center;
+      animation: tier0-brand-condense linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0px 80px;
+    }
+  }
+
+  /* M9.2.6 @starting-style entry/exit for CSS-driven dialogs/sheets/toasts/cartbar */
+  html[data-fx="on"] .sheet,
+  html[data-fx="on"] .cartbar,
+  html[data-fx="on"] .toast-item {
+    transition:
+      opacity var(--dur-fast, 160ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+      transform var(--dur-base, 240ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+      display var(--dur-fast, 160ms) allow-discrete,
+      overlay var(--dur-fast, 160ms) allow-discrete;
+  }
+
+  @starting-style {
+    html[data-fx="on"] .sheet,
+    html[data-fx="on"] .cartbar,
+    html[data-fx="on"] .toast-item {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  /* M9.2.9 Hero poster settle (plays once on first paint, compositor-only) */
+  html[data-fx="on"] .hero-settle {
+    animation: tier0-hero-settle 1.2s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) 1 both;
+  }
+
+  /* M9.2.1 & M9.2.2 Same-document View Transitions */
+  html[data-fx="on"]::view-transition-old(root),
+  html[data-fx="on"]::view-transition-new(root) {
+    animation-duration: 160ms;
+    animation-timing-function: var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  html[data-fx="on"]::view-transition-group(product-image) {
+    animation-duration: 240ms;
+    animation-timing-function: var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  html[data-fx="on"]::view-transition-old(product-image),
+  html[data-fx="on"]::view-transition-new(product-image) {
+    object-fit: cover;
+    height: 100%;
+    border-radius: 12px;
+  }
+}
+
+/* Reduced motion & ?fx=off safety */
+html[data-fx="off"]::view-transition-old(root),
+html[data-fx="off"]::view-transition-new(root),
+html[data-fx="off"]::view-transition-group(product-image) {
+  animation-duration: 0.01ms !important;
+}
+
+@keyframes tier0-reveal-up {
+  from {
+    opacity: 0.4;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tier0-header-condense {
+  from {
+    background-color: color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom-color: transparent;
+    box-shadow: none;
+  }
+  to {
+    background-color: color-mix(in srgb, var(--bg) 97%, transparent);
+    border-bottom-color: var(--border-soft);
+    box-shadow: var(--sh-1);
+  }
+}
+
+@keyframes tier0-brand-condense {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.94);
+  }
+}
+
+@keyframes tier0-hero-settle {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes tier0-badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.badge-pulse {
+  animation: tier0-badge-pulse 200ms var(--ease-out, ease-out) 1;
+}

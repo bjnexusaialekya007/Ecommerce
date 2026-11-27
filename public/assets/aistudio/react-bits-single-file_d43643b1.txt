@@ -1,0 +1,487 @@
+# React Bits skill (single-file version for Google AI Studio / any LLM)
+
+Use this as system instructions or attached context. When the user asks for animated React components, follow the workflow, pick components ONLY from the catalog, and read the installed source for exact props.
+
+
+# React Bits
+
+Open-source animated React component library by David Haz. MIT + Commons Clause license. Docs: https://reactbits.dev. Repo: https://github.com/DavidHDev/react-bits. You copy the source into your project (shadcn-style); it is not an npm package you import from.
+
+## Workflow
+
+1. **Find the component.** Search the catalog sections below. Never invent component names; if it is not in the catalog it does not exist in the free library.
+2. **Pick the variant** from the project: language (JS or TS) and styling (CSS or Tailwind). Detect from `tsconfig.json`, `tailwind.config.*`, `@import "tailwindcss"`. Default to `TS-TW` if the project uses TS + Tailwind, else `JS-CSS`. Tailwind variants assume Tailwind is already set up.
+3. **Install** with the CLI (below), or copy the source manually.
+4. **Install dependencies** the component needs (listed in the catalog). The shadcn CLI installs them automatically; manual copy does not.
+5. **Use it**: import from where the CLI placed it, and tune via props. Read the installed source file to see the real prop list and defaults; do not guess prop names.
+6. **Verify**: check the browser console, mobile layout, and `prefers-reduced-motion`.
+
+## Install commands
+
+Install ID = `<ComponentName>-<LANG>-<STYLE>`, LANG is `JS` or `TS`, STYLE is `CSS` or `TW`.
+
+```bash
+# shadcn (needs a components.json; run `npx shadcn@latest init` first if missing)
+npx shadcn@latest add https://reactbits.dev/r/SplitText-TS-TW
+npx shadcn@latest add @react-bits/BlurText-TS-TW        # registry alias form, if @react-bits is configured
+
+# jsrepo
+npx jsrepo@latest add https://reactbits.dev/r/SplitText-JS-CSS
+```
+
+Notes:
+- CSS variants ship a sibling `<Name>.css`; the component imports it relatively. Keep both files together.
+- TS variants may need `@types/three` or `@types/matter-js`; the CLI adds them.
+- Registry JSON lives at `https://reactbits.dev/r/<ID>.json` (readable via fetch if a CLI is not possible: each file has `content`).
+- Very recent components may not yet be in the registry. Then copy from the repo: `src/content/<Category>/<Name>` (JS-CSS), `src/tailwind/...` (JS-TW), `src/ts-default/...` (TS-CSS), `src/ts-tailwind/...` (TS-TW).
+- Source tree categories: `TextAnimations`, `Animations`, `Components`, `Micro`, `Backgrounds`.
+
+## Categories (217+ free components)
+
+| Category | What it is | Catalog |
+|---|---|---|
+| Text Animations | Split/blur/shiny/scramble/typing/gradient text | the matching catalog section below |
+| Animations | Cursors, reveals, scroll effects, trails, transitions | the matching catalog section below |
+| Components | Cards, galleries, menus, docks, carousels, counters | the matching catalog section below |
+| Micro | Small switches, buttons, loaders, hover details | the matching catalog section below |
+| Backgrounds | Shader/WebGL/canvas animated backgrounds | the matching catalog section below |
+
+
+
+## Key dependencies
+
+- **gsap** (+ `@gsap/react`): most text and scroll components. GSAP plugins like SplitText and ScrollTrigger are imported from `gsap/...` and registered inside the component.
+- **motion** (Framer Motion): enter/exit and stagger components. Import from `motion/react`.
+- **three / @react-three/fiber / @react-three/drei**: 3D components.
+- **ogl**: lightweight WebGL for shader backgrounds.
+- Some use `matter-js`, `lenis`, `postprocessing`, or nothing at all. Always read the catalog "Dependencies" column.
+
+## Integration rules
+
+- **Next.js / RSC:** components are client components and start with `'use client'`. If you wrap them in a server file, import them from a client boundary. WebGL components touch `window`/`document`, so use `next/dynamic` with `ssr: false` if hydration errors appear.
+- **Sizing:** backgrounds fill their parent. Put them in a `position: relative` container with explicit height, behind content (`position:absolute; inset:0; z-index:0`) and give content `position: relative; z-index: 1`.
+- **Performance:** use at most one or two WebGL backgrounds per page, lazy-load them below the fold, and prefer lower `dpr`/particle counts on mobile. Do not stack heavy backgrounds with heavy cursor effects.
+- **Accessibility:** respect `prefers-reduced-motion` (disable or simplify), keep real text in the DOM for text animations when possible, and keep contrast on animated backdrops.
+- **Customization:** edit the copied source freely. That is the point of the library. Prefer props first, then CSS variables/classes, then source edits.
+- **Do not hand-write from memory.** Prop names and defaults change between releases; open the installed file.
+
+## Licensing and what not to do
+
+- MIT + Commons Clause: you may use the components in apps, sites and products, including commercial ones. You may **not** sell, sublicense, or redistribute the components themselves (alone, in a bundle, or as a port/template pack). Same for the React Bits tools and sounds. Keep the copyright notice.
+- When building a deliverable for a user, installing/copying components into their project is fine. Do not package the library as a standalone product.
+- Free library = open source forever. **React Bits Pro** (pro.reactbits.dev) is a separate paid, license-gated registry (page blocks, app UI, templates). Pro items cannot be installed from the free registry and must never be guessed. Only mention Pro when the user needs full landing-page blocks, app UI/dashboards, or templates that the free library lacks.
+- Official ports for other frameworks: Vue Bits (vue-bits.dev), Svelte Bits (sveltebits.xyz), Solid Bits (solid-bits.dev). Do not use React Bits directly in non-React projects; point to the port.
+
+## Free tools on reactbits.dev (browser tools, not installable)
+
+Background Studio (customize backgrounds, export video/image/code), Shape Magic (inner rounded corners, export SVG/React/clip-path), Texture Lab (noise, dithering, ASCII on images/video), Center Stage, Sound Lab. Exports are yours to use; do not resell them as packs.
+
+## When sandboxed or offline
+
+If the CLI cannot reach reactbits.dev (restricted network), clone the repo instead (`git clone --depth 1 https://github.com/DavidHDev/react-bits`) and copy the component folder for the chosen variant. For live truth, `https://reactbits.dev/llms.txt` is the maintainer's agent-oriented index (components, CLI formats, Pro catalog). The catalog below is a snapshot from repo commit `37f53df` (2026-11-24); for live data fetch https://reactbits.dev/llms.txt.
+
+
+---
+
+# Catalog: Text Animations
+
+33 components. Install ID is the PascalCase name; append `-<JS|TS>-<CSS|TW>`.
+Deps are from the registry (TS-TW variant); `react` is assumed.
+
+| Name | Install ID | Dependencies | Description |
+|---|---|---|---|
+| ASCII Text | `ASCIIText` | - | Waving ASCII text that tilts toward the pointer, scrambles on hover and ripples on click. |
+| Blur Text | `BlurText` | motion | Text starts blurred then crisply resolves for a soft-focus reveal effect. |
+| Circular Text | `CircularText` | motion | Layouts characters around a circle with optional rotation animation. |
+| Count Up | `CountUp` | motion | Animated number counter supporting formatting and decimals. |
+| Curved Loop | `CurvedLoop` | - | Flowing looping text path along a customizable curve with drag interaction. |
+| Decrypted Text | `DecryptedText` | motion | Hacker-style decryption cycling random glyphs until resolving to real text. |
+| Depth Text | `DepthText` | - | Layered extruded type with parallax that shifts against the pointer. |
+| Echo Text | `EchoText` | - | Ghosted copies trail behind the text and settle into a single word. |
+| Falling Text | `FallingText` | matter-js | Text that breaks apart and tumbles into a pile you can drag, throw and swipe, then flies back into place. |
+| Fold Text | `FoldText` | gsap | Lines unfold into place like creased paper opening flat. |
+| Fuzzy Text | `FuzzyText` | - | Vibrating fuzzy text with controllable hover intensity. |
+| Glitch Text | `GlitchText` | - | RGB split and distortion glitch effect with jitter effects. |
+| Gradient Text | `GradientText` | - | Living gradients inside your text: a sliding sweep, a drifting mesh or a swinging conic fan. |
+| Masked Heading | `MaskedHeading` | gsap | A headline with a drifting colour mesh or image showing through, revealed word by word. |
+| Particle Text | `ParticleText` | - | Text assembles from drifting particles that scatter and reform on demand. |
+| Rotating Text | `RotatingText` | motion | Cycles through multiple phrases with 3D rotate / flip transitions. |
+| Scrambled Text | `ScrambledText` | gsap | Detects cursor position and applies a distortion effect to text. |
+| Scroll Float | `ScrollFloat` | gsap | Text gently floats / parallax shifts on scroll. |
+| Scroll Reveal | `ScrollReveal` | gsap | Text gently unblurs and reveals on scroll. |
+| Scroll Velocity | `ScrollVelocity` | motion | Text marquee animatio - speed and distortion scale with user's scroll velocity. |
+| Shiny Text | `ShinyText` | - | A sheen of light that sweeps across text, from soft bands to chrome-like reflections. |
+| Shuffle | `Shuffle` | gsap, @gsap/react | Animated text reveal where characters shuffle before settling. |
+| Split Flap Text | `SplitFlapText` | - | Mechanical split-flap departure board that clacks through to each new phrase. |
+| Split Text | `SplitText` | gsap, @gsap/react | Splits text into characters / words for staggered entrance animation. |
+| Stroke Text | `StrokeText` | gsap | Outlined letterforms draw themselves on, then flood with fill. |
+| Tech Text | `TechText` | - | A wordmark whose letters turn into dashed vector paths under the cursor. |
+| Text Cursor | `TextCursor` | - | Text or emoji that trails your cursor as stamped copies, a following chain or a ribbon of letters. |
+| Text Loop | `TextLoop` | gsap | A seamless text marquee that flows along curved SVG paths. |
+| Text Pressure | `TextPressure` | - | Characters scale / warp interactively based on pointer pressure zone. |
+| Text Type | `TextType` | gsap | Typewriter effect with blinking cursor and adjustable typing cadence. |
+| True Focus | `TrueFocus` | motion | Applies dynamic blur / clarity based over a series of words in order. |
+| Variable Proximity | `VariableProximity` | - | Letter styling changes continuously with pointer distance mapping. |
+| Warp Text | `WarpText` | ogl | WebGL warp that bends and refracts the text around the pointer. |
+
+
+---
+
+# Catalog: Animations
+
+38 components. Install ID is the PascalCase name; append `-<JS|TS>-<CSS|TW>`.
+Deps are from the registry (TS-TW variant); `react` is assumed.
+
+| Name | Install ID | Dependencies | Description |
+|---|---|---|---|
+| Animated Content | `AnimatedContent` | gsap | Wrapper that reveals its content on scroll with slides, blur, 3D tilts, soft wipes and staggered children. |
+| Blob Cursor | `BlobCursor` | three | Liquid metal blob cursor that stretches, sloshes and bursts into droplets, in chrome, jelly, pearl or ink. |
+| Click Spark | `ClickSpark` | - | Bursts of sparks at every click, as dashes, comets, dots or stars, that can spill around buttons. |
+| Crosshair | `Crosshair` | - | Crosshair cursor with live coordinates that locks onto links and buttons and measures them. |
+| Crystalized Ball | `CrystalizedBall` | ogl | A glass ball with a crackling electric rim and glowing dust that swirls with the cursor. |
+| Cubes | `Cubes` | - | A grid of outlined 3D cubes that turn to face the cursor, spin when swept and ripple on click. |
+| Cursor Grid | `CursorGrid` | - | A crisp grid whose cells light up and fade behind the cursor, with grid styles, tiles and click pulses. |
+| Dither Veil | `DitherVeil` | ogl | A 1-bit dithered photo the cursor burns through to full colour, knitting back cell by cell. |
+| Elastic Mesh | `ElasticMesh` | - | Turns text or any logo into a puffy inflated shape you can press, poke and stretch like jelly. |
+| Electric Border | `ElectricBorder` | - | Wraps any element in crackling strands of current that surge near the cursor and leap off in sparks. |
+| Electric Logo | `ElectricLogo` | ogl | Turns any logo into a living lightning outline, with arcs that leap off its edges. |
+| Fade Content | `FadeContent` | gsap | Wrapper that fades content in on scroll, plain or out of focus, from washed-out gray, or through grain, mist and pixel blocks. |
+| Ghost Cursor | `GhostCursor` | - | A ghost of glowing smoke that floats after the cursor and curls away as it rises. |
+| Glare Hover | `GlareHover` | - | A glossy light streak that sweeps across any element in the direction the cursor moves. |
+| Glow Cursor | `GlowCursor` | - | Light that pours from the cursor, drifts softly through the air and cools as it fades. |
+| Gradual Blur | `GradualBlur` | - | Progressive edge blur for headers, footers, captions and carousels, with an optional fade to color that hides at the ends of a scroll. |
+| Halftone Reveal | `HalftoneReveal` | - | A halftone print of an image whose dots swell into the real photo under the cursor. |
+| Image Trail | `ImageTrail` | gsap | Cursor-based image trail with several built-in variants. |
+| Laser Flow | `LaserFlow` | - | A beam of light that splashes onto your content and pours over its corners. |
+| Logo Loop | `LogoLoop` | - | Continuously looping marquee of brand or tech logos with seamless repeat and hover pause. |
+| Magnet | `Magnet` | - | Elements magnetically ease toward the cursor then settle back with spring physics. |
+| Meta Balls | `MetaBalls` | - | Liquid metaballs that merge, stretch and pinch apart, with a cursor blob that pushes through them. |
+| Metallic Paint | `MetallicPaint` | - | Liquid chrome that flows over your logo or text, adapted from Paper's Liquid Metal shader. |
+| Noise | `Noise` | - | Film grain overlay for photos and pages, from fine 35mm grain to dust, paper and TV static. |
+| Orbit Images | `OrbitImages` | - | SVG Path customizable orbiting images effect. |
+| Pixel Swap | `PixelSwap` | - | New content builds in pixel by pixel in a springy wave that starts wherever the cursor enters. |
+| Pixel Trail | `PixelTrail` | - | Glossy pixels melt into a fluid goo trail behind the cursor, with color shifts and drips. |
+| Pixel Transition | `PixelTransition` | - | Retro pixel dissolve that covers a card in solid pixels, swaps the content underneath and clears again. |
+| Ribbons | `Ribbons` | - | Springy ribbons that trail the cursor, in lens, comet or even shapes with an optional wave. |
+| Ripple Distortion | `RippleDistortion` | ogl | Pointer-driven water displacement that warps content and leaves a decaying wake. |
+| Scroll Expand | `ScrollExpand` | - | A rounded media frame that grows to full bleed as it scrolls through the viewport. |
+| Shape Blur | `ShapeBlur` | - | A crisp logo or shape that drifts out of focus under the pointer like a camera lens. |
+| Splash Cursor | `SplashCursor` | - | A fluid simulation that trails the cursor in swirling ink and bursts into a splash on click. |
+| Star Border | `StarBorder` | - | A twinkling star that travels the exact outline of any button, pill or card, trailing light and stardust. |
+| Sticker Peel | `StickerPeel` | - | A die-cut sticker you can peel at any edge, drag, throw and swing, in gloss, matte or holographic finishes. |
+| Strands | `Strands` | - | Spectral strands that twist inside a frosted glass orb and swell into a smooth bulge where they come together, like the new Siri. |
+| Swarm Cursor | `SwarmCursor` | - | A liquid swarm of particles that flows after the cursor, curls into eddies and pours around hovered buttons. |
+| Target Cursor | `TargetCursor` | react-dom | A reticle cursor whose corner brackets snap around targets, matching their shape. |
+| NeonLogo | `NeonLogo` | - | Turns any logo or word into a neon heat map that melts open under the cursor. |
+
+
+---
+
+# Catalog: Components
+
+48 components. Install ID is the PascalCase name; append `-<JS|TS>-<CSS|TW>`.
+Deps are from the registry (TS-TW variant); `react` is assumed.
+
+| Name | Install ID | Dependencies | Description |
+|---|---|---|---|
+| Accordion Gallery | `AccordionGallery` | gsap | Panels expand on hover or focus, revealing parallax imagery and captions. |
+| Animated List | `AnimatedList` | @hugeicons/react, @hugeicons/core-free-icons | A scrolling list whose rows spring into view, with a gliding selection and arrow keys. |
+| Border Glow | `BorderGlow` | - | Glowing mesh-gradient border that follows cursor direction and intensifies near edges. |
+| Bounce Cards | `BounceCards` | - | A fan of photo cards that bounce in, then spread apart and straighten the one you hover. |
+| Bubble Menu | `BubbleMenu` | gsap | Floating circular expanding menu with staggered item reveal. |
+| Card Nav | `CardNav` | @hugeicons/react, @hugeicons/core-free-icons | A navigation bar that springs open into a row of cards, each with its own links. |
+| Card Swap | `CardSwap` | @hugeicons/react, @hugeicons/core-free-icons | A 3D stack of cards that sends the front card to the back on a timer, or when you fling it. |
+| Carousel | `Carousel` | @hugeicons/react, @hugeicons/core-free-icons | Swipeable cards for feature tours, stories and galleries, with five transitions and an autoplay timer. |
+| Chroma Grid | `ChromaGrid` | - | A grid of grayscale photo cards where a spotlight follows the cursor and brings back color. |
+| Circular Carousel | `CircularCarousel` | - | A 3D ring of images with bendable cards, momentum drag, snapping and click to focus. |
+| Circular Gallery | `CircularGallery` | - | A curved image gallery you can drag, scroll or tab through, with cards that open to the full image. |
+| Counter | `Counter` | - | An odometer-style number whose digits roll to every new value, with currency, separators and locales. |
+| Curved Input | `CurvedInput` | - | Arc-bent input bar with text, caret and submit button all following the curve. |
+| Decay Card | `DecayCard` | - | An image card that tears and melts as the pointer moves, then pulls itself back together. |
+| Depth Carousel | `DepthCarousel` | gsap | Cards recede into depth on a 3D rail, with drag, keyboard and auto-advance. |
+| Dock | `Dock` | react-dom | macOS style dock with smooth magnification, launch bounce, badges and context menus. |
+| Dome Gallery | `DomeGallery` | @use-gesture/react | Immersive 3D dome gallery projecting images on a hemispheric surface. |
+| Drift Wall | `DriftWall` | - | An endless perspective wall of tiles drifting past, lifting on hover. |
+| Elastic Slider | `ElasticSlider` | @hugeicons/react, @hugeicons/core-free-icons | A slider that grows under your cursor and stretches like rubber when pulled past either end, then springs back. |
+| Flex Carousel | `FlexCarousel` | ogl | An infinite image row that flows through invisible liquid glass at its edges. |
+| Flowing Menu | `FlowingMenu` | @hugeicons/react, @hugeicons/core-free-icons | A full-height menu with a liquid band that glides between rows and reveals a scrolling marquee of each item. |
+| Fluid Glass | `FluidGlass` | - | A 3D glass object that refracts your headline, image or video, follows the cursor and melts between shapes. |
+| Flying Posters | `FlyingPosters` | - | 3D posters that twist and flip as you scroll or drag through an endless column. |
+| Folder | `Folder` | - | Folder that drops its flap open or swings open like a book, with pages you can pick. |
+| Glass Icons | `GlassIcons` | - | Liquid glass icons that bend the color behind them, for app grids, docks and social links. |
+| Glass Surface | `GlassSurface` | - | Apple-style liquid glass that bends what is behind it, in a rounded panel or any logo shape. |
+| Gooey Nav | `GooeyNav` | - | A navigation bar whose active pill breaks into goo that flows over to the item you pick. |
+| Holo Card | `HoloCard` | - | Collectible trading card with a real holographic foil and glitter that sparkles as it tilts. |
+| Infinite Menu | `InfiniteMenu` | - | A draggable sphere of image tiles that snaps the nearest one forward and shows its title. |
+| Infinite Spiral | `InfiniteSpiral` | - | An endlessly looping 3D helix of images with adjustable motion, depth and spacing. |
+| Lanyard | `Lanyard` | three | Swinging 3D badge on a stretchy woven band that you can drag, throw or click to flip. |
+| Line Sidebar | `LineSidebar` | - | Static list navigation with a cursor-proximity effect that shifts and highlights nearby items. |
+| Magic Bento | `MagicBento` | @hugeicons/react, @hugeicons/core-free-icons | A bento grid of feature cards with live artwork, edge light that follows the cursor and a click wave. |
+| Masonry | `Masonry` | react-dom, @hugeicons/react, @hugeicons/core-free-icons | A masonry gallery that springs into place, reflows as it resizes and opens images in a lightbox. |
+| Model Viewer | `ModelViewer` | @react-three/fiber, @react-three/drei, three | A product-style 3D model viewer that frames itself and floats over a soft shadow. |
+| Morph Slider | `MorphSlider` | ogl, gsap | WebGL slider that melts between images with a displacement transition. |
+| Option Wheel | `OptionWheel` | - | Curved option picker that spins with scroll, drag or arrow keys, tilting items away. |
+| Pill Nav | `PillNav` | - | A pill navigation bar where a fill rises through each link as its label rolls over, with a sliding active dot. |
+| Pixel Card | `PixelCard` | - | A card that fills with twinkling pixels on hover, rippling out from the center or the cursor. |
+| Profile Card | `ProfileCard` | @hugeicons/react, @hugeicons/core-free-icons | A framed profile card that tilts toward the cursor, with holographic foil shining through a tiled pattern. |
+| Reflective Card | `ReflectiveCard` | @hugeicons/react, @hugeicons/core-free-icons | A metal ID card that reflects your camera or a looping video and catches the light as it tilts. |
+| Scroll Stack | `ScrollStack` | - | Cards pin and stack as you scroll, settling back into a dimmed deck with smooth, jitter-free motion. |
+| Specular Button | `SpecularButton` | - | Glass button whose edge catches the light, with a highlight that glides toward the cursor. |
+| Spotlight Card | `SpotlightCard` | - | Card lit by a soft spotlight that follows the pointer, catches its edge and reaches nearby cards. |
+| Stack | `Stack` | motion | Pile of cards you can drag, flick or click through, with thrown cards tucking underneath. |
+| Staggered Menu | `StaggeredMenu` | gsap | Menu with staggered item animations and smooth transitions on open/close. |
+| Stepper | `Stepper` | @hugeicons/react, @hugeicons/core-free-icons | A multi-step flow with a gliding step indicator, spring transitions and horizontal or vertical layouts. |
+| Tilted Card | `TiltedCard` | - | A 3D card that tilts toward the cursor, with glare, a soft shadow, floating layers and a flip side. |
+
+
+---
+
+# Catalog: Micro
+
+34 components. Install ID is the PascalCase name; append `-<JS|TS>-<CSS|TW>`.
+Deps are from the registry (TS-TW variant); `react` is assumed.
+
+| Name | Install ID | Dependencies | Description |
+|---|---|---|---|
+| Bell Toggle | `BellToggle` | motion, @hugeicons/react, @hugeicons/core-free-icons | Pill toggle where a press rings the bell, crossfades the label and unfurls the pill. |
+| Branched Menu | `BranchedMenu` | @hugeicons/react, @hugeicons/core-free-icons | Collapsible menu that branches each section from a trunk and traces a line to your pick. |
+| Call Chip | `CallChip` | @hugeicons/react, @hugeicons/core-free-icons | Tool-call chip whose fill wipes across as a live timer ticks, ending green or shaking red. |
+| Code Slots | `CodeSlots` | motion, @hugeicons/react, @hugeicons/core-free-icons | One-time code input whose digits spring into their slots, with paste and SMS autofill. |
+| Comet Dial | `CometDial` | motion | Tick-ring dial you flick by angle, with a comet that streaks behind the lit head. |
+| Dodge Field | `DodgeField` | motion | Wrapper that makes any child dodge the pointer until it relents and glides home. |
+| Flip Card | `FlipCard` | motion | Two-faced card that flips in 3D on a click, drag or flick and settles on a spring. |
+| Folder Float | `FolderFloat` | matter-js | Folder whose notes spring out into a floating cloud when it opens on hover or press. |
+| Fuse Button | `FuseButton` | @hugeicons/react, @hugeicons/core-free-icons | Action button whose done state carries an undo on a burning fuse. |
+| Glide Select | `GlideSelect` | @hugeicons/react, @hugeicons/core-free-icons | Select chip whose menu pops from its corner and whose highlight glides between rows. |
+| Hold Button | `HoldButton` | - | Hold-to-confirm button whose liquid fill rises while pressed and snaps back if you let go. |
+| Jelly Radio | `JellyRadio` | motion | Radio group of chips where the chosen one swells and barges its neighbours outward. |
+| Lattice Loader | `LatticeLoader` | - | Agent status row with a lattice of cells that brighten in a wave beside a live stopwatch. |
+| Paper Crumple | `PaperCrumple` | three | An image that crumples into a textured 3D sheet while you hold and drag it. |
+| Peek Rating | `PeekRating` | @hugeicons/react, @hugeicons/core-free-icons | Star rating that lifts a wave of stars up to the pointer, then commits with a pop on click. |
+| Prompt Bar | `PromptBar` | motion, @hugeicons/react, @hugeicons/core-free-icons | Chat composer with @ sources, / commands, a model picker, dictation and attachments. |
+| Pulse Heart | `PulseHeart` | @hugeicons/core-free-icons | Like button that contracts to a dot, flips colour and pulses back as the count ticks over. |
+| Refine Frame | `RefineFrame` | @hugeicons/react, @hugeicons/core-free-icons | Media frame that steps an image through generation stages without any layout shift. |
+| Rubber Segment | `RubberSegment` | motion | Segmented control whose rubber thumb stretches across the gap and squashes into place. |
+| Scrub Field | `ScrubField` | motion | Number chip you drag to scrub, with rubber-band limits and click to type. |
+| Shredder | `Shredder` | react-dom | A list with a paper shredder at the bottom that cuts dragged rows into curling strips. |
+| Slide Commit | `SlideCommit` | motion, @hugeicons/react, @hugeicons/core-free-icons | Slide-to-confirm handle that spins while your action runs and unfurls into a done pill. |
+| Sling Button | `SlingButton` | motion, @hugeicons/react, @hugeicons/core-free-icons | Send button you pull back like a slingshot and release to fire. |
+| Slosh Gauge | `SloshGauge` | - | Tank gauge whose liquid chases the value, tilts as it moves and splashes when it fills. |
+| Spring Check | `SpringCheck` | motion, @hugeicons/core-free-icons | Checkbox row where one spring fills the box, draws the tick and strikes through the label. |
+| Squish Switch | `SquishSwitch` | motion | Switch whose thumb stretches with speed and squashes against the end when you flick it. |
+| Status Mark | `StatusMark` | motion | Agent task status glyph that morphs from an idle ring to a progress arc, then a check. |
+| Swipe Row | `SwipeRow` | motion, @hugeicons/react, @hugeicons/core-free-icons | List row that swipes open to reveal actions and deletes on a full swipe. |
+| Swipe Toast | `SwipeToast` | motion, @hugeicons/react, @hugeicons/core-free-icons | Toast that swipes down to dismiss and burns a thin fuse for its remaining time. |
+| Tear Ticket | `TearTicket` | motion | Ticket whose perforated stub tears off by hand, fibre by fibre, and drops away. |
+| Thought Line | `ThoughtLine` | motion, @hugeicons/react, @hugeicons/core-free-icons | Reasoning trace header with a live clock that folds its steps into one line when done. |
+| Voice Pill | `VoicePill` | @hugeicons/react, @hugeicons/core-free-icons | Mic button that swells into a capsule of live equalizer bars and a timer while recording. |
+| Wake Slider | `WakeSlider` | motion | Thumbless range slider of thin bars where drag speed raises a wake behind the handle. |
+| Warm Tooltip | `WarmTooltip` | react-dom, motion | Tooltip group where the first label waits, then its siblings open instantly while warm. |
+| FlyingButton | `FlyingButton` | - | A list with a paper shredder at the bottom that cuts dragged rows into curling strips. |
+
+
+---
+
+# Catalog: Backgrounds
+
+64 components. Install ID is the PascalCase name; append `-<JS|TS>-<CSS|TW>`.
+Deps are from the registry (TS-TW variant); `react` is assumed.
+
+| Name | Install ID | Dependencies | Description |
+|---|---|---|---|
+| Acid Squares | `AcidSquares` | - | A rolling field of glossy squares that ripples under two drifting colored lights. |
+| Aero Shards | `AeroShards` | vgpu | Silk ribbons of thick glass shards streaming on layered depths among survey markers, catching light along their edges. |
+| Antigravity | `Antigravity` | - | A field of particles that lifts into a glowing ring around the cursor and bursts outward on click. |
+| Aurora | `Aurora` | - | A soft, calm aurora that flows across the top of the page and drifts toward the cursor. |
+| Balatro | `Balatro` | - | The swirling Balatro paint shader, with crisp pixels, a cursor that stirs the paint and click whirlpools. |
+| Ballpit | `Ballpit` | - | A soft-lit pit of physics balls you can shove with the cursor, grab, throw and blast apart. |
+| Beams | `Beams` | - | Glossy ribbons that ripple in the dark and catch the light, which follows your cursor. |
+| Color Bends | `ColorBends` | three | Vibrant color bends with smooth flowing animation. |
+| CRT Warp | `CRTWarp` | - | A blocky plasma glowing on a curved CRT, with real scanlines, a phosphor mask, afterglow and a power-on intro. |
+| Dark Veil | `DarkVeil` | - | A silky veil of light that drifts in the dark and bends around the cursor. |
+| Dither | `Dither` | - | Retro dithered waves with Bayer, halftone, line and noise patterns, palettes and cursor trails. |
+| Dot Field | `DotField` | - | A gradient dot field seen through a lens that follows the cursor, magnifying, pinching or swirling the dots. |
+| Dot Grid | `DotGrid` | - | A springy dot grid that the cursor flicks and drags through like jelly, with click shockwaves. |
+| Faulty Terminal | `FaultyTerminal` | - | A flickering CRT terminal of glowing glyphs, with phosphor trails under the cursor and glitches on click. |
+| Ferrofluid | `Ferrofluid` | - | A glossy sea of magnetic fluid where swells of spikes roll in and the cursor raises a crown. |
+| Floating Lines | `FloatingLines` | - | Ribbons of fine glowing lines that drift in waves, part around the cursor and curl when clicked. |
+| Flux Lines | `FluxLines` | - | Glowing flux lines tracing a churning magnetic fluid. The cursor magnet reveals and curls them. |
+| Galaxy | `Galaxy` | - | Endless flight through a twinkling starfield with warp jumps, cursor repulsion and star palettes. |
+| Ghost Fibers | `GhostFibers` | - | Layered ribbons of fine glowing fibers that twist, fold and drift through soft depth of field. |
+| Gradient ASCII | `GradientASCII` | - | Soft gradient glows drawn in ASCII characters that scramble under the cursor. |
+| Gradient Blinds | `GradientBlinds` | - | Satin gradient blinds lit by a spotlight that follows the cursor, swaying and turning toward the light. |
+| Gradient Waves | `GradientWaves` | - | Lit satin waves rolling in from a hazy horizon, with a light that follows the cursor and swells on click. |
+| Grainient | `Grainient` | - | Flowing grainy gradients you can stir with the cursor. |
+| Grid Distortion | `GridDistortion` | - | Image background that breaks into a grid of blocks under the cursor and settles back into place. |
+| Grid Motion | `GridMotion` | - | A tilted wall of drifting tiles that slides with the pointer and lights up where it rests. |
+| Grid Scan | `GridScan` | - | A 3D grid room swept by a scanning light that follows your view. |
+| Holo Mosaic | `HoloMosaic` | - | Holographic tiles that split light into sweeping color as it moves, with glitter, a flip-in intro and click waves. |
+| Hyperspeed | `Hyperspeed` | three | Night highway of glowing light trails on a winding road that warps into hyperspace while you hold. |
+| Iridescence | `Iridescence` | - | Liquid iridescent surface with shifting folds that you can stir with the cursor. |
+| Letter Glitch | `LetterGlitch` | - | A calm field of letters that flicker, scramble and glitch in color, stirred by the cursor and torn by clicks. |
+| Lightfall | `Lightfall` | - | Streaks of light falling down a curved tunnel, bending around the cursor and stretching into warp trails on hold. |
+| Lightning | `Lightning` | - | Crackling, branching lightning that bends toward the cursor and strikes wherever you click. |
+| Light Pillar | `LightPillar` | - | A swirling pillar of light that ignites on load, leans toward the cursor and surges on click. |
+| Light Rays | `LightRays` | - | Volumetric light rays from any edge, with source glow and haze. The cursor steers the beam and casts a shadow. |
+| Light Tunnel | `LightTunnel` | - | A swirling fibre-optic tunnel where comets of light race into depth, steered by the cursor. |
+| Line Waves | `LineWaves` | - | Fine lines that flow in silky waves while a band of light drifts through them. |
+| Liquid Chrome | `LiquidChrome` | - | Soft ribbons of liquid chrome that swirl through a dark pool, ripple under the cursor and catch the light as it moves. |
+| Liquid Ether | `LiquidEther` | - | A glowing liquid that swirls under the cursor, colored by how fast it flows. |
+| Magic Rings | `MagicRings` | - | Glowing rings that pulse outward in a wave, swell toward the cursor and flare on click. |
+| Magnet Lines | `MagnetLines` | - | A field of magnetic lines that swing toward the cursor, ripple outward and spin with every click. |
+| Micro Slats | `MicroSlats` | ogl | A wall of tiny slats that becomes a rolling sea in perspective, with glinting crests. |
+| Molten Metal | `MoltenMetal` | - | Swirling caustic filaments with white-hot cores that heat up under the cursor and flare on click. |
+| Orb | `Orb` | - | A glowing ring of swirling color that breathes, trails an orbiting light and reaches toward the cursor. |
+| Particles | `Particles` | - | A drifting 3D field of particles with glow, twinkle, constellation lines and cursor interaction. |
+| Pattern Waves | `PatternWaves` | ogl | A lit halftone surface of dots, lines or glyphs that moves like draped silk. |
+| Pixel Blast | `PixelBlast` | - | Dithered pixel clouds that drift, shimmer and light up under the cursor, with ripples, shapes and a perspective floor. |
+| Pixel Snow | `PixelSnow` | - | Pixel-art snowflakes drifting down in layers of depth, brushed aside by the cursor. |
+| Plasma | `Plasma` | - | Folds of satin light twisting slowly through the dark, turning to follow the cursor. |
+| Plasma Wave | `PlasmaWave` | - | Two ribbons of plasma curling through each other, with soft glow and white-hot cores. |
+| Prism | `Prism` | - | Rotating prism of glowing spectral light with configurable shape, colors and motion. |
+| Prismatic Burst | `PrismaticBurst` | - | A burst of prismatic light rays that leans toward the cursor and sends a wave of light outward on click. |
+| Radar | `Radar` | - | A radar scope whose sweep leaves a phosphor afterglow and picks up moving contacts. |
+| Ripple Grid | `RippleGrid` | - | A crisp grid that ripples like water, bending and lighting up as waves pass through it. |
+| Scanner | `Scanner` | - | Glowing interference lines swept by a scan beam, with a CRT finish, cursor lensing and click pings. |
+| Shape Grid | `ShapeGrid` | - | A drifting grid of shapes that lights up under the cursor, with perspective tilt and rainbow trails. |
+| Shape Waves | `ShapeWaves` | vgpu | A field of triangles, circles and squares that brighten and grow along rolling waves. |
+| Side Rays | `SideRays` | - | Shafts of light that fan in from a corner or side, shimmer slowly and lean toward the cursor. |
+| Silk | `Silk` | - | Flowing satin folds with glossy highlights that turn toward the cursor and ripple on click. |
+| Sliced Waves | `SlicedWaves` | - | Waves of colored light sliced into glowing bars, seen in depth with a focus that follows the cursor. |
+| Soft Aurora | `SoftAurora` | - | Soft aurora borealis shader with 3D Perlin noise and cosine gradient palettes. |
+| Threads | `Threads` | - | Flowing threads that fray apart and part around the cursor, from fine silk to contour lines. |
+| Topography | `Topography` | - | A 3D landscape drawn in glowing contour lines that rises under the cursor, with light pulses on click. |
+| Waves | `Waves` | - | Dense flowing lines that sway like silk, bend around the cursor and spring back into place. |
+| Web Threads | `WebThreads` | - | Glowing threads woven through luminous pinch points that light up under the cursor and carry light on click. |
+| NeonGlyphs | `NeonGlyphs` | - | A deep field of glowing neon glyphs floating through a 3D plane, with bloom and a color-split edge fade. |
+| EvilEye | `EvilEye` | ogl | Procedural evil eye shader with animated iris, slit pupil, and fiery outer glow. |
+
+
+---
+
+# Usage patterns
+
+Prop names below were checked against repo commit 37f53df. Always re-read the installed file; props evolve.
+
+## 1. Hero: shader background + animated headline
+
+```tsx
+// Paths depend on where the CLI placed the files (check `components.json` aliases).
+import Aurora from '@/components/Aurora/Aurora';
+import SplitText from '@/components/SplitText/SplitText';
+
+export default function Hero() {
+  return (
+    <section style={{ position: 'relative', minHeight: '100svh', overflow: 'hidden', background: '#05060a' }}>
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <Aurora colorStops={['#5227FF', '#7cff67', '#5227FF']} amplitude={1} speed={0.6} />
+      </div>
+      <div style={{ position: 'relative', zIndex: 1, display: 'grid', placeItems: 'center', minHeight: '100svh' }}>
+        <SplitText text="Ship something memorable" tag="h1" splitType="chars" delay={40} textAlign="center" />
+      </div>
+    </section>
+  );
+}
+```
+
+Real props confirmed in source:
+- `Aurora`: `colorStops, amplitude, blend, speed, height, scale, glow, brightness, layers, direction ('top'|'bottom'), mouseInteraction, intro, opacity, lightMode, paused, dpr, className, style`.
+- `SplitText`: `text, className, delay, duration, ease, splitType ('chars'|'words'|'lines'|'words, chars'), from, to, threshold, rootMargin, tag, textAlign, staggerFrom, mask, effect ('fade'|'blur'|'flip'|'pop'|'skew'|'wave'), trigger ('view'|'load'|'hover'|'click'), loop, loopDelay, hoverEffect, color, accentColor, onLetterAnimationComplete`.
+
+## 2. Next.js: avoid SSR/hydration problems with WebGL
+
+```tsx
+'use client';
+import dynamic from 'next/dynamic';
+const Aurora = dynamic(() => import('@/components/Aurora/Aurora'), { ssr: false });
+```
+`next/dynamic` with `ssr: false` must live in a Client Component.
+
+## 3. Reduced motion
+
+```tsx
+import { useEffect, useState } from 'react';
+export function usePrefersReducedMotion() {
+  const [r, setR] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setR(m.matches);
+    const h = (e: MediaQueryListEvent) => setR(e.matches);
+    m.addEventListener('change', h);
+    return () => m.removeEventListener('change', h);
+  }, []);
+  return r;
+}
+// {reduced ? <div className="static-gradient" /> : <Aurora ... />}
+```
+Components with a `paused` prop can be frozen with it instead of unmounting.
+
+## 4. Layering rules for backgrounds
+
+- Parent: `position: relative; overflow: hidden; height/min-height set`.
+- Background wrapper: `position: absolute; inset: 0; z-index: 0; pointer-events: none` (unless the background reacts to the pointer, in which case put listeners on the parent or leave pointer events on).
+- Content: `position: relative; z-index: 1`.
+
+## 5. Choosing components by intent
+
+| Goal | Look in |
+|---|---|
+| Animated headline / typewriter / scramble / shiny text | `text-animations.md` |
+| Custom cursor, click sparks, trails, scroll reveals | `animations.md` |
+| Cards, galleries, docks, menus, carousels, counters | `components.md` |
+| Toggles, buttons, loaders, hover details | `micro.md` |
+| Aurora, particles, grids, waves, shaders, 3D scenes | `backgrounds.md` |
+| Full landing-page sections, dashboards, templates | Not in free library: React Bits Pro (paid) or build from free pieces |
+
+## 6. AI/MCP helpers
+
+reactbits.dev documents using the shadcn MCP server to let agents browse and install components: `npx shadcn@latest mcp init --client claude` (also cursor, vscode, codex). Components are discoverable through the `@react-bits` registry once it is configured in `components.json`:
+
+```json
+{ "registries": { "@react-bits": "https://reactbits.dev/r/{name}.json" } }
+```
+(Verify against https://reactbits.dev/get-started/installation, as this config format is shadcn's and may change.)
+
+
+---
+
+# Repo layout (github.com/DavidHDev/react-bits)
+
+Vite + React docs site that also builds the component registry. Snapshot: commit `37f53df` (2026-11-24, "add neon components").
+
+```
+src/content/<Category>/<Name>/        JS + CSS variant (Name.jsx + Name.css)
+src/tailwind/<Category>/<Name>/       JS + Tailwind variant
+src/ts-default/<Category>/<Name>/     TS + CSS variant
+src/ts-tailwind/<Category>/<Name>/    TS + Tailwind variant
+src/constants/Information.js          componentMetadata: name, description, category, tags, added, updates, variants
+src/constants/Categories.js           sidebar categories
+src/demo/<Category>/                  demo pages shown on the docs site
+src/tools/                            Background Studio, Texture Lab, Shape Magic, Center Stage, Sound Lab
+public/r/<Name>-<LANG>-<STYLE>.json   built shadcn registry items (generated; 1287 files at snapshot)
+public/llms.txt                       agent-oriented index (generated by scripts/generateLlmsText.js)
+jsrepo.config.ts                      registry definition; builds the 4 variants per component
+scripts/generateComponent.js          `npm run new:component` scaffold
+```
+
+Categories: `Animations`, `Backgrounds`, `Components`, `Micro`, `TextAnimations`.
+
+## Run locally
+
+```bash
+git clone --depth 1 https://github.com/DavidHDev/react-bits.git
+cd react-bits && npm install && npm run dev   # docs site + registry watcher
+npm run registry:build                        # regenerate public/r
+npm run check:prop-docs                       # verify defaults match across 4 variants + docs
+```
+
+## Contributing rules (CONTRIBUTING.md)
+
+- Branch name `feat/<feature-name>`; PR to `main`.
+- Every component change must be mirrored in all 4 variants, and user-visible changes need an `updates: [{date, note}]` entry in `src/constants/Information.js`.
+- New community components are currently NOT accepted; only enhancements and bug fixes.
+- Test on desktop and mobile, check the console, run `npm run check:prop-docs`.
+
+## Manual copy fallback
+
+If the CLI is unavailable: copy the whole component folder for your variant, install its dependencies (see catalog), and for CSS variants keep the `.css` file beside the component.

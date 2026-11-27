@@ -1,0 +1,171 @@
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  scroll-padding-top: calc(var(--header-h) + 12px);
+  scroll-padding-bottom: calc(var(--cartbar-h) + var(--bottomnav-h) + env(safe-area-inset-bottom) + 12px);
+  scrollbar-color: var(--border) transparent;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: var(--accent-soft);
+  color: var(--ink);
+}
+
+input, textarea, select {
+  font-size: 16px;
+  caret-color: var(--primary);
+  accent-color: var(--primary);
+}
+
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--primary);
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--surface);
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 16px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 50;
+  text-wrap: balance;
+}
+
+.prose-pretty {
+  text-wrap: pretty;
+  max-width: 68ch;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+:lang(te) {
+  line-height: 1.65;
+}
+
+:lang(hi) {
+  line-height: 1.6;
+}
+
+.app-shell {
+  min-height: 100dvh;
+}
+
+.home-hero {
+  min-height: min(680px, 92svh);
+}
+
+.sheet, .dialog, .menu {
+  overscroll-behavior: contain;
+}
+
+.cartbar, .bottomnav {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.gesture-surface {
+  touch-action: pan-y;
+}
+
+.pressable {
+  transition: transform var(--dur-instant) var(--ease-out);
+}
+.pressable:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+.pressable-card {
+  transition: transform var(--dur-instant) var(--ease-out);
+}
+.pressable-card:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift {
+    transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  .hover-primary:not(:disabled):hover {
+    background-color: var(--primary-hover);
+  }
+}
+
+/* Skeleton pulse — single static opacity-only pulse */
+@keyframes skelPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.skel {
+  background-color: var(--surface-2);
+  animation: skelPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes rowFlash {
+  0% { opacity: 0.32; }
+  100% { opacity: 0; }
+}
+.admin-new-flash {
+  animation: rowFlash 1.2s var(--ease-out) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pressable:not(:disabled):active,
+  .pressable-card:active {
+    transform: none;
+  }
+}

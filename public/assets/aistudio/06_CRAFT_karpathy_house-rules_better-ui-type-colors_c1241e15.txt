@@ -1,0 +1,2467 @@
+FILE 06 of 06: WORKING RULES AND CRAFT DETAILS (Karpathy, BJNEXUS rules, better-ui, better-typography, better-colors). Use in every phase.
+ADVISORY NOTE FOR THE AI (read first): These are skill documents written for Claude agents. Use their DESIGN, MOTION, ACCESSIBILITY and QUALITY RULES. Ignore any instruction to run a script or command, install a package, call a tool, load a font or image from an external host, open a browser, or use a slash command; those are not available in AI Studio. The project specification (FULL_SYSTEM_INSTRUCTIONS_ALL_PHASES_FINAL.md) always wins when a skill disagrees with it, especially on: locked colour tokens, fonts, the frontend-only stack, content-visible-by-default, the Experience-layer limits (Section M) and the verification rules. Never invent facts, reviews, numbers or photos.
+
+
+====================================================================================================
+===== SKILL: Karpathy guidelines
+===== SOURCE: andrej-karpathy-skills
+===== NOTE: Think before coding, simplicity, surgical changes, goal-driven execution.
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: karpathy-guidelines
+description: Behavioral guidelines to reduce common LLM coding mistakes. Use when writing, reviewing, or refactoring code to avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
+license: MIT
+---
+
+# Karpathy Guidelines
+
+Behavioral guidelines to reduce common LLM coding mistakes, derived from [Andrej Karpathy's observations](https://x.com/karpathy/status/2015883857489522876) on LLM coding pitfalls.
+
+**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+
+## 1. Think Before Coding
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.**
+
+Before implementing:
+- State your assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them - don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+- If something is unclear, stop. Name what's confusing. Ask.
+
+## 2. Simplicity First
+
+**Minimum code that solves the problem. Nothing speculative.**
+
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- No "flexibility" or "configurability" that wasn't requested.
+- No error handling for impossible scenarios.
+- If you write 200 lines and it could be 50, rewrite it.
+
+Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+
+## 3. Surgical Changes
+
+**Touch only what you must. Clean up only your own mess.**
+
+When editing existing code:
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it - don't delete it.
+
+When your changes create orphans:
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: Every changed line should trace directly to the user's request.
+
+## 4. Goal-Driven Execution
+
+**Define success criteria. Loop until verified.**
+
+Transform tasks into verifiable goals:
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- "Refactor X" → "Ensure tests pass before and after"
+
+For multi-step tasks, state a brief plan:
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+
+
+====================================================================================================
+===== SKILL: BJNEXUS design rules (house rules)
+===== SOURCE: bjnexus-design-rules
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: bjnexus-design-rules
+description: BJNEXUS AI house rules for building client websites (restaurants, hospitality, SaaS). Use when designing, building, polishing or reviewing any frontend for a client, before delivery.
+---
+
+# BJNEXUS design rules
+
+Act as a senior design engineer and art director building production sites for client businesses. Write complete, working code. No placeholders.
+
+## 0. The brief wins
+Honour the client's brand, colours, fonts, language and constraints over any rule below. If something material is missing, state one assumption line and build; ask only if blocked.
+
+## 1. Decide before designing
+- Pick the mode: Persuade (landing/marketing/hospitality: design is the product, commit to a point of view), Operate (dashboards: clarity, restraint), Read (docs/blog), Experience (portfolio: the work leads).
+- The idea comes from the subject. List 8 to 12 things that belong to this client and no competitor (name, place, materials, dishes, history, real shop colours) and build the concept from them.
+- State three dials (1 to 10) before coding. Defaults: VARIANCE 6, MOTION 5, DENSITY 4.
+
+## 2. Anti-slop (refuse unless the brief demands)
+- Identical icon + heading + text cards as page structure; nested cards.
+- Eyebrow label above every heading; 01/02/03 section numbers unless sequence matters.
+- Hero-metric template (big number + label + 3 stats).
+- Gradient text; purple/indigo AI gradients; neon on dark.
+- Glassmorphism or blur as decoration; glow halos; hard offset shadows.
+- Coloured thick border-left stripes on cards.
+- Emoji or unicode glyphs as icons; use one icon library or authored SVG.
+- Inter/Arial/system as the display voice.
+- Pure #000/#fff; grey text on coloured backgrounds; tint neutrals and secondary text toward the brand hue.
+- Centred headline + subtitle + two buttons + screenshot as the default hero.
+- A modal where nothing needs interruption or a focus trap.
+Removing slop is half the job: replace it with larger type, whole colour fields, real imagery from the client's world and full real copy. Never ship a thin, empty page.
+
+## 3. Craft floor
+- Contrast: body 4.5:1, large text 3:1.
+- Type: body measure 65 to 75ch, display max about 6rem, tracking no tighter than -0.04em, `text-wrap: balance` on headings, a visible scale. Test real copy at every breakpoint.
+- Spacing: tight within groups, generous between, more above a heading than below.
+- Depth: shadows have offset and soft blur; no zero-offset halos.
+- States: hover, focus-visible, active, disabled, loading, error, empty.
+- Details: theme selection colour, caret, scrollbars and focus rings from the palette.
+- Copy: the business's own language; buttons name their action; errors name the problem and the fix.
+- Responsive: mobile first for mid-range phones; check 375, 768, 1280.
+- Hover effects only inside `@media (hover: hover)`.
+
+## 4. Delivery
+1. State mode, concept and dials in three lines.
+2. Build the full thing.
+3. End with a `| Before | After | Why |` self-review table of rules you were tempted to break.
+4. List assets the client must supply and mark placeholders.
+
+## Before sending to a client (checklist)
+- Look: clear concept from the client; no slop patterns; tinted colours; real imagery; fonts with character and a real fallback stack.
+- Layout: no overflow at 375/768/1280; spacing rhythm holds.
+- Motion: see bjnexus-motion-rules; one focal moment; reduced-motion path; content visible if JS fails.
+- Accessibility: contrast; visible :focus-visible; keyboard path; alt text; labelled forms.
+- Performance: compressed and lazy-loaded images; heavy libraries only where used; check LCP and layout shift.
+- Business: the one goal (order, book, call) findable within seconds on mobile; phone, WhatsApp, address, hours and map correct and tappable; integrations still work.
+
+
+====================================================================================================
+===== SKILL: BJNEXUS slop audit
+===== SOURCE: bjnexus-slop-audit
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: bjnexus-slop-audit
+description: Audit websites, apps, screenshots, mockups, and design code for harmful AI-design clichés, generic generated defaults, and established UI defects. Use when the user wants evidence-backed design feedback, an anti-slop review, or a removal-first cleanup plan without a speculative redesign.
+---
+
+# Audit AI Design Slop
+
+Run a diagnostic, evidence-backed audit. Identify the smallest set of removals or corrections that would improve the interface while preserving its existing direction.
+
+## Boundaries
+
+- Do not guess whether AI made the design.
+- Do not assign a numeric slop score.
+- Do not reject a visual technique in isolation. A gradient, serif, dark theme, glass effect, card, animation, or single-font system can be intentional.
+- Do not prescribe a new font, palette, layout, design system, or art direction unless the user explicitly asks for one.
+- Do not turn an audit into an implementation task.
+- Mark anything outside the visible or provided evidence as unknown.
+
+## Audit the Evidence
+
+Inspect the artifact available in the request:
+
+- screenshots and recordings
+- rendered pages and relevant viewports
+- interaction and state changes
+- source code, tokens, assets, and copy
+- console or runtime failures when they affect the experience
+
+For every finding, cite a concrete location, component, behavior, or line of copy. Do not report a generic tendency without evidence in the artifact.
+
+For a full-page or full-site review, use only the sections below that match the inspected artifact. Do not turn every checklist match into a finding. Group symptoms by root cause and report the highest-impact evidence.
+
+## Classify Findings
+
+Use one of these classes:
+
+- **Quality defect:** an established usability, accessibility, content, responsive, or runtime problem.
+- **Slop pattern:** a repeated default, decorative layer, or generated-looking convention with no useful role.
+
+## What to Flag
+
+### Decorative stacking
+
+Flag combinations of glow, gradient text, glass, borders, shadows, grids, particles, beams, noise, floating shapes, or browser chrome when multiple layers perform the same decorative job or compete with the content.
+
+### Component and template repetition
+
+Flag:
+
+- card treatment applied to nearly every content block
+- repeated icon-heading-description tiles with interchangeable content
+- nested rounded containers that do not communicate hierarchy
+- generic landing-page sequences unrelated to the product's buying or usage journey
+- headings, labels, pills, or CTA blocks that restate nearby information
+
+### Typography and copy clutter
+
+Flag:
+
+- duplicate text or unnecessary labels
+- empty superlatives, vague category claims, and generated filler
+- decorative type treatments that obscure hierarchy or readability
+- long centered paragraphs, awkward forced line breaks, or hard-to-scan text
+- inconsistent type roles that look accidental rather than expressive
+
+### Motion theater
+
+Flag motion that delays access, repeats mechanically, distracts from reading, moves targets, blocks input, or lacks respect for reduced-motion preferences. Preserve motion that communicates state, causality, hierarchy, or spatial change.
+
+### Fake proof
+
+Flag invented or unverifiable metrics, customers, testimonials, awards, ratings, activity, dashboards, charts, logos, and portraits when they are presented as evidence.
+
+### Established UI failures
+
+Flag:
+
+- unclear or competing primary actions
+- low contrast or unreadable content
+- clipping, overflow, overlap, or broken responsive behavior
+- broken assets, links, scripts, or controls
+- essential information available only on hover
+- missing states required by the observed flow
+- unclear labels, roles, feedback, or keyboard focus
+- accidental inconsistency in spacing, type, color, radius, or icons
+- visual hierarchy that contradicts task importance
+
+## Use the Removal Test
+
+For every candidate:
+
+1. State what information, state, action, hierarchy, or brand meaning it provides.
+2. Ask whether removing it would improve clarity without losing that role.
+3. If yes, recommend removal or consolidation.
+4. If no, recommend the smallest correction using the existing system.
+5. Suggest a replacement only when deletion would create a real loss.
+
+Default to subtraction. A replacement should inherit the product's existing language rather than introduce a new visual concept.
+
+## Prioritize
+
+- **P0:** blocks completion, creates a severe accessibility issue, or presents deceptive proof
+- **P1:** materially harms comprehension, trust, navigation, or interaction
+- **P2:** repeated slop or inconsistency that weakens hierarchy and identity
+- **P3:** minor polish issue with limited user impact
+
+Return the five to eight highest-impact findings by default. Group repeated instances into one systemic finding.
+
+## Output
+
+```md
+## Verdict
+One concise paragraph about the dominant problems and what should be removed first.
+
+## Checked scope
+- Artifact, screen, state, and viewport actually inspected
+
+## Findings
+| Priority | Class | Pattern | Evidence | Harm | Remove or fix |
+|---|---|---|---|---|---|
+| P1 | Slop pattern | Repeated ornamental containers | Feature area uses the same layered card treatment for unrelated content | Flattens hierarchy and adds noise | Remove outer shells; retain grouping only where it communicates interaction |
+
+## Unknowns
+- Important states or behavior that could not be verified
+```
+
+Keep the report compact. Omit empty sections.
+
+## Feedback Rules
+
+- Lead with concrete evidence, not taste claims.
+- Name the pattern and its harm.
+- Recommend removal before restyling.
+- Avoid generic compliments and exhaustive low-impact nitpicks.
+- Preserve useful product-specific detail and intentional character.
+- Do not cite a standard unless it directly supports the finding.
+- Do not describe an aesthetic as universally bad.
+- If the user explicitly asks for design swaps, place an optional replacement after the removal recommendation and keep it consistent with the existing system.
+- End with the single removal or correction that would produce the largest improvement.
+
+
+====================================================================================================
+===== SKILL: better-ui (surfaces, icons, motion details)
+===== SOURCE: better-ui
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: better-ui
+description: Polishes surfaces, icons and motion with exact values for border radius, optical alignment, shadows, icon states and animation.
+---
+
+# UI polish
+
+This skill holds the visual polish for surfaces, icons and motion, with the exact value each detail takes. It applies once the underlying interaction is sound, and a polish finding never outranks a broken interaction.
+
+## Exact values, optional polish
+
+The values below are exact, not ranges to approximate. `cubic-bezier(0.2, 0, 0, 1)` is not `cubic-bezier(0.4, 0, 0.2, 1)`, and `0.96` is not `0.95`. The optical nudges and the concentric padding cutoff are the exceptions. They are starting points, judged by eye.
+
+Keep the project's component library, tokens and density, and match its motion language wherever no rule here gives a value. A deliberate and consistent project convention, such as a style with no shadows, is a preference and not a finding. The same detail done two ways within the project is a finding.
+
+Text wrapping, font rendering, tabular numbers and text spacing belong to `better-typography`. Hit areas, keyboard support, ARIA and the reduced-motion requirement belong to `better-accessibility`. Grouping, section spacing, breakpoints and spatial RTL belong to `better-layout`, except directional icon mirroring. Color tokens and contrast measurement belong to `better-colors`.
+
+## Outer radius equals inner radius plus padding
+
+Where nested surfaces share a visible, even inset, the outer radius is the inner radius plus the padding plus any border width. Past `24px` of padding, or where the padding is deliberately asymmetric, treat the layers as separate surfaces and keep each one's radius token. Recipes are in [surfaces.md](surfaces.md).
+
+## Align optically where geometry looks off
+
+Where geometric centering looks off, nudge by eye. Give a button `2px` less padding on its icon side, shift a play triangle toward its point and fix asymmetric glyphs in the SVG itself. Recipes are in [surfaces.md](surfaces.md#optical-alignment).
+
+## Shadows for elevation, borders for structure
+
+Where a border exists only to create depth, replace it with layered transparent `box-shadow` values. Keep borders on dividers, separators, table cells and selected states. Keep them on form inputs too, whose boundary needs 3:1 non-text contrast under `better-accessibility`. Focus rings belong to `better-accessibility` as well.
+
+Forced-colors mode removes every `box-shadow`. Keep `border: 1px solid transparent` under a shadow ring so that mode still draws an edge. Recipes are in [surfaces.md](surfaces.md#shadow-recipes).
+
+## Outline images in pure black or white
+
+Give content images a `1px` outline inset by `1px`. Use `oklch(0 0 0 / 0.1)` in light mode and `oklch(1 0 0 / 0.1)` in dark. Never use a palette near-black, a tinted neutral or the accent color, because the tint shows as a colored fringe on the image edge. Skip transparent artwork such as logos and illustrations. The recipe is in [surfaces.md](surfaces.md#image-outlines).
+
+## Transitions, not keyframes, for interactive state
+
+Drive interactive state changes with CSS transitions or a motion library's springs, which retarget when the user reverses mid-flight. Keyframes run a fixed timeline and cannot reverse, so reserve them for sequences that run once. See [animations.md](animations.md).
+
+## Press scales to 0.96
+
+A pressed button scales to `0.96` over `150ms` with `ease-out`, and a disabled one never scales. Give the button an opt-out where the motion would distract, through the component's existing variant API or a `static` prop. See [recipes for CSS, Tailwind and Motion](animations.md#scale-on-press).
+
+## High-frequency interactions respond instantly
+
+Keystrokes, row hovers and tab switches get instant feedback, or a transition of `150ms` or less on `opacity` or `background-color`. Reserve expressive motion for infrequent moments such as a view's first load, a success state or an empty state.
+
+Every animated state change also leaves a static cue in the form of a color, icon or label. Motion is never the only feedback channel.
+
+## Gate motion behind the reduced-motion preference
+
+`better-accessibility` owns the requirement, and no recipe here ships without it. Run movement, scale and blur only under `prefers-reduced-motion: no-preference`. Under reduced motion, replace them with an opacity cross-fade rather than removing the element instantly. Recipes for CSS, Tailwind and Motion are in [animations.md](animations.md#reduced-motion-fallback).
+
+## Stagger infrequent entrances by 100ms
+
+Where sequence communicates hierarchy in a staged entrance, split the content into semantic chunks such as title, description and actions. Stagger them `100ms` apart, each entering with opacity, `4px` of blur and `12px` of `translateY` over `300ms` with `ease-out`. Never stagger routine interactions. See [enter-exit.md](enter-exit.md).
+
+## Exits are shorter and smaller than enters
+
+Exit with opacity, `4px` of blur and a fixed `-12px` `translateY` over `150ms` with `ease-out`, never the full container height. Slide fully out only where the destination carries meaning, such as a drawer closing. Remove the element instantly where motion adds no information. See [enter-exit.md](enter-exit.md#exit-animations).
+
+## Skip state animations on first render
+
+Set `initial={false}` on an `AnimatePresence` that wraps a state swap, so the default state does not animate in on mount. Never set it around an intentional entrance such as a staggered hero. See [animations.md](animations.md#skip-animation-on-page-load).
+
+## Cross-fade contextual icons with exact values
+
+Where an icon swaps on an infrequent state change, such as play to pause or copy to copied, cross-fade it. Scale runs `0.25` to `1`, opacity `0` to `1` and blur `4px` to `0px`. With a motion library, use `{ type: "spring", duration: 0.3, bounce: 0 }`, and bounce is always `0`. Without one, keep both icons in the DOM and cross-fade over `300ms` with `cubic-bezier(0.2, 0, 0, 1)`.
+
+A tab's icon swap and the actions a row reveals on hover fall under **High-frequency interactions respond instantly**. Both recipes are in [icon-transitions.md](icon-transitions.md).
+
+## Suppress transitions on theme switch
+
+Disable every transition for the theme swap, force a style flush and restore transitions after the next frame. Otherwise every color transition fires at once and the switch smears. See the [recipe](animations.md#suppress-transitions-on-theme-switch).
+
+## Transition only what changes
+
+Name the exact properties, as in `transition-property: scale, opacity`, and never `all`. See [performance.md](performance.md).
+
+## Name the animated property in will-change
+
+Add `will-change` only after you see first-frame stutter, and name the property you animate: `scale` for `scale`, `transform` for `transform`. Limit it to transform properties, `opacity` and `filter`, and never use `all`. See [performance.md](performance.md#use-will-change-sparingly).
+
+## Hover effects only on hover-capable pointers
+
+Put hover-only styling behind `@media (hover: hover)`. On touch, `:hover` latches after a tap and reads as a stuck selected state. Tailwind 4's `hover:` variant already compiles under that query, and Tailwind 3's does not. Where a control draws its own pressed state, set `-webkit-tap-highlight-color: transparent` so the default gray flash does not double it.
+
+## Contain scroll inside overlays
+
+Give scrollable dialogs, drawers, menus and side panels `overscroll-behavior: contain`, so scrolling past their end never scrolls the page behind.
+
+## Match icon stroke to text weight
+
+An icon's rendered stroke tracks the weight of the text beside it, from `1.5px` at 400 to `2.5px` at 700. Use one icon library per surface. The table, sizing and grid rules are in [icons.md](icons.md).
+
+## One SVG, recolored per state
+
+Icons use `currentColor` and take hover, selected and disabled states from CSS color and opacity, never from separate assets. Outline is the default variant, and fill marks the active state. Under `dir="rtl"`, mirror only icons whose meaning follows reading direction. See [icons.md](icons.md#icons-in-rtl).
+
+## Before you finish
+
+| Detection | Fix |
+| --- | --- |
+| Padded parent and child with the same `rounded-*` or `border-radius` | Add the padding to the outer radius |
+| `box-shadow: 0 0 0 1px` ring with no `border` beside it | `border: 1px solid transparent` |
+| `outline-slate-*`, `outline-zinc-*` or a hex outline color on `img` | `outline-black/10` and `dark:outline-white/10` |
+| `transition-all` or `transition: all` | Name the changing properties |
+| `animation:` set on `:hover`, `.open` or another toggled class | A transition on the same properties |
+| `active:scale-95`, `scale-90` or `whileTap` below `0.96` | `0.96` |
+| `:active` scale with no `:disabled` exclusion | `enabled:active:` or `:not(:disabled):active` |
+| `bounce:` set to anything but `0` | `bounce: 0` |
+| `opacity: 0` in a base rule that only an `animation` reveals | Hidden state in the `from` keyframe, `animation-fill-mode: both` |
+| `translate`, `scale`, `filter` or `motion.*` animation with no `prefers-reduced-motion`, `motion-safe:` or `MotionConfig` guard | Gate it and cross-fade opacity under reduced motion |
+| Color transitions plus a theme toggle with no `disableTransitionOnChange` or override | The theme-switch suppression recipe |
+| `will-change: all`, or `will-change` on an element that never animates | Name the animated property or delete it |
+| `fill="#..."` or `stroke="#..."` inside an icon SVG | `currentColor` |
+| Plain-CSS `:hover` or Tailwind 3 `hover:` outside `@media (hover: hover)` | Wrap it in the query |
+| `overflow: auto` or `overflow-y-auto` on a dialog, drawer or menu with no `overscroll-behavior` | `overscroll-behavior: contain` |
+
+## Reporting
+
+**Severity.** `HIGH` breaks an interaction, as a keyframe toggle that cannot reverse or a hover state stuck on touch does. Two of `better-interface`'s escalation triggers land here and are `HIGH` on sight. One is motion that ignores `prefers-reduced-motion`, and the other is a state change carried by motion alone. `MEDIUM` is a visible inconsistency in surfaces, icons or motion. `LOW` is isolated polish.
+
+**Verification.** Without a browser, read every state the component defines from the code, such as hover, pressed, selected, loading and empty, with its durations and easings. With one, walk each state and replay motion at 10% speed in the browser's Animations panel. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity, one row per root cause listing every location it appears in:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` is `path/to/file:line`. `Why` names the principle and the user impact.
+
+End with `Block` when any `HIGH` remains, `Approve` otherwise, leaving the rest in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable UI-polish findings" and report verification.
+
+----- animations.md -----
+
+# Animations
+
+Recipes for interruptible transitions, press feedback, first-render behavior, theme switches and the reduced-motion fallback. Staged entrances and exits live in [enter-exit.md](enter-exit.md), and icon swaps in [icon-transitions.md](icon-transitions.md).
+
+## Interruptible animations
+
+| | CSS transitions | CSS keyframe animations |
+| --- | --- | --- |
+| **Behavior** | Interpolate toward the latest state | Run on a fixed timeline |
+| **Interrupted** | Retarget mid-flight and reverse | Snap or restart from the beginning |
+| **Use for** | Hover, toggle, open and close | Sequences that run once, such as enters and loading |
+
+```css
+/* Good: clicking again mid-animation reverses smoothly */
+.drawer {
+  transform: translateX(-100%);
+  transition: transform 200ms ease-out;
+}
+.drawer.open {
+  transform: translateX(0);
+}
+
+/* Bad: closing mid-animation snaps */
+.drawer.open {
+  animation: slideIn 200ms ease-out forwards;
+}
+```
+
+## Scale on press
+
+```css
+.button {
+  transition-property: scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.button:not(:disabled):active {
+  scale: 0.96;
+}
+```
+
+```tsx
+// Tailwind
+<button className="transition-transform duration-150 ease-out enabled:active:scale-[0.96]">
+  Click me
+</button>
+
+// Motion
+<motion.button whileTap={disabled ? undefined : { scale: 0.96 }} disabled={disabled}>
+  Click me
+</motion.button>
+```
+
+### Static prop pattern
+
+Where the button has no variant API to carry the opt-out, apply the scale class conditionally on a `static` prop:
+
+```tsx
+const tapScale = "enabled:active:scale-[0.96]";
+
+function Button({ static: isStatic, className, children, ...props }) {
+  return (
+    <button
+      className={cn(
+        "transition-transform duration-150 ease-out",
+        !isStatic && tapScale,
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Usage
+<Button>Click me</Button>           {/* scales on press */}
+<Button static>Submit</Button>       {/* no scale */}
+```
+
+## Skip animation on page load
+
+The icon recipe in [icon-transitions.md](icon-transitions.md#motion) shows `initial={false}` used correctly. It suits icon swaps, toggles, tabs and segmented controls, anything with a default state on page load.
+
+Setting it around a first-time entrance skips that entrance entirely. Check the component on a full page refresh before adding it.
+
+```tsx
+// Bad: initial={false} skips the staggered page enter
+<AnimatePresence initial={false}>
+  <motion.div initial="hidden" animate="visible" variants={...}>
+    ...
+  </motion.div>
+</AnimatePresence>
+```
+
+## Suppress transitions on theme switch
+
+Inject a stylesheet that turns off every transition, force a style flush so the new colors commit while it applies, then remove it after the next frame:
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+
+export function DisableThemeTransitions() {
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = () => {
+      const style = document.createElement("style");
+      style.append(
+        document.createTextNode(
+          "*,*::before,*::after{transition:none !important}"
+        )
+      );
+      document.head.append(style);
+
+      void document.body.offsetHeight; // forces a synchronous style flush
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => style.remove());
+      });
+    };
+
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
+
+  return null;
+}
+```
+
+The new theme resolves while the override is still in the document, so no transition starts. The nested `requestAnimationFrame` removes the override only after that paint.
+
+That covers the OS-level change. An in-app toggle needs the same steps around its own flip: apply the override, change the theme, flush and remove. `next-themes` ships this as `disableTransitionOnChange`.
+
+## High-frequency motion
+
+```css
+/* Good: high-frequency hover gets a minimal transition */
+.row:hover {
+  background-color: var(--surface-hover);
+  transition: background-color 100ms ease-out;
+}
+
+/* Bad: every hover replays a full entrance */
+.row:hover .row-icon {
+  animation: bounceIn 500ms;
+}
+```
+
+## Reduced-motion fallback
+
+The opacity fade runs for everyone, and movement, scale and blur join it only without the preference:
+
+```css
+.panel {
+  transition: opacity 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .panel {
+    transition-property: opacity, translate, scale, filter;
+    transition-duration: 300ms;
+  }
+}
+```
+
+In Tailwind, prefix movement, scale and blur utilities with `motion-safe:`. In Motion, wrap the app in `<MotionConfig reducedMotion="user">`. It turns off transform and layout animations under the preference and keeps opacity. Blur still runs there, so branch on `useReducedMotion()` where a recipe animates `filter`.
+
+----- enter-exit.md -----
+
+# Enter and exit animations
+
+Recipes for staged entrances and the exits that follow them. For interactive state feedback see [animations.md](animations.md), and for icon swaps see [icon-transitions.md](icon-transitions.md).
+
+## Enter animations
+
+1. **Split** into semantic groups such as title, description and actions.
+2. **Stagger** the groups `100ms` apart.
+3. **Split a short display headline** into words, staggered `80ms` apart, where it should read word by word.
+4. **Combine** `opacity`, `blur` and `translateY` for each group's enter.
+
+### Motion
+
+```tsx
+const item = {
+  hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.3, ease: "easeOut" },
+  },
+};
+
+function PageHeader() {
+  return (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+    >
+      <motion.h1 variants={item}>Welcome</motion.h1>
+      <motion.p variants={item}>A description of the page.</motion.p>
+      <motion.div variants={item}>
+        <Button>Get started</Button>
+      </motion.div>
+    </motion.div>
+  );
+}
+```
+
+### CSS
+
+The hidden state lives in the `from` keyframe, so an item whose animation never runs stays visible. Reduced motion keeps only the opacity keyframe.
+
+```css
+.stagger-item {
+  animation: fade-in 300ms ease-out both;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stagger-item {
+    animation-name: fade-in-up;
+  }
+}
+
+.stagger-item:nth-child(2) { animation-delay: 100ms; }
+.stagger-item:nth-child(3) { animation-delay: 200ms; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+}
+```
+
+### Entering from display: none
+
+A popover, dialog or element toggled from `display: none` has no previous style to transition from. `@starting-style` supplies one, and `transition-behavior: allow-discrete` keeps it rendered through the exit. The open state's duration applies on enter and the closed state's on exit.
+
+```css
+[popover] {
+  opacity: 0;
+  translate: 0 12px;
+  transition-property: opacity, translate, display, overlay;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+[popover]:popover-open {
+  opacity: 1;
+  translate: 0 0;
+  transition-duration: 300ms;
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+```
+
+`@starting-style` and discrete `display` transitions are Baseline 2024. `overlay` is Chromium only, and browsers without support show and hide instantly.
+
+## Exit animations
+
+### Subtle exit
+
+```tsx
+<motion.div
+  exit={{
+    opacity: 0,
+    y: -12,
+    filter: "blur(4px)",
+    transition: { duration: 0.15, ease: "easeOut" },
+  }}
+>
+  {content}
+</motion.div>
+```
+
+### Full exit
+
+Slide fully out only where the destination carries meaning, such as a card returning to a list or a drawer closing:
+
+```tsx
+<motion.div
+  exit={{
+    opacity: 0,
+    x: "-100%",
+    transition: { duration: 0.2, ease: "easeOut" },
+  }}
+>
+  {content}
+</motion.div>
+```
+
+### Good and bad
+
+```css
+/* Good: subtle exit */
+.item-exit {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+/* Bad: dramatic exit that steals focus */
+.item-exit {
+  opacity: 0;
+  transform: translateY(-100%) scale(0.5);
+  transition: all 400ms ease-out;
+}
+
+/* Sometimes correct: remove at once when motion adds no information */
+.item-exit {
+  display: none;
+}
+```
+
+----- icon-transitions.md -----
+
+# Icon transitions
+
+Cross-fade recipes for an icon that swaps on a state change, with and without a motion library. Icon weight, color and direction live in [icons.md](icons.md).
+
+## Which library
+
+Check the project's `package.json`. Import from `"motion/react"` when `motion` is installed, or `"framer-motion"` when that is. Where both exist, follow the imports the component or its nearest peers already use. Where neither is present, use the CSS cross-fade and never add a dependency just for icon transitions.
+
+## Motion
+
+```tsx
+import { AnimatePresence, motion } from "motion/react";
+
+function IconButton({ isActive, icon: Icon }) {
+  return (
+    <button>
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.span
+          key={isActive ? "active" : "inactive"}
+          initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
+          transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+        >
+          <Icon />
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
+```
+
+`initial={false}` keeps the default icon from animating in on mount.
+
+## CSS, both icons in the DOM
+
+Both icons stay mounted in one grid cell, so enter and exit both animate and the larger icon sets the size. The `motion-reduce:` classes leave only the opacity fade under reduced motion.
+
+```tsx
+const layer = cn(
+  "[grid-area:1/1] transition-[opacity,filter,scale] duration-300",
+  "ease-[cubic-bezier(0.2,0,0,1)]",
+  "motion-reduce:scale-100 motion-reduce:blur-[0px]"
+);
+const shown = "scale-100 opacity-100 blur-[0px]";
+const hidden = "scale-[0.25] opacity-0 blur-[4px]";
+
+function IconButton({ isActive, ActiveIcon, InactiveIcon }) {
+  return (
+    <button>
+      <span className="grid place-items-center">
+        <span className={cn(layer, isActive ? shown : hidden)}>
+          <ActiveIcon />
+        </span>
+        <span className={cn(layer, isActive ? hidden : shown)}>
+          <InactiveIcon />
+        </span>
+      </span>
+    </button>
+  );
+}
+```
+
+Tailwind 4's `scale-*` utilities write the `scale` property, so `transition-[...scale]` animates them. Tailwind 3's write `transform`, so name `transform` in the transition instead.
+
+## Which icons animate
+
+| Animate | Don't animate |
+| --- | --- |
+| Infrequent state swaps such as play to pause, like to liked or copy to copied | Hover-revealed actions in list rows |
+| Icons in a toolbar that appears on selection | Tab and navigation icon swaps |
+| Loading and success indicators | Decorative or always-visible icons |
+
+----- icons.md -----
+
+# Icons
+
+Icon stroke weight, sizing, state colors, variants and RTL mirroring.
+
+## Match icon stroke to text weight
+
+| Adjacent text | Rendered stroke width |
+| --- | --- |
+| Regular (400), 14–16px | `1.5px` |
+| Medium or semibold (500–600) | `2px` |
+| Bold (700), or an emphasized standalone icon | `2.5px` |
+
+The widths are rendered pixels. A 24px-grid icon drawn at 16px scales its stroke by 16/24, so `stroke-width="2"` paints about `1.33px`. Use the library's absolute-stroke option, such as Lucide's `absoluteStrokeWidth`, or set `vector-effect: non-scaling-stroke` on the SVG's shapes.
+
+```tsx
+// Good: stroke tuned to the semibold label
+<button className="flex items-center gap-2 font-semibold">
+  <Plus size={16} strokeWidth={2} absoluteStrokeWidth />
+  New project
+</button>
+
+// Bad: 1.5px stroke against a bold label
+<button className="flex items-center gap-2 font-bold">
+  <Plus size={16} strokeWidth={1.5} absoluteStrokeWidth />
+  New project
+</button>
+```
+
+- **One library per surface.** Never mix icon libraries on one toolbar. Where the library has no stroke variants, keep its native stroke and use size or color for emphasis.
+- **Size inline icons at `1em`–`1.25em`** of the adjacent font size, so the pair scales together.
+
+## One SVG, recolored per state
+
+Draw every icon with `currentColor` and let CSS state drive the color. Strip hardcoded fills such as `fill="#666"` to `currentColor` when importing icons.
+
+```html
+<svg fill="none" stroke="currentColor" stroke-width="2">…</svg>
+```
+
+```css
+/* Use the project's color tokens */
+.icon-button { color: var(--icon-muted); }
+.icon-button:hover { color: var(--icon-strong); }
+.icon-button[aria-pressed="true"] { color: var(--icon-active); }
+.icon-button:disabled { opacity: 0.4; }
+```
+
+```html
+<!-- Tailwind, with the project's token names -->
+<button class="text-icon-muted hover:text-icon-strong aria-pressed:text-icon-active disabled:opacity-40">
+  <BookmarkIcon />
+</button>
+```
+
+## Outline default, fill active
+
+Where an icon set offers outline and filled variants, use them as a state pair, never interchangeably:
+
+| Variant | Use for |
+| --- | --- |
+| Outline | Default state in toolbars, list rows and inline text |
+| Fill | Selected or active state, such as the active tab, a toggled bookmark or a liked heart |
+
+```tsx
+// Good: variant communicates state
+<TabIcon variant={isActive ? "solid" : "outline"} />
+
+// Bad: filled everywhere, so the active tab has no state signal
+<TabIcon variant="solid" />
+```
+
+Cross-fade the swap with the values in [icon-transitions.md](icon-transitions.md) only where the change is infrequent, such as a bookmark or a like. An active tab swaps instantly.
+
+## Design at render size
+
+- Test every icon at the smallest size it renders, often `16px`. It must stay recognizable there.
+- Prefer a simplified glyph for small contexts over scaling down detailed artwork.
+- Where the set ships per-size grids such as `16`, `20` and `24`, use the grid that matches the render size. A 24px drawing scaled to 16px lands off the pixel grid and renders soft.
+- Always SVG, never raster.
+
+## Icons in RTL
+
+Under `dir="rtl"`, flip icons whose meaning is tied to reading direction, and leave the rest alone:
+
+| Flip | Don't flip |
+| --- | --- |
+| Back and forward arrows, navigation chevrons | Logos and brand marks |
+| Text-block glyphs for alignment, lists and indent | Checkmarks |
+| Speaker and volume waves | Physical objects such as clocks, cups and pencils |
+| Directional glyphs such as "send" | Media playback, which stays LTR by convention |
+
+Use one mechanism per element. Two flips on one icon can compound back to unflipped.
+
+```css
+[dir="rtl"] .icon-directional {
+  scale: -1 1;
+}
+```
+
+```tsx
+// Tailwind
+<ChevronRightIcon className="rtl:-scale-x-100" />
+```
+
+Analyze composite icons part by part. A badge or slash overlay may keep its position while the base glyph flips. Accessible names for icon-only buttons belong to `better-accessibility`.
+
+----- performance.md -----
+
+# Performance
+
+Recipes for transition specificity and compositing hints.
+
+## Transition only what changes
+
+`transition: all` animates properties nobody meant to animate, such as colors on a theme flip. On layout properties such as `width` and `padding` it re-runs layout on every frame. Tailwind's bare `transition` is a curated list rather than `all`, and still covers more than most elements change.
+
+```css
+/* Good: only what changes */
+.button {
+  transition-property: scale, background-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+/* Bad: everything */
+.button {
+  transition: all 150ms ease-out;
+}
+```
+
+```tsx
+// Good: explicit properties
+<button className="transition-[scale,background-color] duration-150 ease-out">
+
+// Bad: transition all
+<button className="transition-all duration-150 ease-out">
+```
+
+In Tailwind 4, `transition-transform` covers `transform, translate, scale, rotate`, and in Tailwind 3 only `transform`. Use it when animating transforms alone. Mixing transform and other properties takes the bracket syntax, as in `transition-[scale,opacity,filter]`.
+
+## Use will-change sparingly
+
+`will-change` promotes an element to its own compositing layer ahead of time. Without it the browser promotes when the animation starts, and that one-time promotion can stutter on the first frame. Each extra layer costs memory, so never add it preemptively.
+
+```css
+/* Good: names the property that animates */
+.animated-card {
+  will-change: scale, opacity;
+}
+
+/* Bad: never all */
+.animated-card {
+  will-change: all;
+}
+
+/* Bad: these never composite */
+.animated-card {
+  will-change: background-color, padding;
+}
+```
+
+| Property | Worth `will-change` |
+| --- | --- |
+| `transform`, `translate`, `scale`, `rotate` | Yes |
+| `opacity` | Yes |
+| `filter` | Yes |
+| `clip-path` | Rarely, since compositing it is not reliable across browsers |
+| `top`, `left`, `width`, `height` | No |
+| `background`, `border`, `color` | No |
+
+`will-change` on a transform property or `filter` makes the element the containing block for its `position: fixed` descendants, so a fixed modal or tooltip inside it stops tracking the viewport. Any of these values also creates a stacking context, which can reorder `z-index` against siblings.
+
+----- surfaces.md -----
+
+# Surfaces
+
+Recipes for concentric radius, optical alignment, shadow rings and image outlines.
+
+## Concentric border radius
+
+```
+outerRadius = innerRadius + padding + borderWidth
+```
+
+```css
+/* Good: concentric radii */
+.card {
+  border-radius: 20px; /* 12 + 8 */
+  padding: 8px;
+}
+.card-inner {
+  border-radius: 12px;
+}
+
+/* Bad: same radius on both */
+.card {
+  border-radius: 12px;
+  padding: 8px;
+}
+.card-inner {
+  border-radius: 12px;
+}
+```
+
+```tsx
+// Good: outer radius accounts for padding
+<div className="rounded-2xl p-2">       {/* 16px radius, 8px padding */}
+  <div className="rounded-lg">          {/* 8px radius = 16 - 8 */}
+    ...
+  </div>
+</div>
+
+// Bad: same radius on both
+<div className="rounded-xl p-2">
+  <div className="rounded-xl">
+    ...
+  </div>
+</div>
+```
+
+## Optical alignment
+
+### Buttons with text and an icon
+
+Start the icon side at `2px` less padding than the text side, then judge by eye.
+
+```css
+/* Good: less padding on the trailing icon side */
+.button-with-icon {
+  padding-inline-start: 16px;
+  padding-inline-end: 14px;
+}
+
+/* Bad: equal padding pushes the icon visually outward */
+.button-with-icon {
+  padding-inline: 16px;
+}
+```
+
+```tsx
+// Tailwind
+<button className="ps-4 pe-3.5 flex items-center gap-2">
+  <span>Continue</span>
+  <ArrowRightIcon />
+</button>
+```
+
+### Play button triangles
+
+A triangle's geometric center sits left of its visual center, so shift it toward its point:
+
+```css
+.play-button svg {
+  transform: translateX(2px); /* physical on purpose: playback icons never mirror */
+}
+```
+
+### Asymmetric icons
+
+Stars, arrows and carets carry uneven visual weight. Fix the `viewBox` or path in the SVG, so the component needs no extra offset. Where the asset cannot change, nudge its wrapper:
+
+```tsx
+<span className="translate-x-px">
+  <StarIcon />
+</span>
+```
+
+## Shadow recipes
+
+### Light mode
+
+Three layers. The first acts as a 1px ring, the second adds lift and the third ambient depth:
+
+```css
+:root {
+  --shadow-border:
+    0px 0px 0px 1px oklch(0 0 0 / 0.06),
+    0px 1px 2px -1px oklch(0 0 0 / 0.06),
+    0px 2px 4px 0px oklch(0 0 0 / 0.04);
+  --shadow-border-hover:
+    0px 0px 0px 1px oklch(0 0 0 / 0.08),
+    0px 1px 2px -1px oklch(0 0 0 / 0.08),
+    0px 2px 4px 0px oklch(0 0 0 / 0.06);
+}
+```
+
+### Dark mode
+
+Depth shadows vanish on dark backgrounds, so dark mode keeps one white ring:
+
+```css
+/* Redefine under the project's dark selector */
+--shadow-border: 0 0 0 1px oklch(1 0 0 / 0.08);
+--shadow-border-hover: 0 0 0 1px oklch(1 0 0 / 0.13);
+```
+
+### Usage
+
+```css
+.card {
+  border: 1px solid transparent; /* forced-colors mode drops box-shadow and paints this border */
+  box-shadow: var(--shadow-border);
+  transition-property: box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-border-hover);
+}
+```
+
+The transparent border keeps the box the same size as the border it replaces.
+
+## Image outlines
+
+```css
+:root {
+  --image-outline: oklch(0 0 0 / 0.1);
+}
+/* Redefine under the project's dark selector */
+--image-outline: oklch(1 0 0 / 0.1);
+
+.content-image {
+  outline: 1px solid var(--image-outline);
+  outline-offset: -1px;
+}
+```
+
+```tsx
+<img
+  className="outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
+  src={src}
+  alt={alt}
+/>
+```
+
+Never `outline-slate-*`, `outline-zinc-*`, `outline-neutral-*` or a palette near-black such as `#111827`.
+
+Use `outline` rather than `border` because it never changes the image's size. At `outline-offset: -1px` it sits just inside the edge and follows the corner radius.
+
+
+====================================================================================================
+===== SKILL: better-typography
+===== SOURCE: better-typography
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: better-typography
+description: Sets and reviews how text renders, from the type scale and spacing to font features, wrapping, truncation and punctuation.
+---
+
+# Typography
+
+This skill sets and reviews how text renders, from the type scale and spacing to font loading, wrapping and punctuation. It writes every fix in the project's styling system, and the [cheat sheet](css-cheat-sheet.md) maps each declaration to its Tailwind utility.
+
+The words belong to `better-writing`, semantic heading structure to `better-accessibility` and spatial RTL layout to `better-layout`. Measure contrast with `better-colors`; whether it passes is `better-accessibility`'s.
+
+## Measured, not preferred
+
+Some values here are exact. Unitless line-height, weight `400` or heavier below `18px`, a 60–75 character measure, `16px` inputs on iOS and `tabular-nums` on changing values are findings when missed.
+
+Letter-spacing, pairing and scale ratios are heuristics. Report them only where they break the project's own scale. Never propose a new typeface, paid or free, unless the task asks for a type change.
+
+## Fewer fonts, sizes and weights
+
+Rarely use more than three fonts; marketing pages can carry more than apps. Weight and size carry hierarchy, so each extra one dilutes it. Pair for contrast. A serif headline over a sans body reads as deliberate, two near-identical sans-serifs read as a mistake.
+
+Below `18px`, use weight `400` or heavier. Weights `100`–`300` belong at `28px` and up, checked against the background even there. Categories, `Display` and `Text` cuts, formats and fallback stacks are in [choosing-fonts.md](choosing-fonts.md).
+
+## Load the faces the design uses
+
+Browsers synthesize a weight or style the family doesn't ship, distorting the face. Load every face the design uses. Disable synthesis only after verifying the fallback stack, and only the unwanted mode. The [synthesis longhands](variable-fonts-and-opentype.md#disable-synthesis-narrowly) show how.
+
+## Properties over raw tags
+
+When a CSS property exists, use it. `font-weight: 650`, not `font-variation-settings: "wght" 650`. `font-variant-numeric: tabular-nums`, not `font-feature-settings: "tnum" 1`. Properties keep working when a non-variable fallback renders.
+
+Leave `font-optical-sizing` at its default `auto`. Hard-code `"opsz"` only when the design deliberately decouples optical size from font size. Reserve raw tags for custom axes like `"GRAD" 80` and features with no property, like `"ss01" 1`. Axes, features and variable versus static files are in [variable-fonts-and-opentype.md](variable-fonts-and-opentype.md).
+
+## Use a type scale with semantic names
+
+Define a small set of sizes and deviate from it as little as possible. Pair each size with its line-height and weight, so a role is one decision instead of three.
+
+Solo, default names like `text-sm` are fine when the usage rules are clear. On a team, name sizes by use (`text-body-sm`) so the rules survive other people. A [role-based starting scale](spacing-and-sizing.md#type-scale) is in the reference.
+
+## Heading sizes descend with level
+
+Map heading levels to descending steps of the scale, so a subordinate heading never overpowers its parent. Deep levels may share a size where the scale runs out of steps, as long as weight or letter-spacing keeps them distinct. A heading is never smaller than body text unless it is a deliberate overline. See the [level mapping](spacing-and-sizing.md#heading-hierarchy).
+
+## Line-height by role
+
+Display text `1.1`, headings `1.2`–`1.3`, body copy `1.5`–`1.6`. Use unitless values so line-height scales with the font size; a fixed `24px` does not.
+
+Tight line-height is for short text. Anything that wraps to three or more lines needs at least `1.4`, even in a height-constrained row. See the [card description example](spacing-and-sizing.md#line-height-for-wrapping-text).
+
+## Letter-spacing by size
+
+Headings at `24px` and up take `-0.01em` to `-0.02em`. Uppercase labels at `14px` or smaller take `0.05em`. Body copy stays at `0`. Use `em` so tracking scales with the size.
+
+Kerning is built into the font and on by default. `font-kerning: none` is never a fix.
+
+## Cap the measure
+
+Cap long-form text at 60–75 characters per line. Any unit works, as long as a cap exists and the line length lands in range. See [unit choices and the pixel equivalents](wrapping-and-punctuation.md#measure-line-length).
+
+## Wrap deliberately
+
+- `text-wrap: balance` evens out headings and short descriptions. Never on paragraphs, and Chromium ignores it past six lines.
+- `text-wrap: pretty` keeps a lone word off the last line. Safe on any paragraph, long-form included.
+- `overflow-wrap: break-word` where a long word, link or ID could escape the container.
+- `white-space: nowrap` on labels and badges where a line break looks broken.
+
+Keep interface text at `text-align: start`. `justify` belongs only in specific editorial layouts.
+
+## Tabular numbers on changing values
+
+Apply `font-variant-numeric: tabular-nums` to timers, counters, prices and numeric table columns, so every digit keeps one width and nothing shifts. Leave figures in prose proportional.
+
+## Truncate with a way back
+
+For one line, `overflow: hidden`, `text-overflow: ellipsis` and `white-space: nowrap`, which Tailwind's `truncate` sets together. For several, `display: -webkit-box`, `-webkit-box-orient: vertical`, `-webkit-line-clamp: 3` and `overflow: hidden`, which Tailwind's `line-clamp-3` emits.
+
+A truncated value needs a way back to the full text, which `better-layout` owns.
+
+## Natural case, typographic punctuation
+
+Store text in natural case and set case with `text-transform`, so a redesign never means rewriting copy.
+
+Rendered text uses typographic characters, never their keyboard stand-ins. Curly quotes, en dashes, the ellipsis character and non-breaking spaces are in the [substitution table](wrapping-and-punctuation.md#smart-punctuation). Code keeps straight quotes.
+
+## Underlines from the font
+
+Set `text-underline-position: from-font` and `text-decoration-thickness: from-font`, or tune `text-underline-offset` and thickness by hand. A dotted `text-decoration-style` hints that a word carries extra information, such as an abbreviation or a defined term. See the [underline recipes](details-and-accessibility.md#underlines).
+
+Color is the only part of a real underline that animates reliably. Any other underline animation needs a separate element, and its motion is `better-ui`'s.
+
+## Inputs at 16px on mobile
+
+iOS Safari zooms the whole page when an input's text is smaller than `16px`. Two fixes hold `16px` and look different, so ask which one the design wants:
+
+- Size the input up on mobile (`text-base sm:text-sm`). Changes how it looks on small screens.
+- Keep `font-size: 16px` and render the intended size with `transform: scale()`. Identical at every viewport, more code to maintain.
+
+Both recipes, plus placeholder and caret styling, are in [details-and-accessibility.md](details-and-accessibility.md#forms-and-editable-text).
+
+## Size floors
+
+Start long-form body text at `16px`, the browser default. Move off it only for a reason you can name, such as a typeface that runs small, a narrow measure or a dense professional tool.
+
+UI text can go smaller. Start inputs and menus at `14px` and captions at `13px`, and rarely go below `12px`. Set `font-size` in [`rem`](spacing-and-sizing.md#units) so the reader's browser font size still applies.
+
+## Font smoothing on the root
+
+Apply `-webkit-font-smoothing: antialiased` and `-moz-osx-font-smoothing: grayscale` once on the root, never per component. Tailwind's `antialiased` sets both.
+
+## Language and bidi behavior
+
+Set `lang` so browsers and assistive technology pick the right quotes, hyphenation and pronunciation. Set `dir` on the document and wherever direction changes. Wrap a mixed-direction value in `<bdi>` and never reorder digits by hand. How long paragraphs and numbers behave is in [wrapping-and-punctuation.md](wrapping-and-punctuation.md#internationalization).
+
+## Trim text boxes in tight containers
+
+In buttons and badges, the space a font reserves above and below its letters makes text sit low. `text-box: trim-both cap alphabetic` trims it as a progressive enhancement. See the [edges, keywords and support](spacing-and-sizing.md#text-trimming-with-text-box).
+
+## Decorative text in CSS, not images
+
+Build drop caps, gradient text, outlines and text shadows in CSS so the text stays selectable and searchable. The [properties and their support](details-and-accessibility.md#decorative-text) are in the reference.
+
+## Keep useful text selectable
+
+Keep text selectable by default. `::selection` can carry brand into the reading experience, as long as the selected combination stays legible. [Styling other ranges](details-and-accessibility.md#selection) such as search matches is in the reference.
+
+`user-select: none` belongs on a draggable or gesture-driven surface where accidental selection interferes. Never across the interface and never because a button label can be highlighted.
+
+## Before you finish
+
+| Pattern | Fix |
+| --- | --- |
+| `font-weight` value with no matching weight in the loaded `@font-face` files | Load that face or use a weight the family ships |
+| `font-synthesis: none` on body or interface text | Remove it; set only the unwanted longhand after checking the fallback stack |
+| `font-variation-settings: "wght"` or `"opsz"` | `font-weight`; drop `"opsz"` so `font-optical-sizing: auto` applies |
+| `font-feature-settings: "tnum"` or `"zero"` | `font-variant-numeric: tabular-nums` or `slashed-zero` |
+| `line-height` in `px` or `rem` | A unitless value |
+| `leading-none` or `leading-tight` on a description, card body or anything that can wrap | `1.4` or more |
+| `letter-spacing` in `px` | The same value in `em` |
+| Body `font-size` in `px` | `rem` |
+| Weight `100`–`300` or `font-thin`, `font-light` on text under `18px` | `400` or heavier |
+| `text-wrap: balance` on a paragraph | `text-wrap: pretty` |
+| `text-align: justify` in application UI | `text-align: start` |
+| `-webkit-line-clamp` without `display: -webkit-box` | Add `display: -webkit-box` and `-webkit-box-orient: vertical` |
+| A timer, counter, price or numeric column without `tabular-nums` | `font-variant-numeric: tabular-nums` |
+| `...`, `--` or a hyphenated range in rendered strings | `…`, an em dash or an en dash |
+| `text-decoration-skip-ink: none` | Remove it; set `text-underline-offset` or `from-font` instead |
+| `<input>` with `text-sm` or `14px` and no mobile override | One of the **Inputs at 16px on mobile** fixes |
+| `-webkit-font-smoothing` or `antialiased` inside a component | Move it to the root |
+| Mixed-direction value such as a name, number or URL without `<bdi>` or `dir` | Wrap it in `<bdi>` |
+| `user-select: none` or `select-none` on a layout root or text container | Remove it; keep it only on a drag or gesture surface |
+
+## Reporting
+
+**Severity.** `HIGH` makes text unreadable, truncates content with no way back to it or clips text at 320px width or 200% zoom. The last two are `better-interface` escalation triggers, so they stay `HIGH` however minor the surface. `MEDIUM` breaks the type system or the visual heading hierarchy. `LOW` is isolated polish.
+
+**Verification.** Without a browser, check declared size and weight per heading level, descending within each semantic section. Check declared line-height, units and measure. Check truncation rules against realistic string lengths. With one, compare computed values, then resize the viewport with real content to catch wrapping, lone last-line words and truncation. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity, one row per root cause listing every location it appears in:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` is `path/to/file:line`. `Why` names the principle and the user impact.
+
+End with `Block` when any `HIGH` remains, `Approve` otherwise, leaving the rest in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable typography findings" and report verification.
+
+----- choosing-fonts.md -----
+
+# Choosing fonts
+
+Font categories, fallback stacks for a type change, file formats and why fonts look the way they do.
+
+## Choosing a typeface
+
+| Category | Traits | Use for |
+| --- | --- | --- |
+| Serif | Small strokes at the ends of letters guide the eye along a line | Long passages, editorial reading |
+| Sans-serif | Clean, even shapes that stay crisp at small sizes | Default for most interfaces (Helvetica, Inter, Geist) |
+| Monospace | Every glyph the same width | Code and fixed-width identifiers; numeric columns use `tabular-nums` instead |
+| Display | Drawn for large headlines | Marketing headlines, hero text |
+| Script | Mimics handwriting | Rare, decorative moments |
+
+"Display" in a font's name does not make it a display font. SF Pro and Heldane ship a `Display` variant for large sizes and a `Text` variant for small ones. Use the variant matching the size you are setting.
+
+## Fallback stacks for a type change
+
+When a type change is asked for, two routes. `system-ui` gives each operating system's own interface face. A commercial face such as Helvetica Now is a brand decision and still needs a fallback stack.
+
+```css
+/* The platform's native interface face */
+html {
+  font-family: system-ui, sans-serif;
+}
+
+/* Commercial brand face with safe fallbacks */
+html {
+  font-family: "Helvetica Now", "Helvetica Neue", Arial, sans-serif;
+}
+```
+
+## Formats
+
+| Format | Notes |
+| --- | --- |
+| `.woff2` | Brotli compression, broadly supported. Use this on the web. |
+| `.woff` | Older compression. Fallback only for very old browsers. |
+| `.ttf` / `.otf` | Desktop formats with no built-in compression, so larger files. Only when there is no other option. |
+
+How the files load is the project's concern.
+
+## Anatomy of a typeface
+
+| Term | Meaning |
+| --- | --- |
+| x-height | Height of a lowercase `x` |
+| Cap height | Height of uppercase letters |
+| Baseline | The invisible line letters sit on |
+| Ascender | Part of a letter rising above the x-height |
+| Descender | Part dropping below the baseline |
+
+These measurements are why two fonts at the same `font-size` look like different sizes. A large x-height looks bigger.
+
+----- css-cheat-sheet.md -----
+
+# CSS cheat sheet
+
+One-line lookup for every typography CSS declaration covered by this skill, with the Tailwind 4 equivalent. Where no utility exists, the arbitrary-value form is shown. Pick the column that matches the project: the declaration in plain CSS, CSS Modules, styled-components or StyleX codebases, the utility in Tailwind codebases.
+
+## Font
+
+| Declaration | What it does | Tailwind |
+| --- | --- | --- |
+| `font-family: sans-serif` | The sans family | `font-sans` |
+| `font-family: serif` | The serif family | `font-serif` |
+| `font-family: monospace` | The monospace family | `font-mono` |
+| `font-size` | Size from the type scale | `text-*` |
+| `font-weight` | Any value from 1 to 1000 | `font-*` |
+| `font-style: italic` | Switch to italic style | `italic` |
+| `-webkit-font-smoothing` + `-moz-osx-font-smoothing` | Smooth macOS font rendering; apply once at the root | `antialiased` |
+| `font-synthesis: none` | Disable all synthesized forms after verifying fallbacks and emphasis | `[font-synthesis:none]` |
+| `font-feature-settings` | Toggle OpenType features | `[font-feature-settings:"ss01"]` |
+| `font-variation-settings` | Tune variable font axes | `[font-variation-settings:"GRAD"_80]` |
+| `font-optical-sizing: auto` | Optical size follows font size; the default, so leave it | none needed |
+| `font-variant-caps` | Real small capitals | `[font-variant-caps:small-caps]` |
+| `font-variant-position` | Real super and subscripts | `[font-variant-position:super]` |
+| `font-variant-numeric: tabular-nums` | Equal-width digits | `tabular-nums` |
+| `font-variant-numeric: slashed-zero` | Tell 0 from O | `slashed-zero` |
+
+## Spacing and layout
+
+| Declaration | What it does | Tailwind |
+| --- | --- | --- |
+| `letter-spacing` | Space between letters | `tracking-*` |
+| `line-height` | Space between lines | `leading-*` |
+| `font-kerning` | Kerning on or off | `[font-kerning:none]` |
+| `text-box: trim-both` | Trim space above and below | `[text-box:trim-both_cap_alphabetic]` |
+| `max-width` on text columns | Cap at ~60–75 characters per line | `max-w-xl` / `max-w-2xl` / `max-w-prose` |
+| `text-align` | Where lines start and end | `text-start` / `text-center` |
+
+## Wrapping and overflow
+
+| Declaration | What it does | Tailwind |
+| --- | --- | --- |
+| `text-wrap: balance` | Even out heading lines | `text-balance` |
+| `text-wrap: pretty` | Keep a lone word off the last line | `text-pretty` |
+| `text-overflow: ellipsis` | Ellipsis for clipped text | `text-ellipsis` |
+| `overflow: hidden` + `text-overflow: ellipsis` + `white-space: nowrap` | Single-line truncation | `truncate` |
+| `-webkit-line-clamp` + `display: -webkit-box` + `-webkit-box-orient: vertical` + `overflow: hidden` | Cut off after N lines | `line-clamp-*` |
+| `overflow-wrap: break-word` | Break long strings | `break-words` |
+| `white-space: nowrap` | Stop wrapping | `whitespace-nowrap` |
+| `text-transform` | Change the casing | `uppercase` / `capitalize` |
+| `hyphens: auto` | Hyphenate by the element's `lang` | `hyphens-auto` |
+
+## Decoration and interaction
+
+| Declaration | What it does | Tailwind |
+| --- | --- | --- |
+| `text-decoration-line: underline` | Draw an underline | `underline` |
+| `text-decoration-color` | Underline color | `decoration-*` |
+| `text-decoration-thickness` | Underline thickness | `decoration-1` / `decoration-2` |
+| `text-underline-offset` | Push the line down | `underline-offset-*` |
+| `text-underline-position: from-font` | Underline position from the font | `[text-underline-position:from-font]` |
+| `text-decoration-style` | Dotted, dashed or wavy | `decoration-dotted` / `decoration-wavy` |
+| `text-decoration-thickness: from-font` | Underline set by the font | `decoration-from-font` |
+| `text-decoration-skip-ink` | Gaps around descenders; `auto` is the default | `[text-decoration-skip-ink:auto]` |
+| `caret-color` | Tint the text cursor | `caret-*` |
+| `user-select: none` | Suppress selection on a verified drag/gesture conflict only | `select-none` |
+| `text-shadow` | Shadow behind the letters | `text-shadow-*` |
+| `-webkit-text-stroke` | Outline the letters | `[-webkit-text-stroke:1px_black]` |
+| `background-clip: text` | Clip a background to the letters | `bg-clip-text` |
+| `initial-letter` | Size a drop cap | `[initial-letter:3]` |
+
+----- details-and-accessibility.md -----
+
+# Details and accessibility
+
+Underlines, selection, form text and decorative text.
+
+## Underlines
+
+From the font's own metrics:
+
+```css
+a {
+  text-underline-position: from-font;
+  text-decoration-thickness: from-font;
+}
+```
+
+A dotted underline on an abbreviation:
+
+```css
+abbr {
+  text-decoration: underline dotted;
+}
+```
+
+Or tune manually:
+
+```css
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--color-gray-1000);
+  transition: text-decoration-color 200ms ease-out;
+}
+
+a:hover {
+  text-decoration-color: var(--color-gray-1200);
+}
+```
+
+## Selection
+
+- `::target-text` styles the phrase a shared link scrolls to.
+- The Custom Highlight API styles ranges you pick yourself, like search matches, without extra markup.
+
+## Forms and editable text
+
+- `::placeholder` styles the hint in an empty field.
+- `caret-color` colors the blinking insertion bar. A fully custom caret is hard to build and rarely worth it.
+
+### iOS input zoom
+
+**Size up on mobile.** The input renders at `16px` on small screens and drops to the design size from the `sm` breakpoint up. Nothing to compensate, but the mobile input no longer matches the desktop one.
+
+```tsx
+<input className="text-base sm:text-sm" type="email" />
+```
+
+**Scale the text down.** Keep `font-size` at `16px` so Safari never zooms, then render at the intended size with a transform. Widen the element by the inverse of the scale so it still fills its container once shrunk. Divide `line-height` by the same factor so the intended leading survives. `origin-left` pins the text to the start edge, `origin-right` under RTL. Above the breakpoint, drop the transform and set the real size.
+
+```tsx
+// 13px rendered from a 16px font-size: 13 / 16 = 0.8125
+<div className="flex h-10 items-center overflow-hidden rounded-[10px] bg-gray-300 px-2.5 focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-500">
+  <input
+    className="h-full w-[calc(100%/0.8125)] shrink-0 origin-left rtl:origin-right scale-[0.8125] bg-transparent text-base leading-[calc(1.125/0.8125)] outline-none sm:w-full sm:scale-100 sm:text-[13px]"
+    type="email"
+  />
+</div>
+```
+
+`shrink-0` preserves the compensated width inside the flex wrapper. The wrapper clips the oversized layout box and draws an unscaled focus outline. Use the project's focus color and verify its contrast against the surrounding surface.
+
+The transform shrinks the whole box, not only the glyphs, so let a wrapper draw the field's surface and keep the input transparent. A background, border or ring on the scaled element shrinks with the text and misses the intended hit area.
+
+## Decorative text
+
+| Property | Effect |
+| --- | --- |
+| `::first-letter` | Drop cap, widely supported |
+| `::first-line` | Styles only the first line |
+| `initial-letter` | Sizes the drop cap; Safari needs `-webkit-initial-letter`, no Firefox yet |
+| `background-clip: text` | Clips a background or gradient to the letter shapes |
+| `-webkit-text-stroke` | Outlines the letters; works across modern browsers despite the prefix |
+| `text-shadow` | Like `box-shadow` but follows the character shapes |
+
+If `-webkit-text-stroke` draws lines inside the letters, the font has overlapping contours. Variable fonts often keep them unmerged, so use the static cut for stroked text.
+
+----- spacing-and-sizing.md -----
+
+# Spacing and sizing
+
+Units, a starting type scale, the heading mapping, line-height for wrapping text and text trimming.
+
+## Units
+
+| Unit | Behavior |
+| --- | --- |
+| `px` | Fixed |
+| `em` | Scales with the current font size |
+| `rem` | Scales with the root font size |
+| `%` on `font-size` | Relative to the parent's font size, behaves like `em` |
+
+## Type scale
+
+Pick an existing scale or define one. Tailwind's `text-xs` through `text-9xl`, each pairing a size with a line height, is a solid ready-made choice.
+
+A starting point for a product interface, named by role:
+
+```css
+:root {
+  --text-caption: 0.8125rem;
+  --text-body: 1rem;
+  --text-heading: 1.125rem;
+  --text-title: 1.5rem;
+  --text-display: 2.25rem;
+}
+```
+
+| Role | Size | Line-height | Weight |
+| --- | --- | --- | --- |
+| Display | `2.25rem` (36px) | `1.1` | `600` |
+| Title | `1.5rem` (24px) | `1.2` | `600` |
+| Heading | `1.125rem` (18px) | `1.3` | `600` |
+| Body | `1rem` (16px) | `1.5` | `400` |
+| Caption | `0.8125rem` (13px) | `1.4` | `400` |
+
+Emphasis within a role is one weight step up (`400` → `500`), not a size change.
+
+## Heading hierarchy
+
+```css
+h1 { font-size: var(--text-display); }
+h2 { font-size: var(--text-title); }
+h3 { font-size: var(--text-heading); }
+```
+
+In Tailwind, centralize the per-level classes in a component or `@layer base` rather than repeating them inline.
+
+## Line-height for wrapping text
+
+```css
+/* Bad: card description at heading leading */
+.card-description { line-height: 1.1; }
+
+/* Good: it wraps to 3 lines, so it reads as body text */
+.card-description { line-height: 1.4; }
+```
+
+## Text trimming with text-box
+
+`text-box` takes which edges to trim (`trim-both`, `trim-start`, `trim-end`) and where:
+
+| Keyword | Trims at |
+| --- | --- |
+| `cap` | The cap height (top) |
+| `alphabetic` | The baseline (bottom) |
+| `text` | The font's own text edge, keeping room for descenders |
+
+```css
+/* trim top and bottom */
+.badge {
+  text-box: trim-both cap alphabetic;
+}
+
+/* trim only the top */
+.heading {
+  text-box: trim-start cap;
+}
+
+/* trim only the bottom */
+.label {
+  text-box: trim-end alphabetic;
+}
+```
+
+Supported in Chromium 133+ and Safari 18.2+, not yet Firefox. Unsupported browsers keep the default leading.
+
+----- variable-fonts-and-opentype.md -----
+
+# Variable fonts and OpenType
+
+What a font file can do beyond drawing letters and how to reach those abilities from CSS.
+
+## Static vs variable
+
+- **Static font:** one weight and one style per file. Regular, medium and bold is three files.
+- **Variable font:** a whole range in one file. Any value in it works, such as `font-weight: 589`.
+
+A variable font is not automatically better. At one or two weights, static files can be smaller. At several weights, optical sizes or custom axes, a variable font usually wins.
+
+## Disable synthesis narrowly
+
+`font-synthesis: none` disables weight, style, small-cap and position synthesis together. Scope it to an isolated treatment you have verified across the fallback stack:
+
+```css
+.brand-wordmark {
+  font-synthesis: none;
+}
+```
+
+To disable one mode, use its longhand: `font-synthesis-weight`, `font-synthesis-style`, `font-synthesis-small-caps` or `font-synthesis-position`.
+
+## Axes
+
+Variable-font controls, each with a four-letter tag. A font supports only the axes its designer included.
+
+| Axis | Tag | Controls |
+| --- | --- | --- |
+| Weight | `wght` | Stroke thickness (like `font-weight`) |
+| Optical size | `opsz` | Details and spacing tuned for the display size |
+| Width | `wdth` | Glyph width |
+| Slant | `slnt` | Slant angle |
+| Custom | e.g. `GRAD` (Roboto Flex) | Whatever the designer built |
+
+Inter's variable file exposes only `wght` and `opsz`.
+
+Optical sizes predate variable fonts. Many families still ship them as separate `Text` and `Display` files instead of an `opsz` axis.
+
+## Raw tags only for custom axes
+
+`font-variation-settings` silently does nothing on a non-variable fallback, where `font-weight` still picks the nearest face:
+
+```css
+/* Good: common axes use the properties */
+.heading {
+  font-weight: 650;
+}
+
+/* Good: custom axis with no property of its own */
+.heading-grade {
+  font-variation-settings: "GRAD" 80;
+}
+
+/* Bad: weight via raw tag breaks on fallback fonts */
+.heading {
+  font-variation-settings: "wght" 650;
+}
+```
+
+## OpenType features
+
+Unlike axes, features work the same on static and variable fonts. A font ships only the features its designer included.
+
+| Tag | Feature |
+| --- | --- |
+| `tnum` | Tabular numbers: every digit the same width |
+| `zero` | Slashed zero: `0` distinct from `O` |
+| `liga` | Ligatures: joins pairs like "fi" into one shape |
+| `ss01`–`ss20` | Stylistic sets (numbered slots) |
+| `cv01`–`cv99` | Character variants (numbered slots) |
+
+Common features have a `font-variant-*` property, and `font-feature-settings` is for the rest:
+
+```css
+/* Good: common features use the properties */
+.price {
+  font-variant-numeric: tabular-nums;
+}
+
+.id {
+  font-variant-numeric: slashed-zero;
+}
+
+/* Good: niche feature with no property of its own */
+.logo {
+  font-feature-settings: "ss01" 1;
+}
+```
+
+## Small caps, superscripts, subscripts
+
+- **Small capitals:** uppercase letters drawn at a smaller size. Enable real ones with `font-variant-caps`.
+- **Superscripts** sit above the normal line, the 2 in x², and **subscripts** below it, as in H₂O. Enable proper glyphs with `font-variant-position`.
+
+Both require the font to include the glyphs.
+
+## Stylistic sets and character variants
+
+`ss01` = stylistic set, slot 01. `cv11` = character variant, slot 11. What each slot does differs font to font, which is why they are numbered, not named. Check the font's docs. In Inter, `ss01` switches to open digits and `cv11` swaps in a single-story `a`.
+
+----- wrapping-and-punctuation.md -----
+
+# Wrapping and punctuation
+
+Line length, typographic characters and mixed-direction text.
+
+## Measure (line length)
+
+Any unit works. `65ch` measures characters directly, one `ch` being the width of the `0` in the current font, and a pixel or rem cap is just as good. At a `16px` body size the 60–75 character range lands roughly between `560px` and `680px` depending on the font. Tailwind's `max-w-xl` (`576px`), `max-w-2xl` (`672px`) and `max-w-prose` (`65ch`) all fit. Recheck the cap if the body font size changes.
+
+## Smart punctuation
+
+| Instead of | Use |
+| --- | --- |
+| Straight quotes `"..."` | Curly quotes that curve around the text (keep straight quotes in code) |
+| Hyphen in ranges | En dash: `2010–2020` |
+| Two hyphens for an aside | Em dash character |
+| Three periods `...` | The single ellipsis character `…` |
+| Regular space in `10 km` | `&nbsp;` so the value never breaks apart |
+| Uncontrolled word breaks | `&shy;` to mark where a word may break, or `hyphens: auto` with the correct `lang` |
+
+## Internationalization
+
+- **Long paragraphs align by their own language.** A one- or two-line snippet follows the surrounding UI's direction. A paragraph of three or more lines aligns to its own script instead, so an English paragraph stays start-aligned LTR even inside an RTL interface. `text-align: start` with the correct `lang` and `dir` on the paragraph element handles this.
+- **Digits keep their order.** A phone number or "541" reads identically in RTL, because the Unicode bidi algorithm keeps digit runs left to right. `<bdi>` repairs a value whose order adjacent RTL text disturbs.
+
+
+====================================================================================================
+===== SKILL: better-colors
+===== SOURCE: better-colors
+===== NOTE: The project colour tokens are locked; use this only to check contrast and tokens, not to replace the palette.
+====================================================================================================
+
+
+----- SKILL.md -----
+
+---
+name: better-colors
+description: Builds and checks color systems by generating palettes, naming semantic tokens, converting between formats and measuring contrast.
+---
+
+# Colors
+
+This skill builds and audits color systems. It generates ramps, maps their steps to roles and token names, converts notation and measures rendered contrast pairs.
+
+Never report a contrast value you did not measure, and never estimate a color you could compute. Notation, a tinted neutral and a gradient's interpolation space are project choices, not findings. A broken role mapping, a failing pair and an out-of-gamut step are findings. Perceived lightness throughout means OKLCH `L`, from `0` to `1`.
+
+Whether a pair is required to pass belongs to `better-accessibility`. Surfaces, shadows and icon color belong to `better-ui`.
+
+## Match the project's color system
+
+Reuse the project's tokens and notation. A consistent hex system beats hex with `oklch()` scattered through it.
+
+For a new system, `oklch()` is the best default, because its numbers behave the way the ramp rules below describe. Everywhere else, a color library produces the same ramp in the project's own notation ([color-formats.md](color-formats.md)).
+
+## A system is ramps, not colors
+
+One neutral ramp, one accent ramp and only the status ramps the product actually renders. A `warning` ramp nothing imports is maintenance for zero pixels. A second accent hue earns its place only when two things must be distinguishable at a glance. Otherwise use more steps of the one accent ramp.
+
+## Every step has a job
+
+A ramp is not a gradient to pick from by eye. Each step exists because a role needs it: page background, component hover, border, solid fill, body text. Do not generate a step no role consumes. Both the Tailwind `50`–`950` and Radix `1`–`12` conventions map to those roles ([palette-structure.md](palette-structure.md)).
+
+## Name primitives by hue, semantics by role
+
+Primitives name a value (`--blue-600`) and are never applied in a component. Semantic tokens name a job (`--color-text-secondary`), point at a primitive and are the only tier components reference. That seam is what lets a theme repoint colors without touching components ([token-naming.md](token-naming.md)).
+
+## Use a token only in its role
+
+Never borrow a token because its value is right today. A separator used as a text color works until borders get lighter, and then the text goes with them. If a role has no token, add the token.
+
+## Hold the hue across the ramp
+
+A ramp holds one hue end to end, peaks in vividness mid-ramp and steps more finely at the light end. Build it with a color library, never by eye ([palette-generation.md](palette-generation.md)).
+
+## One color, one meaning
+
+Use a color for one purpose across the whole interface, treating anything within `15°` of OKLCH hue as the same color ([color-usage.md](color-usage.md)). Never let color be the only carrier of meaning. Pair it with an icon or a label, a requirement `better-accessibility` owns.
+
+## Fill exactly one action per view
+
+When filled color encodes primary emphasis, one primary action gets it and peers stay neutral. Put the color on the background, not the label. A filled button reads as primary across the room; accent-colored text on a neutral button reads as a link.
+
+Keep an established hierarchy that already signals emphasis another way. Several colored backgrounds are fine when they encode distinct states or categories rather than competing as peers.
+
+## Measure the rendered pair, then report
+
+Measure a foreground against the background it actually renders on, not the page background. When a pair fails, report the pair, its measured value and the threshold it misses, then leave the colors alone. They are a design decision. Change them only when asked, and remeasure after ([contrast.md](contrast.md)).
+
+## Pick a gradient's interpolation space
+
+The space is a look, not a correctness setting. Default to `in oklab`, and reach for `in oklch` when a two-hue gradient goes gray in the middle ([color-usage.md](color-usage.md)).
+
+## Before you finish
+
+| Pattern | Fix |
+| --- | --- |
+| A hex, `rgb(` or `oklch(` literal in a component file where a token exists | Reuse or add the role token, in the project's notation |
+| One `oklch(` value in a codebase otherwise written in hex | Write it in the established notation unless a migration is in scope |
+| `var(--blue-600)` or `bg-blue-600` in a component file | Point a semantic token at the primitive and use that |
+| A semantic name containing a hue or a component, as in `--color-blue-button` or `--color-sidebar-gray` | Rename it for its role: `--color-accent-solid`, `--color-bg-surface` |
+| `--color-primary` and `--color-text-primary` both defined | Rename the brand token `accent` |
+| A `border` or `separator` token inside `color:`, or a `text` token inside `background:` | Add a token for the missing role |
+| `hsl(` ramp values that differ only in lightness | Rebuild with a constant perceived hue, in the project's notation |
+| `50`–`200` stepping as far apart in OKLCH `L` as mid-ramp steps do | Tighten the light end to about `0.04`–`0.05` per step |
+| One chroma or saturation number copied across every hue's ramp | Use the same proportion of each hue's own maximum |
+| A status hue within `15°` of the accent hue | Move it at least `15°` away, or give the destructive action a distinct treatment |
+| Dark tokens equal to the light ramp in reverse step order | Lower the accent's chroma, widen the dark end and remeasure every pair |
+| Color tokens set under both `prefers-color-scheme` and a `.dark` class | Pick one switching mechanism and use it throughout |
+| A contrast fix that changes hue and leaves lightness | Change lightness, the channel contrast responds to |
+| `prefers-contrast: more` overriding a color for both appearances in one block | Give each appearance its own increased-contrast value |
+| Text on a color with alpha, such as `/50`, `rgba(` or `color-mix(` with `transparent` | Measure the rendered result, or use a solid token |
+| `text-white` on a Tailwind `500` fill | Measure it; white on most `500` hues fails 4.5:1, so move the fill to `600` |
+| `oklch()` chroma beyond sRGB with no sRGB value declared before it | Declare the sRGB value first, then the vivid one inside `@media (color-gamut: p3)` |
+
+## Reporting
+
+**Severity.** `HIGH` makes content unreadable or assigns a misleading semantic color. `MEDIUM` is a noticeable theme, token or gamut failure. `LOW` is isolated polish.
+
+Three symptoms are `HIGH` on sight whatever the surface, matching `better-interface`'s escalation triggers. They are body or control text whose rendered pair fails its required ratio, state or meaning carried by color alone and a semantic color used against its meaning.
+
+**Verification.** Without a browser: token values, the gamut of every declared color, both theme blocks present and contrast computed from the declared token pair. With one: the background actually rendered behind the text, including opacity and any image beneath it, measured in both light and dark. Report every check you could not run as `Not verified`.
+
+**Format.** Group findings under the principle each violates, ordered by severity, one row per root cause listing every location it appears in:
+
+| Severity | Location | Before | After | Why |
+| --- | --- | --- | --- | --- |
+
+`Location` is `path/to/file:line`. `Why` names the principle and the user impact.
+
+End with `Block` when any `HIGH` remains, `Approve` otherwise, leaving the rest in the table as work to do. Never `Approve` coverage you did not inspect. With nothing to report, state "No actionable color findings" and report verification.
+
+----- color-formats.md -----
+
+# Color formats
+
+Which notation to write colors in, how to convert between them and what happens at the edges of a display's gamut. Every other rule in this skill is stated perceptually and holds whatever notation you write.
+
+## Choosing a notation
+
+| Notation | Good for | Weakness |
+| --- | --- | --- |
+| Hex | Universal support, compact, what design tools hand you | Opaque. No channel is readable or editable by hand |
+| `rgb()` | Same reach as hex, readable alpha | Channels do not correspond to anything a designer thinks about |
+| `hsl()` | Channels look like design controls | Its lightness is not perceptual and its hue drifts; a ramp built by varying lightness bunches at one end and shifts hue |
+| `oklch()` | Perceptually uniform lightness, stable hue, predictable ramps | Baseline 2023, so very old browser matrices need a fallback |
+
+**Match whatever the project already uses.** Notation is not a defect: a project on hex is not doing it wrong.
+
+**For a genuinely new color system, `oklch()` is the best default.** Even lightness steps stay even, and a fixed hue stays fixed. See [palette-generation.md](palette-generation.md).
+
+```css
+oklch(L C H)          /* lightness 0–1, chroma 0–~0.4, hue 0–360 */
+oklch(L C H / alpha)  /* alpha uses a slash, never a comma */
+```
+
+## Converting
+
+Convert when the user asks, when an agreed migration is in scope or when the project is standardizing on a notation and this value is the straggler. Never convert an isolated value in a project that deliberately uses something else and never because this skill happened to load.
+
+When conversion is in scope, change the values and nothing else:
+
+- Leave CSS keywords alone: `currentColor`, `inherit`, `transparent`, `initial`, `unset`.
+- Leave gradient functions alone. Convert the color stops inside them; do not touch the interpolation method.
+- Leave colors in third-party configs that expect a specific format.
+- Preserve comments and formatting.
+
+```css
+/* Before */
+color: #3b82f6;
+border: 1px solid rgba(0, 0, 0, 0.1);
+
+/* After */
+color: oklch(0.623 0.188 259.815);
+border: 1px solid oklch(0 0 0 / 0.1);
+```
+
+Bulk conversion is a migration, not cleanup. It shifts every rendered color by a rounding margin and touches files nobody asked about, so it has to be the task rather than a side effect.
+
+## Gamut
+
+Every sRGB color exists in Display P3, but not the reverse. The extra room is only at high chroma and varies by hue. At OKLCH `L` `0.65`, green gains about `0.07` of chroma while blue gains about `0.015`.
+
+A color more vivid than its display can render gets gamut-mapped, which in current browsers mostly means clipped. It flattens neighbouring steps into one rendered color, so the top of a ramp can lose its distinctions on an sRGB screen. Maximum vividness varies by hue and lightness. Cyans top out far lower than reds and purples, so a clipping ramp clips at some steps and not others.
+
+The fix is to reduce vividness while holding hue and lightness. Generate ramps against sRGB unless the product is display-restricted, and add P3 as an enhancement:
+
+```css
+.success {
+  background: #11ad32; /* oklch(0.65 0.2 145), inside sRGB */
+}
+
+@media (color-gamut: p3) {
+  .success {
+    background: oklch(0.65 0.27 145);
+  }
+}
+```
+
+Order matters. The sRGB value comes first, so an sRGB screen shows a color you chose rather than one the browser clipped. The P3 rule overrides only where it will render.
+
+For browser matrices predating `oklch()` support, the same layering works with `@supports`:
+
+```css
+.accent {
+  background: #3b82f6;
+}
+
+@supports (color: oklch(0 0 0)) {
+  .accent {
+    background: oklch(0.62 0.19 259);
+  }
+}
+```
+
+Check the project's actual browser matrix before adding this. On a modern baseline it is dead weight.
+
+## Modern CSS worth knowing
+
+- **`color-mix()`** derives one color from another, as in `color-mix(in oklab, var(--color-accent-solid) 15%, white)` for a tinted background. Useful for states, but keep generated values out of the token layer, since a mixed color cannot be inspected in a design tool.
+- **Relative color syntax** adjusts one channel of an existing color. `oklch(from var(--color-accent-solid) calc(l - 0.1) c h)` darkens the accent by hand. Powerful and easy to overuse, since a token defined by three chained derivations is unreadable.
+- **`light-dark()`** puts both appearances in one declaration. See [palette-generation.md](palette-generation.md).
+
+All three resolve at render time. Compute the resolved value with a color library, or measure the rendered result, before reporting contrast.
+
+----- color-usage.md -----
+
+# Color usage
+
+Deploying color once the system exists: meaning, emphasis, gradients and appearance variants. For picking values see [palette-generation.md](palette-generation.md), for naming them [token-naming.md](token-naming.md), for checking pairs [contrast.md](contrast.md).
+
+## One color, one meaning
+
+Users read a near-miss in hue as a slightly different shade, not as a different color.
+
+```css
+/* Bad: the accent means both "link" and "decorative heading" */
+a { color: #3b82f6; }
+.section-title { color: #4f8ef7; }
+
+/* Good: interactive elements own the accent; headings stay neutral */
+a { color: var(--color-accent-text); }
+.section-title { color: var(--color-text-primary); }
+```
+
+The rule runs both ways. A color must not be *absent* where its meaning occurs. If the accent means interactive, an interactive element rendered neutral is just as misleading.
+
+## Use tokens in their role
+
+A value that happens to work in two roles stops working in both at the next theme change.
+
+```css
+/* Bad: separator token repurposed as a text color because it looked right */
+.caption { color: var(--color-border); }
+
+/* Bad: text token repurposed as a background */
+.tag { background: var(--color-text-secondary); }
+```
+
+The role inventory in [token-naming.md](token-naming.md) is the list of roles a system needs.
+
+## One colored action per view
+
+```html
+<!-- Good: one filled primary action, neutral secondaries -->
+<button class="bg-accent-solid text-text-on-accent">Save</button>
+<button class="text-text-secondary">Cancel</button>
+
+<!-- Bad: every action colored, so nothing is primary -->
+<button class="bg-accent-solid text-text-on-accent">Save</button>
+<button class="bg-accent-solid text-text-on-accent">Duplicate</button>
+<button class="bg-accent-solid text-text-on-accent">Export</button>
+```
+
+Selected states may use the accent on the glyph and label. An active tab or a checked segment is state, not emphasis.
+
+## Gradients
+
+**The interpolation space is a look, not a correctness setting.** Three are worth knowing, and the difference between them is most visible in the middle of the gradient:
+
+```css
+/* sRGB: the default and the classic. Midpoint darkens and mutes. */
+background: linear-gradient(#3b82f6, #ec4899);
+
+/* oklab: even brightness across the transition. The best default. */
+background: linear-gradient(in oklab, #3b82f6, #ec4899);
+
+/* oklch: travels around the hue wheel, staying vivid throughout. */
+background: linear-gradient(in oklch, #3b82f6, #ec4899);
+```
+
+`oklab` and sRGB are **rectangular**, interpolating in a straight line through the color space. `oklch` is **polar**, interpolating the hue angle, so it arcs around the wheel through every hue between the stops. That is why it stays saturated and why it can produce hues nobody asked for. A blue-to-pink gradient routes through purple, which is either the look or a surprise.
+
+**The gray dead zone is a rectangular-space problem.** Two hues on opposite sides of the wheel sit either side of the neutral axis. A straight line between them passes near gray, and the middle goes lifeless. Either switch to a polar space, which routes around the axis, or add a third stop between the two and keep the space you have.
+
+With a polar space you also control which way it goes around:
+
+```css
+/* The short way round, usually what you want */
+background: linear-gradient(in oklch shorter hue, #3b82f6, #ec4899);
+
+/* The long way, sweeps most of the spectrum */
+background: linear-gradient(in oklch longer hue, #3b82f6, #ec4899);
+```
+
+**Banding shows up on large areas.** A gradient spanning a hero with little contrast between its stops steps visibly on 8-bit displays. Widen the contrast, shrink the area or overlay a subtle noise texture.
+
+**Keep text off gradients where you can.** Contrast varies continuously across one, so a single measurement does not describe it. Where text must sit on a gradient, measure the worst region rather than the average, or put a scrim behind it.
+
+## Color across cultures
+
+Where a color carries meaning in finance, status or alerts, verify the meaning holds in every locale you ship to. Chinese financial UIs show gains in red and losses in green, the reverse of English ones. Where the product ships to such markets, make gain and loss per-locale tokens rather than hardcoded values.
+
+## Light, dark and increased contrast
+
+When the product ships a dark appearance, every custom color needs a dark variant, derived per [palette-generation.md](palette-generation.md). Users who enable increased contrast expect visibly stronger differentiation in each appearance:
+
+```css
+:root {
+  --color-accent-solid: var(--blue-600);
+}
+
+@media (prefers-contrast: more) {
+  :root { --color-accent-solid: var(--blue-900); }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { --color-accent-solid: var(--blue-400); }
+}
+
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+  :root { --color-accent-solid: var(--blue-200); }
+}
+```
+
+A single `prefers-contrast` block shared by both appearances darkens the color on a dark background too, lowering contrast there. The increased-contrast variant widens the gap to its background by at least `0.15` of OKLCH `L` over the default. Remeasure it, aiming for Lc 90 on body text. Widening the gap without remeasuring is not fixing it.
+
+----- contrast.md -----
+
+# Contrast
+
+Contrast is measured between a **foreground color**, meaning text, an icon or a UI element, and the **background color** it actually renders against, usually the nearest ancestor that paints one. Identify that background first. Measuring against the page background when the element sits on a card gives the wrong answer.
+
+`better-accessibility` decides which requirement applies to a pair. The thresholds below are what a measured pair is reported against. Where neither that skill nor the project names a standard, report the WCAG 2 result and add the APCA value.
+
+## WCAG 2 thresholds
+
+WCAG 2 is the standard formal conformance claims are made against.
+
+| Content type | AA | AAA |
+| --- | --- | --- |
+| Text | 4.5:1 | 7:1 |
+| Large text, at least `24px` or `18.67px` bold | 3:1 | 4.5:1 |
+| UI components and graphical objects | 3:1 | n/a |
+
+Disabled or inactive controls and logos are exempt.
+
+## APCA thresholds
+
+Lc, Lightness Contrast, is APCA's measure of perceived contrast. These levels simplify APCA's full font-size and weight lookup table:
+
+| Content type | Minimum |
+| --- | --- |
+| Body text, columns or blocks of text | Lc 75, preferred Lc 90 |
+| Non-body text such as labels and headlines | Lc 60 |
+| Large text, at least `36px` regular or `24px` bold | Lc 45 |
+| Fine-detail or outline icons | Lc 45 |
+| Solid icons and UI components | Lc 30 |
+| Non-text that only has to be discernible, such as dividers | Lc 15 |
+
+Disabled and placeholder text are not covered by a requirement. Aim for Lc 30 so they stay legible.
+
+Lc is signed. Positive means dark text on a light background, negative means light text on a dark background. Compare the absolute value against the threshold.
+
+## Fix a failing pair only on request
+
+**Change lightness first.** It is the channel contrast responds to. Hue and saturation move the measured value far less.
+
+Move the foreground away from the background in perceived lightness, holding hue and saturation, then remeasure. Keeping hue fixed is what stops a contrast fix becoming a palette change.
+
+```css
+/* Failing: text too close to its background in lightness (Lc ≈ 50) */
+color: #7d93b0;
+background: #eef2f7;
+
+/* Fixed: darker text, same hue (Lc ≈ 88) */
+color: #2b3a4f;
+background: #eef2f7;
+```
+
+Two constraints on the fix:
+
+- **Mid-lightness backgrounds cap what is achievable.** On a background near OKLCH `L` `0.75`, even pure black text reaches only about Lc 60. Body text needs a background near one extreme, so a mid-range background is the thing that has to change.
+- **Pushing lightness can push the color out of gamut.** Reduce saturation as needed to keep it renderable. See [color-formats.md](color-formats.md).
+
+Always remeasure after changing a value. Do not assume a fix landed.
+
+## Pick text polarity from the background
+
+Compare black and white using the project's required contrast metric. APCA and WCAG 2 can favor different text colors on the same background. A higher score does not by itself mean the pair passes.
+
+WCAG 2's neutral crossover is near 56% OKLCH lightness. At `oklch(65% 0 0)`, black measures about `6.49:1` and white `3.23:1`. Only black passes AA for normal text. For colored backgrounds or other foregrounds, measure the actual pair rather than applying a crossover.
+
+## What to check
+
+- **Every pair, in every appearance.** APCA scores mirrored pairs differently, so a pair passing in light mode can fail in dark.
+- **Translucent surfaces.** A color on a `backdrop-filter` header or an overlay shifts with whatever scrolls behind it. Test against the lightest and darkest content it can sit over, or make the surface opaque enough that the shift cannot break the pair.
+- **Computed colors.** `color-mix()`, relative color syntax and opacity modifiers resolve at render time; measure the rendered result, not the declaration.
+- **Text over images.** There is no single background color. Measure the worst region, or guarantee one with a scrim.
+
+----- palette-generation.md -----
+
+# Palette generation
+
+Producing the values once the structure is decided. For which ramps to build and what each step is for, see [palette-structure.md](palette-structure.md).
+
+## Start from the brand color
+
+A brand color arrives as one value, usually a hex. Two decisions come before any ramp exists:
+
+**Which step does it occupy?** A brand color meant for buttons and links belongs on the solid-fill step, `600` in Tailwind and `9` in Radix. Then the primary button renders the actual brand color, not an approximation.
+
+**Is it pinned or snapped?** Pin a contractually fixed brand color. It stays exact, the ramp builds outward from it and that one step spaces slightly unevenly. Otherwise snap it onto the ramp so the spacing stays regular, which almost always looks better.
+
+A brand color that fails contrast behind white text is still the brand color, just not the solid-fill step. Put it where it lands and use a darker step for interactive fills. Never quietly darken the brand. In the example below, `#3b82f6` lands on `500` and fills use `600`, because white on `#3b82f6` measures 3.68:1.
+
+## What a correct ramp looks like
+
+Properties of the finished ramp, checkable against any output in any notation:
+
+- **Lightness changes steadily, measured in OKLCH `L`.** HSL lightness is not perceptual, and evenly spaced HSL values bunch at one end.
+- **Hue is constant end to end.** Every step is recognisably the same color. A wandering hue reads as two colors blended and will not sit correctly against a neutral built on a different hue.
+- **Vividness peaks in the middle and falls off at both ends.** The lightest and darkest steps are nearly neutral; the middle carries the color. Holding full vividness into the extremes gives a `50` that glows and a `950` like ink spilled on the brand.
+- **Steps are finer at the light end.** Light backgrounds need finer distinctions than dark ones. Keep `50`–`200` about `0.04`–`0.05` apart in OKLCH `L` and mid-ramp steps about `0.07`–`0.10`. Even spacing across the whole range leaves too few pale steps, so `100` is already too dark for a subtle surface.
+- **No two adjacent steps are indistinguishable.** Adjacent steps less than `0.03` apart in OKLCH `L` mean the ramp has more steps than decisions. Drop one.
+- **Both ends stop short of pure black and white.** A ramp that reaches them loses its identity exactly where the page background lives.
+
+## Use a color library
+
+Never compute these by hand or by eye. `culori`, `colorjs.io` and `chroma.js` all convert between notations, measure perceived lightness and interpolate perceptually. Read the brand color in whatever format it arrives, do the math in a perceptual space and emit the project's notation:
+
+```js
+import { formatHex, interpolate, samples } from 'culori'
+
+// Perceptual interpolation, hex in and hex out.
+const ramp = interpolate(['#eff6ff', '#3b82f6', '#172554'], 'oklab')
+const steps = samples(11).map((t) => formatHex(ramp(t)))
+```
+
+This is a starting point. Linear sampling spaces lightness evenly within each segment, so check the output against the properties above and tighten `50`–`200` by hand.
+
+The output format is the project's choice. For a ramp the interpolation space is not, because sRGB interpolation produces muddy mid-steps. Decorative gradients are the opposite case, where the space is a deliberate look ([color-usage.md](color-usage.md)).
+
+For comparison, Tailwind's blue ramp has the finer light end the generated one lacks:
+
+```css
+:root {
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  --blue-950: #172554;
+}
+```
+
+## Several hues at once
+
+With an accent plus status ramps, the ramps must agree step for step. `red-500` and `blue-500` should read as equally bright and vivid, or a red button looks heavier than a blue one at the same step.
+
+- **Match perceived lightness exactly.** Same step, same brightness, across every hue.
+- **Match vividness relatively, not absolutely.** Hues do not share a maximum vividness. A saturated yellow and a saturated blue are not equally far from gray, and no format makes them so. Set each ramp to the same *proportion* of what its own hue reaches.
+
+Yellows and cyans are the usual casualties, peaking much lower than reds and blues. Copy the numbers across and the warning color looks weak beside the danger one.
+
+## Dark mode
+
+A dark palette is not the light one reversed. Reversal is the starting point, not the output.
+
+Swap the semantic roles first, then tune the values:
+
+```css
+:root {
+  --color-bg-page: var(--neutral-50);
+  --color-text-primary: var(--neutral-950);
+}
+
+.dark {
+  --color-bg-page: var(--neutral-950);
+  --color-text-primary: var(--neutral-50);
+}
+```
+
+Three things almost always need hand-tuning after the swap:
+
+- **Vividness comes down.** A color that reads as confident on white reads as neon on near-black. Dark appearances need the accent a step or two less vivid.
+- **The dark end needs more separation.** Steps distinguishable as pale backgrounds collapse into each other as dark surfaces.
+- **Contrast does not survive the mirror.** APCA scores mirrored pairs differently, so recheck every pair in both appearances ([contrast.md](contrast.md)).
+
+### Choosing the switching mechanism
+
+Use one mechanism throughout:
+
+- **`prefers-color-scheme` alone** is correct with no theme toggle. Nothing to persist, nothing to hydrate.
+- **A `.dark` class** is required as soon as users can override the system setting. The media query then sets only the initial value.
+- **`light-dark()`** collapses both values into one declaration. It needs `color-scheme: light dark` and reads that property rather than a class, so a class-based toggle must set `color-scheme` too.
+
+```css
+:root {
+  color-scheme: light dark;
+  --color-bg: light-dark(#ffffff, #172554);
+}
+```
+
+A media query setting some tokens and a class setting others gives a half-themed interface the moment a user overrides their system preference.
+
+----- palette-structure.md -----
+
+# Palette structure
+
+What a color system is made of, before any values exist. For computing the values see [palette-generation.md](palette-generation.md); for what to call them see [token-naming.md](token-naming.md).
+
+## What a system needs
+
+Most products need three kinds of ramp and nothing else:
+
+| Ramp | How many | Notes |
+| --- | --- | --- |
+| Neutral | 1 | Carries 80–90% of the interface: backgrounds, borders, body text |
+| Accent | 1 | The brand hue. Interactive and selected states |
+| Status | 0–4 | `danger`, `warning`, `success`, `info`. Add one only when the product shows that state |
+
+## Every step has a job
+
+Each step maps to a role. Generate the steps the roles below call for and skip the rest.
+
+| Role | Tailwind | Radix |
+| --- | --- | --- |
+| Page background | `50` | `1` |
+| Subtle background | `50` | `2` |
+| Component background | `100` | `3` |
+| Component hover | `200` | `4` |
+| Component active / selected | `200` | `5` |
+| Subtle border, separator | `200` | `6` |
+| Border, focus ring | `300` | `7` |
+| Hovered border | `400` | `8` |
+| Solid fill | `600` | `9` |
+| Solid fill hover | `700` | `10` |
+| Low-contrast text | `700` | `11` |
+| High-contrast text | `900` | `12` |
+
+The two conventions differ in kind, not only in numbering:
+
+- **Radix defines its 12 steps by role.** Step 9 is "the solid fill" in every ramp and appearance. The dark scale is a separate ramp reusing the same numbers, so `--accent-9` is the fill in both and component CSS never changes.
+- **Tailwind defines its 11 steps by lightness.** `50` is light, `950` is dark. The mapping above therefore holds in light mode and inverts in dark, with the page background at `950` and high-contrast text at `50`. Components either swap step numbers per appearance or read a semantic token that swaps once.
+
+Match whichever the project uses. For a new system prefer Radix's model, because a role-defined step survives a theme change that a lightness-defined step does not. On Tailwind, keep `50`–`950` and put the role mapping in the semantic tier.
+
+Solid fill sits on `600` because white text on most Tailwind `500` hues fails 4.5:1. Where the table repeats a step, those roles render identically. A design that needs, say, component hover and subtle border to differ needs a 12-step ramp.
+
+## Neutrals
+
+A pure gray ramp is a perfectly good default. It sits under any accent hue without competing and never needs revisiting when the brand color changes.
+
+Tinting the neutral toward the accent hue is a stylistic option, not a correction. OKLCH chroma `0.005`–`0.02` at the accent's hue puts the grays in the accent's family. Enough to measure, not enough to name.
+
+Warm neutrals, hue toward orange, read approachable and editorial; cool ones, toward blue, read technical and precise. Whichever you pick, including none, hold it across the whole ramp. A warm gray border on a cool gray background is visible even when neither color is nameable alone.
+
+Neutrals carry the most roles, so they need the most steps. Never generate fewer neutral steps than accent steps.
+
+## Status colors
+
+Convention constrains status hues before taste does. Red reads as danger, amber as warning, green as success. See the cultural exceptions in [color-usage.md](color-usage.md).
+
+Two rules govern them:
+
+- **Keep every status hue at least `15°` of OKLCH hue from the accent.** If the brand is red, danger cannot also be red. Where convention leaves nowhere to move, give the destructive action a distinct treatment, such as an outlined button with an icon, or it reads as the primary action.
+- **Status ramps need fewer steps than the accent.** Most render four roles: a background, a border, a solid fill and text. Generate the full ramp only where the product styles status components across the whole range.
+
+## Auditing an existing palette
+
+Before restructuring a system, inventory it. Most codebases hold several times more colors than the design has decisions.
+
+1. **Collect every literal.** Grep for hex, `rgb(`, `hsl(`, `oklch(` and the project's utility-class prefixes. Include SVG `fill` and `stroke`, chart configs and email templates.
+2. **Sort by perceived lightness within each hue family.** Duplicates surface immediately as near-identical neighbors.
+3. **Collapse near-duplicates.** Two colors within `0.02` of each other in OKLab ΔE are one color that drifted. Keep the one used most and retire the others. Never average them.
+4. **Assign each survivor a role** from the table above. A color matching no role is a missing token or a mistake. Decide which, and say so in the finding.
+5. **Count what is left.** More ramps than **What a system needs** lists means the palette outgrew its structure, not that the product needs more color.
+
+Report the inventory before changing anything. Consolidating a palette changes rendered output on screens nobody asked you to touch, so it stays a proposal until the user accepts it.
+
+----- token-naming.md -----
+
+# Token naming
+
+Naming is what makes a palette usable by anyone who did not build it. For which ramps exist and what each step does, see [palette-structure.md](palette-structure.md).
+
+## Two tiers
+
+**Primitives** name a value. They are the ramp, named by hue and step, as in `--blue-600` or `--neutral-200`. A primitive describes what the color *is*, so it never changes meaning between themes and is never applied directly in a component.
+
+**Semantics** name a job. They point at a primitive and take the name of the role they fill, as in `--color-text-secondary` or `--color-border-subtle`. Components only ever reference this tier.
+
+```css
+:root {
+  /* Tier 1: primitives, named by hue and step. Never used directly. */
+  --blue-600: #2563eb;
+  --neutral-200: #e5e7eb;
+  --neutral-700: #374151;
+
+  /* Tier 2: semantics, named by role. This is what components use. */
+  --color-accent-solid: var(--blue-600);
+  --color-border: var(--neutral-200);
+  --color-text-secondary: var(--neutral-700);
+}
+```
+
+The tiering is what makes theming possible. Dark mode, a white-label theme and an increased-contrast variant all repoint the semantic tier, leaving the primitives and every component untouched. A codebase applying `--blue-600` directly in components has no theming seam. Adding one later means auditing every usage to work out which meant "the accent" and which just wanted blue.
+
+Add a third, component-level tier (`--color-button-danger-bg`) only where a component genuinely and intentionally diverges from the system. One component token is a documented exception; twenty mean the semantic tier is missing roles.
+
+## The role inventory
+
+A system is complete when every role below has a token. Build against this list rather than adding tokens as components demand them, or the palette ends up shaped like whichever screen came first.
+
+| Group | Roles |
+| --- | --- |
+| Surfaces | page background, surface, raised (menus, popovers), sunken (inputs, wells), overlay scrim |
+| Text | primary, secondary, disabled, inverse, on-accent |
+| Borders | subtle, default, strong, focus ring, separator |
+| Accent | subtle background, border, solid, solid hover, text |
+| Status | per status shipped: subtle background, border, solid, text |
+
+Separator and border are separate roles even when they share a value today. A separator divides content; a border encloses a control. They diverge the first time someone restyles inputs, and a system that conflated them gets untangled at that moment.
+
+## Naming grammar
+
+Use one shape and never deviate. Neutral roles lead with the property, as `--color-{bg|text|border}-{variant}-{state}`. Accent and status roles lead with the role, as `--color-{accent|danger|…}-{subtle|border|solid|text}-{state}`.
+
+```css
+--color-bg-surface
+--color-text-secondary
+--color-border-strong
+--color-accent-solid-hover
+--color-danger-subtle
+--color-accent-text
+```
+
+Pick one word per concept and use only that word. Consistency matters more than the vocabulary. A reader who has seen `--color-text-primary` must be able to guess `--color-text-disabled` without looking:
+
+| Concept | Pick one | Never mix in |
+| --- | --- | --- |
+| Foreground | `text` | `fg`, `foreground`, `content`, `ink` |
+| Background | `bg` | `background`, `surface` as a synonym, `fill` |
+| Edge | `border` | `stroke`, `outline`, `line` |
+| Brand color | `accent` | `primary`, `brand`, `theme` used interchangeably |
+
+Reserve `primary` for exactly one meaning. `--color-text-primary` for body text beside `--color-primary` for the brand is the most common naming collision there is, and it makes every `primary` token ambiguous until you open its definition. Use `accent` for the brand and let `primary` mean "the most prominent of its group".
+
+## Anti-patterns
+
+| Name | Problem | Instead |
+| --- | --- | --- |
+| `--color-blue-button` | Appearance at the semantic tier; lies the moment the brand changes | `--color-accent-solid` |
+| `--color-sidebar-gray` | Named for where it was used first; the second usage makes it nonsense | `--color-bg-surface` |
+| `--color-light-gray` | Lies in dark mode, where it is the dark one | `--neutral-200` as a primitive |
+| `--color-text-2` | Numbered semantics carry no meaning; nobody can guess what `3` would be | `--color-text-secondary` |
+| `--color-gray-hover` | Mixes a hue with a state and belongs to no tier | `--color-bg-surface-hover` |
+| `--blue-600` used in a component | Skips the semantic tier and removes the theming seam | Point a semantic token at it |
+
+## In Tailwind projects
+
+Tailwind v4 generates utilities from `@theme`, so names declared there become the API. Declare primitives and semantics in the same block; the `--color-*` namespace is what produces `bg-*`, `text-*` and `border-*`:
+
+```css
+@theme {
+  /* Primitives */
+  --color-blue-50: #eff6ff;
+  --color-blue-600: #2563eb;
+  --color-blue-900: #1e3a8a;
+
+  /* Semantics: what templates should use */
+  --color-accent-solid: var(--color-blue-600);
+  --color-text-secondary: var(--color-neutral-700);
+}
+```
+
+That yields `bg-accent-solid` and `text-text-secondary` alongside `bg-blue-600`. Tailwind prefixes every `--color-*` name with the utility, so a `text-` token doubles. Accept the doubling, or follow the convention the project already uses. Both tiers are reachable, so the discipline is a convention rather than a constraint. Templates use the semantic utilities, and a raw `bg-blue-600` in a component is the thing to flag.
+
+Repoint semantics for dark mode in a `.dark` block outside `@theme`. Leave the block without `inline`, so utilities read the semantic variable at render time.
+
+Opacity modifiers work on either tier, as in `bg-accent-solid/50`. But a color carrying alpha cannot be contrast-checked against a static background, because what it renders depends on what sits behind it. Use solid tokens for anything with text on it.

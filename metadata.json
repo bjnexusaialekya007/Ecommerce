@@ -1,0 +1,6 @@
+{
+  "name": "Bikaner Heritage Namkeen Storefront",
+  "description": "Mobile-first retail & wholesale packaged namkeen ordering platform with GST quoting, all-India shipping, and owner operations console.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

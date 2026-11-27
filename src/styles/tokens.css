@@ -1,0 +1,113 @@
+:root {
+  color-scheme: light;
+
+  /* Option 3: Earthy Pistachio & Burnt Cardamom Palette */
+  --bg: #F7F4EE;
+  --surface: #FFFFFF;
+  --surface-low: #F4EFE6;
+  --surface-2: #EFE9DE;
+  --surface-high: #E8E1D4;
+  --surface-variant: #EFE9DE;
+  --surface-dim: #DFD7C8;
+
+  --ink: #241C1A;
+  --ink-muted: #6E5F5A;
+
+  --primary: #8F4F24;
+  --primary-container: #8F4F24;
+  --primary-hover: #753F1B;
+  --primary-fixed: #FFE0CB;
+  --on-primary-container: #F7F4EE;
+
+  --accent: #4D6B53;
+  --accent-soft: #E0EBE2;
+  --secondary: #4D6B53;
+  --secondary-container: #E0EBE2;
+  --on-secondary-container: #273B2B;
+  --on-secondary-fixed: #162418;
+
+  --success: #4D6B53;
+  --ok-bg: #E0EBE2;
+  --ok-ink: #162418;
+  --danger: #B42318;
+  --danger-bg: #FEE4E2;
+  --danger-ink: #7A271A;
+  --warn-bg: #FEF0C7;
+  --warn-ink: #753F1B;
+
+  --border: #DCD4C7;
+  --border-soft: #EBE5DB;
+  --focus: #1B5FD1;
+  --veg: #0F8A3C;
+  --nonveg: #934C24;
+  --brand-whatsapp: #128C7E;
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'DM Sans', 'Noto Sans Telugu', 'Noto Sans Devanagari', system-ui, sans-serif;
+
+  /* Elevation */
+  --sh-1: 0 1px 3px rgb(36 28 26 / 0.06);
+  --sh-2: 0 8px 24px rgb(36 28 26 / 0.11);
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* Motion (A9 — only ease-out and ease-in-out) */
+  --dur-instant: 100ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 360ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Layout offsets updated dynamically when fixed bars mount (K4) */
+  --header-h: 60px;
+  --cartbar-h: 0px;
+  --bottomnav-h: 64px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --bottomnav-h: 0px;
+  }
+}
+
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-low: var(--surface-low);
+  --color-surface-2: var(--surface-2);
+  --color-surface-high: var(--surface-high);
+  --color-surface-variant: var(--surface-variant);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fixed: var(--primary-fixed);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-ink: var(--danger-ink);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-ink: var(--warn-ink);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-focus: var(--focus);
+  --color-veg: var(--veg);
+  --color-nonveg: var(--nonveg);
+  --color-whatsapp: var(--brand-whatsapp);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}

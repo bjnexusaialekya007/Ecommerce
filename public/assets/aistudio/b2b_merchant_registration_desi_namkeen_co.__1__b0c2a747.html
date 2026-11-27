@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&amp;family=Noto+Serif:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed": "#ffdbc8", "on-surface-variant": "#53443b", "tertiary": "#75350e", "primary-container": "#8f4f24", "outline-variant": "#d8c2b7", "tertiary-fixed": "#ffdbcb", "surface-container-low": "#fff1ed", "surface-dim": "#e6d7d3", "primary": "#72380e", "outline": "#86736a", "surface-tint": "#8e4e23", "surface-variant": "#efdfdb", "on-tertiary-container": "#ffd0ba", "on-secondary-fixed-variant": "#304d37", "primary-fixed-dim": "#ffb68b", "on-secondary-fixed": "#04210e", "secondary-fixed": "#c9ebcd", "error": "#ba1a1a", "inverse-surface": "#372e2c", "on-primary-container": "#ffd1b8", "tertiary-fixed-dim": "#ffb691", "surface-container-high": "#f5e5e1", "on-error-container": "#93000a", "background": "#fff8f6", "surface-bright": "#fff8f6", "inverse-primary": "#ffb68b", "on-secondary-container": "#4d6b53", "on-background": "#221a18", "surface-container-lowest": "#ffffff", "tertiary-container": "#934c24", "surface": "#fff8f6", "secondary-fixed-dim": "#aecfb2", "secondary-container": "#c9ebcd", "on-tertiary-fixed": "#341100", "error-container": "#ffdad6", "on-primary-fixed-variant": "#70370d", "on-surface": "#221a18", "on-primary": "#ffffff", "surface-container": "#fbeae7", "surface-container-highest": "#efdfdb", "secondary": "#47654e", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "inverse-on-surface": "#fdedea", "on-primary-fixed": "#321200", "on-tertiary-fixed-variant": "#74340e", "on-error": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "3rem", "gutter": "1.5rem", "gutter-mobile": "1rem", "margin-mobile": "1.25rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "space-md": "1rem", "space-xl": "2.5rem", "space-2xl": "4rem" }, "fontFamily": { "label-sm": ["DM Sans"], "label-lg": ["DM Sans"], "body-sm": ["DM Sans"], "display-lg-mobile": ["Noto Serif"], "body-md": ["DM Sans"], "headline-lg-mobile": ["Noto Serif"], "body-lg": ["DM Sans"], "headline-sm": ["Noto Serif"], "price-numeral": ["DM Sans"], "title-md": ["Noto Serif"], "headline-md": ["Noto Serif"], "headline-lg": ["Noto Serif"], "display-lg": ["Noto Serif"] }, "fontSize": { "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" }], "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "600" }], "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500" }], "price-numeral": ["20px", { "lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["18px", { "lineHeight": "26px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "0em", "fontWeight": "500" }], "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col pt-safe pb-safe"><main class="flex-1 flex flex-col relative w-full bg-surface"><div class="flex flex-col w-full pb-32">
+<!-- Top Stepper Header -->
+<section class="px-5 pt-4 pb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary flex items-center gap-1.5 font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block animate-pulse"></span>
+        Step 1 of 2
+      </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">
+        Next: Delivery &amp; Warehouses
+      </span>
+</div>
+<!-- Segmented Tactile Progress Bar -->
+<div class="grid grid-cols-2 gap-2 w-full h-1.5 rounded-full overflow-hidden bg-surface-container-high">
+<div class="bg-primary-container h-full rounded-full transition-all duration-500"></div>
+<div class="bg-surface-variant h-full rounded-full"></div>
+</div>
+</section>
+<!-- Editorial Headline Section -->
+<section class="px-5 pt-3 pb-4">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm mb-3">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+      Direct Artisan Mill Sourcing
+    </div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight leading-tight">
+      Merchant Account Registration
+    </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1.5 leading-relaxed">
+      Enter your verified business credentials to unlock tier-1 wholesale pricing, bulk batches, and master carton dispatches.
+    </p>
+</section>
+<!-- Notice Banner: Pistachio Soft Accent -->
+<section class="px-5 mb-5">
+<div class="bg-secondary-container text-on-secondary-container rounded-xl p-3.5 flex items-start gap-3 shadow-sm">
+<div class="p-1.5 rounded-lg bg-surface-container-lowest/60 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-semibold tracking-normal text-on-secondary-fixed">
+          Strict Price Protection
+        </p>
+<p class="font-body-sm text-body-sm text-on-secondary-container mt-0.5 leading-snug">
+          Wholesale price tiers, trade slabs, and dispatch manifests are exclusively accessible to GST-verified commercial accounts.
+        </p>
+</div>
+</div>
+</section>
+<!-- Form Canvas -->
+<form class="px-5 flex flex-col gap-5" id="merchant-registration-form" onsubmit="event.preventDefault();">
+<!-- Card 1: Legal Entity Credentials -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">storefront</span>
+<h2 class="font-title-md text-title-md text-primary font-semibold">Entity Particulars</h2>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-medium">B2B Trade</span>
+</div>
+<!-- Legal Entity Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="legal-name">
+<span>Business / Legal Entity Name <span class="text-tertiary">*</span></span>
+<span class="font-label-sm text-label-sm text-outline font-normal">As per MCA/GST</span>
+</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner" id="legal-name" name="legal-name" placeholder="e.g. Shree Ganesh Sweets &amp; Snacks Pvt Ltd" required="" type="text" value="Shree Ganesh Sweets &amp; Snacks Pvt Ltd"/>
+</div>
+</div>
+<!-- Trade Name / Shop Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="trade-name">
+          Trade Name / Shop Front <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner" id="trade-name" name="trade-name" placeholder="e.g. Ganesh Sweets, Chappan Dukan" required="" type="text" value="Ganesh Sweets, Indore Central"/>
+</div>
+<!-- Business Type Dropdown -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="business-type">
+          Establishment Category <span class="text-tertiary">*</span>
+</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest pr-10 shadow-inner" id="business-type" name="business-type" required="">
+<option selected="" value="sweet-mart">Sweet Mart / Namkeen Speciality Store</option>
+<option value="retail-gourmet">Retail Gourmet &amp; Organic Pantry Store</option>
+<option value="supermarket">Supermarket / Hypermarket Chain</option>
+<option value="horeca">Cloud Kitchen / Catering &amp; HORECA</option>
+<option value="corporate-gifting">Institutional / Corporate Festive Gifting</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3.5 pointer-events-none text-outline">
+            keyboard_arrow_down
+          </span>
+</div>
+</div>
+<!-- GSTIN Verification Block -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface" for="gstin-input">
+            GSTIN (15 Digits) <span class="text-tertiary">*</span>
+</label>
+<span class="font-label-sm text-label-sm text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span> Automated ITC
+          </span>
+</div>
+<div class="relative">
+<input class="w-full uppercase tracking-wider font-price-numeral text-on-surface bg-surface-container-low rounded-lg px-3.5 py-3 text-[15px] focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="gstin-input" maxlength="15" name="gstin" required="" type="text" value="23AAACH7409R1ZZ"/>
+<span class="absolute right-3 top-3 text-secondary flex items-center gap-1 bg-secondary-fixed/50 px-2 py-0.5 rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Verified
+          </span>
+</div>
+<!-- Real-Time GST Badge -->
+<div class="bg-surface-container p-3 rounded-lg flex items-center justify-between text-on-surface-variant mt-1">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0" style="font-variation-settings: 'FILL' 1;">domain_verification</span>
+<div class="min-w-0">
+<p class="font-label-sm text-label-sm text-on-surface font-semibold truncate">
+                State: Madhya Pradesh (Code 23)
+              </p>
+<p class="font-body-sm text-[12px] text-on-surface-variant truncate">
+                Taxpayer: Active Regular • Filing Compliant
+              </p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm bg-secondary-container text-on-secondary-container font-semibold uppercase shrink-0">
+            Active
+          </span>
+</div>
+<p class="font-body-sm text-[12px] text-outline mt-0.5 leading-snug">
+          GSTIN will be validated against NIC/GST portal for automated B2B e-invoicing &amp; input tax credit claims.
+        </p>
+</div>
+</div>
+<!-- Card 2: Primary Authorized Contact -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+<h2 class="font-title-md text-title-md text-primary font-semibold">Authorized Signatory</h2>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+<!-- Contact Person & Designation -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="contact-person">
+          Full Name &amp; Designation <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner" id="contact-person" name="contact-person" placeholder="e.g. Rameshwar Sharma • Managing Partner" required="" type="text" value="Rameshwar Sharma • Managing Partner"/>
+</div>
+<!-- WhatsApp Mobile with OTP Button -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="mobile-number">
+<span>WhatsApp-enabled Contact <span class="text-tertiary">*</span></span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">chat</span> Priority Dispatch Bot
+          </span>
+</label>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<span class="absolute left-3.5 top-3.5 font-label-lg text-label-lg text-outline font-semibold">
+              +91
+            </span>
+<input class="w-full pl-12 pr-3 py-3 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md tracking-wide focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="mobile-number" maxlength="10" name="mobile" placeholder="98260 XXXXX" required="" type="tel" value="98260 44821"/>
+</div>
+<button class="px-3.5 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-label-sm text-label-sm font-semibold shrink-0 active:scale-95 transition-transform hover:bg-secondary hover:text-on-secondary flex items-center gap-1" id="otp-btn" onclick="triggerOtp()" type="button">
+<span class="material-symbols-outlined text-[16px]">phonelink_lock</span>
+<span id="otp-btn-text">Get OTP</span>
+</button>
+</div>
+<div class="hidden flex items-center gap-1.5 font-label-sm text-label-sm text-secondary mt-0.5" id="otp-status">
+<span class="material-symbols-outlined text-[15px]">check</span>
+          6-digit OTP sent via WhatsApp &amp; SMS to +91 98260 44821
+        </div>
+</div>
+<!-- Business Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="business-email">
+          Official Accounts &amp; Logistics Email <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md placeholder:text-outline/70 focus:outline-none focus:bg-surface-container-lowest transition-colors shadow-inner" id="business-email" name="email" placeholder="accounts@ganeshsweets.com" required="" type="email" value="procurement@ganeshsweets.in"/>
+<p class="font-body-sm text-[12px] text-outline">
+          Automated E-way bills, lorry receipts (LR copies), and tax invoices are dispatched here.
+        </p>
+</div>
+</div>
+<!-- Card 3: Registered Billing & Primary Warehouse Address -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">warehouse</span>
+<h2 class="font-title-md text-title-md text-primary font-semibold">Registered Billing / Warehouse</h2>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">local_shipping</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="address-street">
+          Premises / Street Address <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="address-street" name="street" placeholder="Gala No. 4, Ground Floor, Chappan Market Yard" required="" type="text" value="Unit 14-B, Agro Processing Complex, Sector C"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="address-area">
+            Area / Landmark <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="address-area" name="area" placeholder="Sanwer Road Ind. Area" required="" type="text" value="Sanwer Road Phase II"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="address-city">
+            City <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface rounded-lg px-3.5 py-3 font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="address-city" name="city" placeholder="Indore" required="" type="text" value="Indore"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="address-state">
+            State <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-high text-on-surface font-semibold rounded-lg px-3.5 py-3 font-body-md text-body-md focus:outline-none cursor-not-allowed opacity-90 shadow-inner" id="address-state" name="state" readonly="" type="text" value="Madhya Pradesh"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="address-pincode">
+            6-Digit Pincode <span class="text-tertiary">*</span>
+</label>
+<input class="w-full bg-surface-container-low text-on-surface font-price-numeral rounded-lg px-3.5 py-3 text-[15px] focus:outline-none focus:bg-surface-container-lowest shadow-inner" id="address-pincode" maxlength="6" name="pincode" placeholder="452015" required="" type="text" value="452015"/>
+</div>
+</div>
+</div>
+<!-- Card 4: Estimated Procurement Volume Radio Chips -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">scale</span>
+<h2 class="font-title-md text-title-md text-primary font-semibold">Monthly Procurement Run-Rate</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline font-medium">Determines Tier Discount</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+        Select your expected monthly namkeen &amp; pantry staple requirement to calibrate wholesale freight credits:
+      </p>
+<!-- Radio Chips Group -->
+<div class="grid grid-cols-2 gap-2.5 pt-1" id="procurement-chips">
+<!-- Option 1 -->
+<label class="volume-chip relative flex flex-col p-3 rounded-lg cursor-pointer bg-surface-container-low transition-all">
+<input class="sr-only" name="procurement_volume" type="radio" value="lt50"/>
+<div class="flex items-center justify-between w-full mb-1">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">&lt; 50 kg</span>
+<span class="material-symbols-outlined text-[18px] text-outline check-icon opacity-0">check_circle</span>
+</div>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Trial / Boutique Cafe</span>
+</label>
+<!-- Option 2 (Selected by default) -->
+<label class="volume-chip relative flex flex-col p-3 rounded-lg cursor-pointer bg-primary-container text-on-primary shadow-sm transition-all">
+<input checked="" class="sr-only" name="procurement_volume" type="radio" value="50-200"/>
+<div class="flex items-center justify-between w-full mb-1">
+<span class="font-label-lg text-label-lg text-on-primary font-bold">50 – 200 kg</span>
+<span class="material-symbols-outlined text-[18px] text-on-primary check-icon opacity-100" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-body-sm text-[12px] text-on-primary-container">Single Retail Store</span>
+</label>
+<!-- Option 3 -->
+<label class="volume-chip relative flex flex-col p-3 rounded-lg cursor-pointer bg-surface-container-low transition-all">
+<input class="sr-only" name="procurement_volume" type="radio" value="200-500"/>
+<div class="flex items-center justify-between w-full mb-1">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">200 – 500 kg</span>
+<span class="material-symbols-outlined text-[18px] text-outline check-icon opacity-0">check_circle</span>
+</div>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Multi-Outlet Sweet Mart</span>
+</label>
+<!-- Option 4 -->
+<label class="volume-chip relative flex flex-col p-3 rounded-lg cursor-pointer bg-surface-container-low transition-all">
+<input class="sr-only" name="procurement_volume" type="radio" value="gt500"/>
+<div class="flex items-center justify-between w-full mb-1">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">500 kg +</span>
+<span class="material-symbols-outlined text-[18px] text-outline check-icon opacity-0">check_circle</span>
+</div>
+<span class="font-body-sm text-[12px] text-on-surface-variant">Institutional / Supermarket</span>
+</label>
+</div>
+</div>
+<!-- Card 5: Declarations & Legal Undertaking -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">gavel</span>
+<h3 class="font-title-md text-title-md text-primary font-semibold">Statutory Declaration</h3>
+</div>
+<!-- Checkbox 1 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input checked="" class="peer sr-only" id="resale-confirm" name="resale-confirm" required="" type="checkbox"/>
+<div class="w-5 h-5 rounded bg-surface-container-high peer-checked:bg-primary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-primary peer-checked:opacity-100 opacity-0 transition-opacity">check</span>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+          I confirm that all goods procured under this merchant code are meant strictly for <strong class="text-on-surface">commercial resale or commercial catering/re-packaging</strong>, qualifying for Section 16 ITC provisions.
+        </span>
+</label>
+<!-- Checkbox 2 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-0.5">
+<input checked="" class="peer sr-only" id="terms-confirm" name="terms-confirm" required="" type="checkbox"/>
+<div class="w-5 h-5 rounded bg-surface-container-high peer-checked:bg-primary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-primary peer-checked:opacity-100 opacity-0 transition-opacity">check</span>
+</div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+          I accept the <span class="text-primary font-semibold underline decoration-primary/40 underline-offset-2">B2B Terms of Supply</span>, master packaging moisture warranty, and the mandatory <strong class="text-on-surface">7-day transit shortage/damage claim protocol</strong> from LR generation.
+        </span>
+</label>
+</div>
+<!-- Artisan Guarantee Stamp -->
+<div class="p-3 rounded-xl bg-surface-container flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[22px]">workspace_premium</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm font-semibold uppercase tracking-wider text-secondary">
+          Desi Namkeen Co. Mill Assurance
+        </p>
+<p class="font-body-sm text-[12px] text-on-surface-variant leading-tight mt-0.5">
+          Pure cold-pressed peanut &amp; mustard oils. Zero palm olein. Fresh roasted in Indore upon confirmation.
+        </p>
+</div>
+</div>
+</form>
+<!-- Sticky Bottom Navigation Dock -->
+<div class="fixed bottom-0 inset-x-0 bg-surface-container-lowest/95 backdrop-blur-md px-5 pt-3 pb-safe shadow-xl z-30">
+<div class="max-w-md mx-auto flex flex-col gap-2">
+<!-- Primary Action Button -->
+<button class="w-full bg-primary-container text-on-primary py-3.5 px-6 rounded-lg font-label-lg text-label-lg font-semibold tracking-wider flex items-center justify-center gap-2 active:scale-[0.98] transition-all shadow-md hover:bg-tertiary-container" id="submit-merchant-btn" onclick="handleMerchantSubmit()" type="button">
+<span>Submit for Merchant Verification</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<!-- SLA Subtext & Secondary Link -->
+<div class="flex items-center justify-between px-1 pb-1">
+<span class="font-label-sm text-[11px] text-secondary flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+          Approval SLA: Under 4 working hours
+        </span>
+<button class="font-label-sm text-[12px] text-primary font-semibold hover:underline" onclick="openOtpLogin()" type="button">
+          Already registered? Login via OTP
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive Feedback Drawer / Modal (Hidden by Default) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-50 hidden flex items-end justify-center p-4" id="success-drawer">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-2xl p-6 shadow-2xl flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">
+        Application Lodged
+      </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+        Your GSTIN <strong class="text-on-surface">23AAACH7409R1ZZ</strong> has entered desk validation. A verification SMS with provisional desk ticket has been dispatched.
+      </p>
+<div class="w-full p-3 rounded-lg bg-surface-container text-left mb-5">
+<div class="flex justify-between text-body-sm font-label-sm text-on-surface-variant">
+<span>Provisional Ref:</span>
+<span class="font-price-numeral font-bold text-on-surface">B2B-IND-2024-8902</span>
+</div>
+<div class="flex justify-between text-body-sm font-label-sm text-on-surface-variant mt-1">
+<span>Next Milestone:</span>
+<span class="font-semibold text-secondary">Warehouse Pallet Specs</span>
+</div>
+</div>
+<button class="w-full py-3 bg-primary-container text-on-primary font-label-lg text-label-lg rounded-lg font-semibold active:scale-95 transition-transform" onclick="document.getElementById('success-drawer').classList.add('hidden')" type="button">
+        Proceed to Step 2: Delivery &amp; Logistics
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Procurement Radio Chips Interaction
+  const chipLabels = document.querySelectorAll('#procurement-chips .volume-chip');
+  chipLabels.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chipLabels.forEach(c => {
+        c.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+        c.classList.add('bg-surface-container-low', 'text-on-surface');
+        
+        const title = c.querySelector('.font-label-lg');
+        const desc = c.querySelector('.font-body-sm');
+        const icon = c.querySelector('.check-icon');
+        
+        if (title) title.className = 'font-label-lg text-label-lg text-on-surface font-bold';
+        if (desc) desc.className = 'font-body-sm text-[12px] text-on-surface-variant';
+        if (icon) {
+          icon.classList.remove('opacity-100', 'text-on-primary');
+          icon.classList.add('opacity-0', 'text-outline');
+          icon.style.fontVariationSettings = "'FILL' 0";
+        }
+      });
+
+      chip.classList.remove('bg-surface-container-low', 'text-on-surface');
+      chip.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+      
+      const activeTitle = chip.querySelector('.font-label-lg');
+      const activeDesc = chip.querySelector('.font-body-sm');
+      const activeIcon = chip.querySelector('.check-icon');
+      
+      if (activeTitle) activeTitle.className = 'font-label-lg text-label-lg text-on-primary font-bold';
+      if (activeDesc) activeDesc.className = 'font-body-sm text-[12px] text-on-primary-container';
+      if (activeIcon) {
+        activeIcon.classList.remove('opacity-0', 'text-outline');
+        activeIcon.classList.add('opacity-100', 'text-on-primary');
+        activeIcon.style.fontVariationSettings = "'FILL' 1";
+      }
+
+      const radio = chip.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+    });
+  });
+
+  // Micro-interaction for OTP
+  function triggerOtp() {
+    const btn = document.getElementById('otp-btn');
+    const btnText = document.getElementById('otp-btn-text');
+    const statusMsg = document.getElementById('otp-status');
+    
+    btn.disabled = true;
+    btnText.textContent = 'Sending...';
+    
+    setTimeout(() => {
+      btnText.textContent = 'Resend (58s)';
+      statusMsg.classList.remove('hidden');
+      btn.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+      btn.classList.add('bg-surface-container-high', 'text-outline');
+    }, 700);
+  }
+
+  // Micro-interaction for Submit
+  function handleMerchantSubmit() {
+    const drawer = document.getElementById('success-drawer');
+    drawer.classList.remove('hidden');
+  }
+
+  // Login Modal Trigger
+  function openOtpLogin() {
+    alert("Redirecting to Merchant OTP Fast Login portal...");
+  }
+</script></main></body></html>
