@@ -14,7 +14,7 @@ export function StatusPill(props: StatusPillProps) {
   if (props.status && props.mode) {
     label = getStatusLabel(props.status, props.mode);
     if (props.status === 'paid' || props.status === 'delivered') {
-      toneClass = 'bg-[var(--accent-soft)] text-[var(--on-secondary-container)] border-transparent';
+      toneClass = 'bg-[var(--accent-soft)] text-[var(--on-secondary-fixed)] border-[var(--accent-border)]';
       Icon = CheckCircle2;
     } else if (props.status === 'packed') {
       toneClass = 'bg-[var(--surface-2)] text-[var(--ink)] border-[var(--border-soft)]';
@@ -33,7 +33,7 @@ export function StatusPill(props: StatusPillProps) {
     label = props.label || '';
     const t = props.tone || 'neutral';
     if (t === 'ok') {
-      toneClass = 'bg-[var(--accent-soft)] text-[var(--on-secondary-container)] border-transparent';
+      toneClass = 'bg-[var(--accent-soft)] text-[var(--on-secondary-fixed)] border-[var(--accent-border)]';
       Icon = CheckCircle2;
     } else if (t === 'danger') {
       toneClass = 'bg-[var(--danger-bg)] text-[var(--danger-ink)] border-transparent';

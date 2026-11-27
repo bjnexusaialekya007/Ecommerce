@@ -69,9 +69,11 @@ export default function Story({ enabled }: { enabled: boolean }) {
         {STORY_STEPS.map((s) => (
           <div
             key={s.step}
-            className="story-step-card rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-5 shadow-[var(--sh-1)] space-y-2"
+            className="story-step-card rounded-2xl border border-[var(--border-soft)]/70 hover:border-[var(--accent-border)] bg-[var(--surface)] p-5 shadow-[var(--sh-1)] space-y-2.5 transition-colors"
           >
-            <span className="inline-block font-mono text-xs font-bold text-[var(--primary)]">{s.step}</span>
+            <span className="inline-flex h-7 items-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2.5 font-mono text-xs font-bold text-[var(--accent)]">
+              {s.step}
+            </span>
             <h3 className="font-display text-lg font-bold text-[var(--ink)]">{s.title}</h3>
             <p className="text-sm text-[var(--ink-muted)] leading-relaxed">{s.detail}</p>
           </div>

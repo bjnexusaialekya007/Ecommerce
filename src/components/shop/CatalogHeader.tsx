@@ -79,26 +79,24 @@ export function CatalogHeader({
       <div className="sticky top-16 z-20 -mx-4 px-4 py-2.5 bg-[var(--bg)]/95 backdrop-blur-sm border-b border-[var(--border-soft)] flex gap-2 overflow-x-auto">
         <PrefetchLink
           to="/shop"
-          className={`shrink-0 inline-flex min-h-[40px] items-center rounded-full px-4 text-xs font-semibold transition-colors whitespace-nowrap ${
+          className={`shrink-0 inline-flex min-h-[40px] items-center rounded-full border px-4 text-xs font-semibold transition-colors whitespace-nowrap ${
             !activeCategorySlug
-              ? 'bg-[var(--primary)] text-white shadow-[var(--sh-1)]'
-              : 'bg-[var(--surface-2)] text-[var(--ink)] hover:bg-[var(--surface-high)]'
+              ? 'bg-[var(--primary)] border-[var(--primary)] text-white shadow-[var(--sh-1)]'
+              : 'bg-[var(--surface-2)] border-[var(--border)] text-[var(--ink)] hover:bg-[var(--surface-high)]'
           }`}
         >
           All Batches
         </PrefetchLink>
-        {categories.map((c, idx) => {
+        {categories.map((c) => {
           const isActive = activeCategorySlug === c.slug;
           return (
             <PrefetchLink
               key={c.id}
               to={`/c/${c.slug}`}
-              className={`shrink-0 inline-flex min-h-[40px] items-center rounded-full px-4 text-xs font-semibold transition-colors whitespace-nowrap ${
+              className={`shrink-0 inline-flex min-h-[40px] items-center rounded-full border px-4 text-xs font-semibold transition-colors whitespace-nowrap ${
                 isActive
-                  ? 'bg-[var(--primary)] text-white shadow-[var(--sh-1)]'
-                  : idx % 2 === 1
-                  ? 'bg-[var(--accent-soft)] text-[var(--on-secondary-container)] hover:brightness-95'
-                  : 'bg-[var(--surface-2)] text-[var(--ink)] hover:bg-[var(--surface-high)]'
+                  ? 'bg-[var(--primary)] border-[var(--primary)] text-white shadow-[var(--sh-1)]'
+                  : 'bg-[var(--accent-soft)] border-[var(--accent-border)] text-[var(--on-secondary-container)] hover:bg-[var(--accent)] hover:text-white'
               }`}
             >
               {c.name}
@@ -107,15 +105,15 @@ export function CatalogHeader({
         })}
       </div>
 
-      <div className="rounded-xl bg-[var(--accent-soft)] px-4 py-3 flex items-center gap-3 text-[var(--on-secondary-container)] shadow-[var(--sh-1)]">
-        <div className="h-9 w-9 rounded-lg bg-[var(--surface)]/80 text-[var(--accent)] flex items-center justify-center shrink-0">
+      <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-3 flex items-center gap-3 text-[var(--on-secondary-container)] shadow-[var(--sh-1)]">
+        <div className="h-9 w-9 rounded-lg bg-[var(--accent-well)] border border-[var(--accent-border)] text-[var(--accent)] flex items-center justify-center shrink-0">
           <Flame className="h-4 w-4" aria-hidden="true" />
         </div>
         <div className="min-w-0">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[var(--accent)]">
             Small-Batch Kitchen · {city}
           </p>
-          <p className="text-xs leading-snug text-[var(--on-secondary-container)]">
+          <p className="text-xs leading-snug text-[var(--on-secondary-fixed)]">
             Stone-ground spices &amp; cold-pressed groundnut oil packed fresh daily in nitrogen barrier pouches.
           </p>
         </div>

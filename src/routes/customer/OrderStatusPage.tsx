@@ -188,7 +188,7 @@ export function OrderStatusPage() {
 
         {/* Progress Timeline */}
         {order.status !== 'cancelled' && order.status !== 'expired' && order.status !== 'refunded' && (
-          <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-5 shadow-[var(--sh-1)]">
+          <div className="rounded-2xl border border-[var(--accent-border)] bg-[var(--accent-soft)]/45 p-5 shadow-[var(--sh-1)]">
             <div className="grid grid-cols-4 gap-2 text-center text-xs">
               {steps.map((st, idx) => {
                 const currentIdx = steps.indexOf(order.status as typeof steps[number]);
@@ -197,12 +197,14 @@ export function OrderStatusPage() {
                   <div key={st} className="space-y-1.5">
                     <div
                       className={`mx-auto h-7 w-7 rounded-full flex items-center justify-center font-bold ${
-                        done ? 'bg-[var(--success)] text-white' : 'bg-[var(--surface-2)] text-[var(--ink-muted)]'
+                        done
+                          ? 'bg-[var(--accent)] text-white shadow-xs'
+                          : 'bg-[var(--surface)] border border-[var(--border)] text-[var(--ink-muted)]'
                       }`}
                     >
                       {done ? <Check className="h-4 w-4" aria-hidden="true" /> : idx + 1}
                     </div>
-                    <p className={done ? 'font-semibold text-[var(--ink)]' : 'text-[var(--ink-muted)]'}>
+                    <p className={done ? 'font-semibold text-[var(--on-secondary-fixed)]' : 'text-[var(--ink-muted)]'}>
                       {getStatusLabel(st, order.mode)}
                     </p>
                   </div>

@@ -21,6 +21,8 @@
 
   --accent: #4D6B53;
   --accent-soft: #E0EBE2;
+  --accent-border: rgb(77 107 83 / 0.25);
+  --accent-well: rgb(77 107 83 / 0.14);
   --secondary: #4D6B53;
   --secondary-container: #E0EBE2;
   --on-secondary-container: #273B2B;

@@ -51,7 +51,10 @@ export function TrackPage() {
           onSubmit={handleSubmit}
           className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-6 shadow-[var(--sh-1)] space-y-4"
         >
-          <h1 className="font-display text-2xl font-bold text-[var(--ink)]">Track your order</h1>
+          <div className="space-y-1">
+            <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Order &amp; Invoice Lookup</p>
+            <h1 className="font-display text-2xl font-bold text-[var(--ink)]">Track your order</h1>
+          </div>
           <p className="text-sm text-[var(--ink-muted)]">
             Enter your order code and the last 4 digits of your mobile number to view live packing &amp; courier status.
           </p>
@@ -81,6 +84,10 @@ export function TrackPage() {
             <Search className="h-4 w-4" aria-hidden="true" />
             <span>Check order status</span>
           </Button>
+
+          <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-2 text-[11px] font-medium text-[var(--on-secondary-fixed)]">
+            Download your GST tax invoice &amp; courier AWB immediately after verification.
+          </div>
         </form>
       </div>
     </>

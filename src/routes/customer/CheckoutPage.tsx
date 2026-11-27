@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LocateFixed, Lock, ReceiptIndianRupee, ShieldCheck, Truck, User } from 'lucide-react';
+import { CheckCircle2, LocateFixed, Lock, ReceiptIndianRupee, ShieldCheck, Truck, User } from 'lucide-react';
 import { api } from '../../api';
 import type { QuoteResponse } from '../../shared/quote';
 import { INDIAN_STATES, lookupStateByPincode } from '../../shared/constants';
@@ -245,7 +245,7 @@ export function CheckoutPage() {
           <h1 className="font-display text-3xl font-bold text-[var(--ink)]">Checkout</h1>
           <nav aria-label="Checkout steps" className="rounded-full bg-[var(--surface-low)] border border-[var(--border-soft)] px-3 py-2 flex items-center justify-between gap-2 overflow-x-auto text-xs font-semibold">
             <Link to="/cart" className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[var(--accent)] hover:underline whitespace-nowrap shrink-0">
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-soft)] text-[var(--accent)] text-[11px] font-bold">1</span>
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] text-[11px] font-bold">1</span>
               <span>Bag &amp; Review</span>
             </Link>
             <span className="h-px flex-1 min-w-[16px] bg-[var(--primary)]/40" aria-hidden="true" />
@@ -414,6 +414,15 @@ export function CheckoutPage() {
                 />
               </div>
 
+              {draft.gstin.length === 15 && validateGSTIN(draft.gstin) && (
+                <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3.5 py-2.5 flex items-center gap-2.5 text-xs text-[var(--on-secondary-fixed)]">
+                  <CheckCircle2 className="h-4 w-4 text-[var(--accent)] shrink-0" aria-hidden="true" />
+                  <span>
+                    GSTIN verified · Your tax invoice will include B2B Input Tax Credit (ITC) details.
+                  </span>
+                </div>
+              )}
+
               <Textarea
                 label="Delivery note or gift message (optional)"
                 rows={2}
@@ -569,9 +578,9 @@ export function CheckoutPage() {
               </span>
             </Button>
 
-            <div className="rounded-xl bg-[var(--accent-soft)] px-3 py-2 text-[11px] font-medium text-[var(--on-secondary-fixed)] flex items-center justify-center gap-1.5">
+            <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-2 text-[11px] font-semibold text-[var(--on-secondary-fixed)] flex items-center justify-center gap-1.5">
               <ShieldCheck className="h-3.5 w-3.5 text-[var(--accent)] shrink-0" aria-hidden="true" />
-              <span>100% encrypted GST-compliant checkout</span>
+              <span>100% encrypted GST-compliant checkout · Freshness guaranteed</span>
             </div>
           </aside>
         </form>

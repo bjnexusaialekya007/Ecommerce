@@ -27,7 +27,7 @@ export function PriceBlock({
         )}
       </div>
       {hasSavings && !compact && (
-        <p className="text-xs font-medium text-[var(--success)] tabular-nums">
+        <p className="inline-block rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 text-xs font-semibold text-[var(--accent)] tabular-nums">
           You save {formatINR(savings)}
         </p>
       )}

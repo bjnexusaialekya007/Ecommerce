@@ -112,9 +112,12 @@ export function CustomerLayout() {
 
       {/* Announcement / Shop busy strip */}
       {!announcementDismissed && (config.copy.announcement || shop.status !== 'open') && (
-        <div className="no-print bg-[var(--surface-2)] border-b border-[var(--border-soft)] px-4 py-1.5 text-xs">
+        <div className="no-print bg-[var(--accent-soft)] border-b border-[var(--accent-border)] px-4 py-1.5 text-xs text-[var(--on-secondary-fixed)]">
           <div className="mx-auto max-w-6xl flex items-center justify-between gap-3">
-            <p className="text-[var(--ink)] truncate">
+            <p className="truncate font-medium">
+              <span className="font-bold text-[var(--accent)] mr-1.5">
+                {shop.status !== 'open' ? 'Kitchen notice:' : 'Fresh batch dispatch:'}
+              </span>
               {shop.status !== 'open'
                 ? shop.reason
                 : config.copy.announcement || `${config.contact.addressParts.city} Roastery · Fresh batches packed daily`}
@@ -123,7 +126,7 @@ export function CustomerLayout() {
               type="button"
               onClick={dismissAnnouncement}
               aria-label="Dismiss announcement"
-              className="p-1 text-[var(--ink-muted)] hover:text-[var(--ink)] shrink-0"
+              className="p-1 text-[var(--accent)] hover:text-[var(--on-secondary-fixed)] shrink-0"
             >
               <X className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
@@ -272,13 +275,15 @@ export function CustomerLayout() {
           </div>
 
           <div className="space-y-2">
-            <p className="text-xs font-bold uppercase tracking-wider text-[var(--ink-muted)]">Compliance &amp; Hours</p>
-            <p className="text-xs text-[var(--ink-muted)] tabular-nums">
-              FSSAI: <span className="text-[var(--ink)] font-medium">{config.legal.fssai}</span>
-            </p>
-            <p className="text-xs text-[var(--ink-muted)] tabular-nums">
-              GSTIN: <span className="text-[var(--ink)] font-medium">{config.legal.gstin}</span>
-            </p>
+            <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Compliance &amp; Hours</p>
+            <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-2 space-y-0.5 text-xs text-[var(--on-secondary-fixed)] tabular-nums">
+              <p>
+                FSSAI: <span className="font-semibold font-mono">{config.legal.fssai}</span>
+              </p>
+              <p>
+                GSTIN: <span className="font-semibold font-mono">{config.legal.gstin}</span>
+              </p>
+            </div>
             <p className="text-xs text-[var(--ink-muted)]">
               Dispatch hours: {config.hours.openTime} – {config.hours.closeTime} IST
             </p>

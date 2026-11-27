@@ -20,20 +20,20 @@ export function AboutPage() {
           {config.brand.tagline}. Every batch of Bikaneri bhujia, Ratlami laung sev, spiced boondi, and hand-pressed butter murukku is prepared in small daily runs using cold-pressed groundnut oil and sealed within hours into multi-layer nitrogen-flushed pouches.
         </p>
 
-        <div className="grid grid-cols-3 gap-3 rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-4 sm:p-5 shadow-[var(--sh-1)] tabular-nums">
-          <div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-4 sm:p-5 shadow-[var(--sh-1)] tabular-nums items-center">
+          <div className="px-2">
             <p className="font-display text-2xl font-bold text-[var(--primary)]">{activeProducts}</p>
             <p className="text-xs text-[var(--ink-muted)]">Active recipes</p>
           </div>
-          <div>
+          <div className="px-2">
             <p className="font-display text-2xl font-bold text-[var(--primary)]">
               {config.dispatchDays} {config.dispatchDays === 1 ? 'day' : 'days'}
             </p>
             <p className="text-xs text-[var(--ink-muted)]">Dispatch turnaround</p>
           </div>
-          <div>
-            <p className="font-display text-2xl font-bold text-[var(--primary)]">100%</p>
-            <p className="text-xs text-[var(--ink-muted)]">Groundnut oil</p>
+          <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3.5 py-2.5">
+            <p className="font-display text-2xl font-bold text-[var(--accent)]">100%</p>
+            <p className="text-xs font-medium text-[var(--on-secondary-fixed)]">Groundnut oil</p>
           </div>
         </div>
 
@@ -62,10 +62,14 @@ export function ContactPage() {
       <Seo route="contact" path="/contact" config={config} />
       <div className="mx-auto max-w-4xl px-4 py-10 space-y-6">
         <div className="space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Kitchen Desk &amp; Counter Pickup</p>
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-[var(--ink)]">Contact &amp; Flagship Store</h1>
           <p className="text-sm text-[var(--ink-muted)]">
-            {shop.nextOpenText} · {formatAddress(config)}
+            {formatAddress(config)}
           </p>
+        </div>
+        <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-2.5 text-xs font-semibold text-[var(--on-secondary-fixed)]">
+          Dispatch &amp; Counter Hours: {shop.nextOpenText} · {config.hours.displayText}
         </div>
         <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-6 shadow-[var(--sh-1)] space-y-4">
           <ContactActions config={config} context="contact_page" />
@@ -88,10 +92,16 @@ export function FaqPage() {
     <>
       <Seo route="faq" path="/faq" config={config} />
       <div className="mx-auto max-w-4xl px-4 py-10 space-y-6">
-        <h1 className="font-display text-3xl font-bold text-[var(--ink)]">Frequently asked questions</h1>
+        <div className="space-y-2">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Clean-Label Craft &amp; Delivery</p>
+          <h1 className="font-display text-3xl font-bold text-[var(--ink)]">Frequently asked questions</h1>
+        </div>
+        <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-3 text-xs font-medium text-[var(--on-secondary-fixed)]">
+          Zero palm oil · Nitrogen-flushed barrier pouches · Pan-India insured dispatch within {config.dispatchDays} working days.
+        </div>
         <div className="space-y-3">
           {items.map(([q, a]) => (
-            <details key={q} className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] px-5 py-4 text-sm shadow-[var(--sh-1)]">
+            <details key={q} className="rounded-2xl border border-[var(--border-soft)]/70 hover:border-[var(--accent-border)] bg-[var(--surface)] px-5 py-4 text-sm shadow-[var(--sh-1)] transition-colors">
               <summary className="cursor-pointer font-bold text-[var(--ink)]">{q}</summary>
               <p className="mt-2 text-[var(--ink-muted)] leading-relaxed">{a}</p>
             </details>
@@ -122,6 +132,9 @@ export function PolicyPage() {
       <Seo route={seoRoute} path={`/policies/${type}`} config={config} />
       <div className="mx-auto max-w-3xl px-4 py-10 space-y-4">
         <h1 className="font-display text-3xl font-bold text-[var(--ink)]">{titles[type] || 'Store Policy'}</h1>
+        <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-2.5 text-xs font-semibold text-[var(--on-secondary-fixed)]">
+          FSSAI {config.legal.fssai} · GSTIN {config.legal.gstin} · Last updated {config.legal.lastUpdated}
+        </div>
         <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-6 shadow-[var(--sh-1)] space-y-4">
           <p className="text-sm text-[var(--ink-muted)] leading-relaxed">
             {config.legal.legalName} (FSSAI {config.legal.fssai}, GSTIN {config.legal.gstin}) operates this storefront. We store only essential cart and order details required to fulfil your order and generate valid GST tax invoices. Analytics cookies remain disabled unless explicitly accepted.

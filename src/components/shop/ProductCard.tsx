@@ -88,7 +88,7 @@ export function ProductCard({
 
   return (
     <>
-      <article className="contain-card group hover-lift flex flex-col justify-between rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-3 shadow-[var(--sh-1)]">
+      <article className="contain-card group hover-lift flex flex-col justify-between rounded-2xl border border-[var(--border-soft)]/70 hover:border-[var(--accent-border)] bg-[var(--surface)] p-3 shadow-[var(--sh-1)] transition-colors">
         <div>
           <PrefetchLink to={`/p/${product.slug}`} sharedProductImage className="block relative">
             <ImageSlot
@@ -101,12 +101,12 @@ export function ProductCard({
             />
             <div className="absolute top-2 left-2 z-[3] flex items-center gap-1.5 rounded-md bg-[var(--surface)]/95 px-1.5 py-1 shadow-xs">
               <VegMark veg={product.veg} />
-              {product.bestseller && (
-                <span className="text-[11px] font-semibold tracking-wide text-[var(--accent)]">
-                  Bestseller
-                </span>
-              )}
             </div>
+            {product.bestseller && (
+              <span className="absolute top-2 right-2 z-[3] rounded-md bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2 py-0.5 text-[11px] font-semibold tracking-wide text-[var(--accent)] shadow-xs">
+                Bestseller
+              </span>
+            )}
           </PrefetchLink>
 
           <div className="mt-3 space-y-1.5">

@@ -50,12 +50,12 @@ export function HomePage() {
       <section className="mx-auto max-w-6xl px-4 pt-6 pb-10 sm:pt-10 sm:pb-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-6 space-y-5">
-            <div className="inline-flex flex-wrap items-center gap-2 rounded-full bg-[var(--accent-soft)] px-3 py-1 text-xs font-semibold tracking-wide text-[var(--accent)]">
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-1.5 text-xs font-semibold tracking-wide text-[var(--on-secondary-fixed)]">
               <span>{config.contact.addressParts.city} Heritage Kitchen</span>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true" className="text-[var(--accent)]">·</span>
               <span>Est. 1984</span>
-              <span aria-hidden="true">·</span>
-              <span className={shop.isOpenNow ? 'text-[var(--accent)]' : 'text-[var(--danger)]'}>
+              <span aria-hidden="true" className="text-[var(--accent)]">·</span>
+              <span className={shop.isOpenNow ? 'text-[var(--accent)] font-bold' : 'text-[var(--danger)]'}>
                 {shop.isOpenNow ? 'Open for dispatch' : 'Closed now'}
               </span>
             </div>
@@ -87,17 +87,23 @@ export function HomePage() {
               )}
             </div>
 
-            <div className="grid grid-cols-3 gap-3 pt-3 border-t border-[var(--border-soft)] text-xs text-[var(--ink-muted)]">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="h-4 w-4 text-[var(--success)] shrink-0" aria-hidden="true" />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-3 border-t border-[var(--border-soft)] text-xs font-medium text-[var(--ink)]">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] shrink-0">
+                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                </span>
                 <span>FSSAI Certified</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <PackageCheck className="h-4 w-4 text-[var(--primary)] shrink-0" aria-hidden="true" />
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] shrink-0">
+                  <PackageCheck className="h-4 w-4" aria-hidden="true" />
+                </span>
                 <span>Sealed Nitrogen Packs</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Truck className="h-4 w-4 text-[var(--ink)] shrink-0" aria-hidden="true" />
+              <div className="flex items-center gap-2">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] text-[var(--accent)] shrink-0">
+                  <Truck className="h-4 w-4" aria-hidden="true" />
+                </span>
                 <span>Pan-India Courier</span>
               </div>
             </div>
@@ -118,22 +124,22 @@ export function HomePage() {
 
       {/* Kitchen Craft Proof Bar */}
       <section className="mx-auto max-w-6xl px-4 pb-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-4 sm:p-5 shadow-[var(--sh-1)] tabular-nums">
-          <div className="space-y-0.5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-4 sm:p-5 shadow-[var(--sh-1)] tabular-nums items-center">
+          <div className="space-y-0.5 px-2">
             <p className="font-display text-2xl sm:text-3xl font-bold text-[var(--primary)]">{products.length}</p>
             <p className="text-xs text-[var(--ink-muted)]">Small-batch namkeen recipes</p>
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-0.5 px-2">
             <p className="font-display text-2xl sm:text-3xl font-bold text-[var(--primary)]">{activeSkuCount}</p>
             <p className="text-xs text-[var(--ink-muted)]">Nitrogen-sealed pack SKUs</p>
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-0.5 px-2">
             <p className="font-display text-2xl sm:text-3xl font-bold text-[var(--primary)]">{maxShelfLife} days</p>
             <p className="text-xs text-[var(--ink-muted)]">Unopened crispness shelf life</p>
           </div>
-          <div className="space-y-0.5">
-            <p className="font-display text-2xl sm:text-3xl font-bold text-[var(--primary)]">100%</p>
-            <p className="text-xs text-[var(--ink-muted)]">Cold-pressed groundnut oil</p>
+          <div className="space-y-0.5 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3.5 py-2.5">
+            <p className="font-display text-2xl sm:text-3xl font-bold text-[var(--accent)]">100%</p>
+            <p className="text-xs font-medium text-[var(--on-secondary-fixed)]">Cold-pressed groundnut oil</p>
           </div>
         </div>
       </section>
@@ -155,17 +161,23 @@ export function HomePage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
           {categories.map((cat) => {
             const catImg = products.find((p) => p.categoryId === cat.id)?.imageUrl;
+            const catCount = products.filter((p) => p.categoryId === cat.id).length;
             return (
               <PrefetchLink
                 key={cat.id}
                 to={`/c/${cat.slug}`}
-                className="contain-card group pressable hover-lift block rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-3 shadow-[var(--sh-1)]"
+                className="contain-card group pressable hover-lift block rounded-2xl border border-[var(--border-soft)]/70 hover:border-[var(--accent-border)] bg-[var(--surface)] p-3 shadow-[var(--sh-1)] transition-colors"
               >
                 <ImageSlot src={catImg} alt={cat.name} label={cat.name} aspect="4/3" />
                 <div className="mt-2.5">
-                  <h3 className="font-display text-base font-bold text-[var(--ink)] group-hover:text-[var(--primary)] transition-colors">
-                    {cat.name}
-                  </h3>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <h3 className="font-display text-base font-bold text-[var(--ink)] group-hover:text-[var(--primary)] transition-colors">
+                      {cat.name}
+                    </h3>
+                    <span className="text-[11px] font-semibold text-[var(--accent)] shrink-0 tabular-nums">
+                      {catCount} {catCount === 1 ? 'batch' : 'batches'}
+                    </span>
+                  </div>
                   <p className="text-xs text-[var(--ink-muted)] line-clamp-2 mt-0.5">{cat.description}</p>
                 </div>
               </PrefetchLink>
@@ -236,6 +248,13 @@ export function HomePage() {
               <p className="text-sm text-white/80">
                 Apply once with your GSTIN to unlock factory-direct wholesale rates, volume discounts on 10+ and 25+ packs, and automated CGST/SGST or IGST tax invoices.
               </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-1 text-xs font-medium text-[var(--accent-soft)]">
+                <span>Zero palm oil</span>
+                <span aria-hidden="true">·</span>
+                <span>GST Input Credit Invoices</span>
+                <span aria-hidden="true">·</span>
+                <span>Dispatched within {config.dispatchDays} working days</span>
+              </div>
             </div>
             <div className="flex flex-wrap gap-3 shrink-0">
               <PrefetchLink
@@ -280,11 +299,15 @@ export function HomePage() {
         <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-6 shadow-[var(--sh-1)] space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h2 className="font-display text-xl font-bold text-[var(--ink)]">Visit or call our kitchen desk</h2>
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Kitchen Desk &amp; Counter Pickup</p>
+              <h2 className="font-display text-xl font-bold text-[var(--ink)] mt-0.5">Visit or call our kitchen desk</h2>
               <p className="text-sm text-[var(--ink-muted)]">
-                {shop.nextOpenText} · {formatAddress(config)}
+                {formatAddress(config)}
               </p>
             </div>
+            <span className="inline-flex self-start items-center rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-1.5 text-xs font-semibold text-[var(--on-secondary-fixed)]">
+              {shop.nextOpenText}
+            </span>
           </div>
           <ContactActions config={config} context="home" />
         </div>

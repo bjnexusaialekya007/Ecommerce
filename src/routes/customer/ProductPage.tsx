@@ -201,10 +201,13 @@ export function ProductPage() {
 
           <div className="lg:col-span-6 space-y-5">
             <div className="space-y-2">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <VegMark veg={product.veg} />
-                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--accent)]">
-                  HSN {product.hsnCode} · {product.gstRate}% GST · {product.shelfLifeDays}d Crispness
+                <span className="inline-flex items-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2.5 py-0.5 text-xs font-semibold text-[var(--on-secondary-fixed)]">
+                  Fresh Batch · {product.shelfLifeDays}d Crispness
+                </span>
+                <span className="text-xs font-medium text-[var(--ink-muted)] tabular-nums">
+                  HSN {product.hsnCode} · {product.gstRate}% GST
                 </span>
               </div>
               <h1 className="font-display text-3xl sm:text-4xl font-bold text-[var(--ink)] leading-tight">
@@ -270,8 +273,10 @@ export function ProductPage() {
                 </div>
 
                 {/* Clean-Label Botanical Pistachio Guarantee Card */}
-                <div className="rounded-xl bg-[var(--accent-soft)] p-3.5 flex items-start gap-3 text-[var(--on-secondary-container)]">
-                  <ShieldCheck className="h-5 w-5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
+                <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] p-3.5 flex items-start gap-3 text-[var(--on-secondary-container)] shadow-[var(--sh-1)]">
+                  <div className="h-8 w-8 rounded-lg bg-[var(--accent-well)] border border-[var(--accent-border)] text-[var(--accent)] flex items-center justify-center shrink-0">
+                    <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                  </div>
                   <div className="text-xs leading-snug">
                     <p className="font-semibold text-[var(--on-secondary-fixed)]">Zero Palm Oil · Clean-Label Guarantee</p>
                     <p className="mt-0.5">
@@ -283,8 +288,8 @@ export function ProductPage() {
                 <PincodeChecker config={config} weightG={selectedSku.shipWeightG} />
 
                 {isWholesale && skuTiers.length > 0 && (
-                  <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-4 shadow-[var(--sh-1)] space-y-2">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--secondary)]">
+                  <div className="rounded-2xl border border-[var(--accent-border)] bg-[var(--surface)] p-4 shadow-[var(--sh-1)] space-y-2">
+                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
                       Wholesale Volume Slabs (excl. GST)
                     </p>
                     <table className="w-full text-sm tabular-nums">
@@ -319,7 +324,10 @@ export function ProductPage() {
             )}
 
             <div className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-5 shadow-[var(--sh-1)] space-y-4">
-              <h2 className="font-display text-lg font-bold text-[var(--ink)]">Quick pack facts</h2>
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="font-display text-lg font-bold text-[var(--ink)]">Quick pack facts</h2>
+                <span className="text-xs font-semibold text-[var(--accent)]">100% Vegetarian</span>
+              </div>
               <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
                 <div>
                   <dt className="text-xs text-[var(--ink-muted)]">Ingredients</dt>

@@ -69,16 +69,31 @@ export function WholesaleOverviewPage() {
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            ['1. Verify GSTIN once', 'Submit your 15-digit GSTIN, business name, and trade phone. Our desk approves verified trade accounts within 24 hours.'],
-            ['2. Sign in via email OTP', 'Passwordless 6-digit OTP unlocks wholesale rate slabs across all active SKUs automatically in the storefront & cart.'],
-            ['3. Automated B2B invoicing', 'GST is billed exclusive of unit prices as CGST+SGST (intra-state) or IGST (inter-state) for seamless input tax credit.'],
-          ].map(([title, body]) => (
-            <div key={title} className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-5 shadow-[var(--sh-1)] space-y-2">
+            ['01', 'Verify GSTIN once', 'Submit your 15-digit GSTIN, business name, and trade phone. Our desk approves verified trade accounts within 24 hours.'],
+            ['02', 'Sign in via email OTP', 'Passwordless 6-digit OTP unlocks wholesale rate slabs across all active SKUs automatically in the storefront & cart.'],
+            ['03', 'Automated B2B invoicing', 'GST is billed exclusive of unit prices as CGST+SGST (intra-state) or IGST (inter-state) for seamless input tax credit.'],
+          ].map(([step, title, body]) => (
+            <div key={title} className="rounded-2xl border border-[var(--border-soft)]/70 hover:border-[var(--accent-border)] bg-[var(--surface)] p-5 shadow-[var(--sh-1)] space-y-2.5 transition-colors">
+              <span className="inline-flex h-7 items-center rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] px-2.5 font-mono text-xs font-bold text-[var(--accent)]">
+                {step}
+              </span>
               <h2 className="font-display text-lg font-bold text-[var(--ink)]">{title}</h2>
               <p className="text-sm text-[var(--ink-muted)] leading-relaxed">{body}</p>
             </div>
           ))}
         </section>
+
+        <div className="rounded-2xl bg-[var(--accent-soft)] border border-[var(--accent-border)] p-4 flex items-center gap-3 text-[var(--on-secondary-fixed)] shadow-[var(--sh-1)]">
+          <div className="h-9 w-9 rounded-lg bg-[var(--accent-well)] border border-[var(--accent-border)] text-[var(--accent)] flex items-center justify-center shrink-0">
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+          </div>
+          <div className="text-xs leading-snug">
+            <p className="font-semibold">Direct Artisan Mill Supply · Zero Middlemen</p>
+            <p className="text-[var(--on-secondary-container)] mt-0.5">
+              100% pure cold-pressed groundnut oil batches roasted to order with complete HSN &amp; GST ITC documentation.
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -210,8 +225,8 @@ export function WholesaleRegisterPage() {
         </header>
 
         {/* Pistachio Strict Price Protection Notice */}
-        <div className="rounded-xl bg-[var(--accent-soft)] p-4 flex items-start gap-3 text-[var(--on-secondary-container)] shadow-[var(--sh-1)]">
-          <div className="p-2 rounded-lg bg-[var(--surface)]/80 text-[var(--accent)] shrink-0">
+        <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] p-4 flex items-start gap-3 text-[var(--on-secondary-container)] shadow-[var(--sh-1)]">
+          <div className="p-2 rounded-lg bg-[var(--accent-well)] border border-[var(--accent-border)] text-[var(--accent)] shrink-0">
             <Lock className="h-4 w-4" aria-hidden="true" />
           </div>
           <div>
@@ -269,7 +284,7 @@ export function WholesaleRegisterPage() {
               />
 
               {gstValid && gstStateName && (
-                <div className="rounded-xl bg-[var(--accent-soft)] px-3.5 py-2.5 flex items-center justify-between gap-2 text-[var(--on-secondary-fixed)]">
+                <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3.5 py-2.5 flex items-center justify-between gap-2 text-[var(--on-secondary-fixed)]">
                   <div className="min-w-0">
                     <p className="text-xs font-semibold truncate">
                       State: {gstStateName} (Code {gstStateCode})
@@ -407,15 +422,15 @@ export function WholesaleRegisterPage() {
           </section>
 
           {/* Mill Assurance Callout */}
-          <div className="rounded-xl bg-[var(--surface-2)] p-3.5 flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] flex items-center justify-center shrink-0">
+          <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] p-3.5 flex items-center gap-3 text-[var(--on-secondary-fixed)]">
+            <div className="h-10 w-10 rounded-full bg-[var(--accent-well)] border border-[var(--accent-border)] text-[var(--accent)] flex items-center justify-center shrink-0">
               <Award className="h-5 w-5" aria-hidden="true" />
             </div>
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
                 {config.brand.name} · Kitchen Assurance
               </p>
-              <p className="text-xs text-[var(--ink-muted)] leading-snug mt-0.5">
+              <p className="text-xs text-[var(--on-secondary-container)] leading-snug mt-0.5">
                 Cold-pressed groundnut oil batches roasted upon confirmation under FSSAI {config.legal.fssai}.
               </p>
             </div>
@@ -534,6 +549,15 @@ export function WholesaleAccountPage() {
           </div>
         </header>
 
+        {buyer.wholesaleStatus === 'approved' && (
+          <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-4 py-3 flex items-center gap-3 text-xs text-[var(--on-secondary-fixed)]">
+            <ShieldCheck className="h-4 w-4 text-[var(--accent)] shrink-0" aria-hidden="true" />
+            <span>
+              Wholesale rates &amp; volume slabs active across catalogue · Tax invoices include full GST Input Tax Credit details.
+            </span>
+          </div>
+        )}
+
         <section className="space-y-3">
           <h2 className="font-display text-xl font-bold text-[var(--ink)]">Recent wholesale orders</h2>
           {orders.length === 0 ? (
@@ -647,7 +671,13 @@ export function WholesaleQuotePage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="rounded-2xl border border-[var(--border-soft)]/70 bg-[var(--surface)] p-6 shadow-[var(--sh-1)] space-y-4">
-            <h1 className="font-display text-2xl font-bold text-[var(--ink)]">Request bulk or festive quote</h1>
+            <div className="space-y-1">
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">B2B Carton &amp; Gifting Desk</p>
+              <h1 className="font-display text-2xl font-bold text-[var(--ink)]">Request bulk or festive quote</h1>
+            </div>
+            <div className="rounded-xl bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3.5 py-2.5 text-xs text-[var(--on-secondary-fixed)]">
+              24-hour trade desk turnaround · GST B2B e-invoicing &amp; custom master carton pricing available.
+            </div>
             <Input label="Contact / Company Name" value={name} onChange={(e) => setName(e.target.value)} required />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <PhoneInput label="Mobile Number" value={phone} onChange={(e) => setPhone(e.target.value)} required />

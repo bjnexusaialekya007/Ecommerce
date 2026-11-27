@@ -89,24 +89,24 @@ export function PincodeChecker({
               </div>
             </div>
           ) : localZone ? (
-            <div className="flex items-start gap-2 rounded-lg bg-[var(--accent-soft)] px-3 py-2.5 text-[var(--on-secondary-container)]">
+            <div className="flex items-start gap-2 rounded-lg bg-[var(--accent-soft)] border border-[var(--accent-border)] px-3 py-2.5 text-[var(--on-secondary-fixed)]">
               <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-[var(--accent)]" aria-hidden="true" />
               <div className="space-y-0.5">
                 <p className="font-semibold">
                   Same-day / next-day local delivery to {checkedPin} ({localZone.name})
                 </p>
-                <p className="text-xs tabular-nums">
+                <p className="text-xs text-[var(--on-secondary-container)] tabular-nums">
                   Same/next day local route · Fee {formatINR(localZone.feePaise)}
                   {localZone.freeAbovePaise ? ` (Free above ${formatINR(localZone.freeAbovePaise)})` : ''}
                 </p>
               </div>
             </div>
           ) : (
-            <div className="flex items-start gap-2 rounded-lg bg-[var(--surface)] border border-[var(--border-soft)]/70 px-3 py-2.5 text-[var(--ink)]">
+            <div className="flex items-start gap-2 rounded-lg bg-[var(--accent-soft)]/70 border border-[var(--accent-border)] px-3 py-2.5 text-[var(--on-secondary-fixed)]">
               <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-[var(--accent)]" aria-hidden="true" />
               <div className="space-y-0.5">
                 <p className="font-semibold">All-India insured courier to {checkedPin}</p>
-                <p className="text-xs text-[var(--ink-muted)] tabular-nums">
+                <p className="text-xs text-[var(--on-secondary-container)] tabular-nums">
                   Dispatched by {dispatchDate}
                   {courierRate ? ` · ${formatINR(courierRate.feePaise)} for this pack (${courierRate.freeAbovePaise ? `Free above ${formatINR(courierRate.freeAbovePaise)}` : 'tracked'})` : ''}
                 </p>
