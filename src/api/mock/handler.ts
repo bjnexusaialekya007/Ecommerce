@@ -1,4 +1,5 @@
-import { resolveClientConfig, type ClientConfig } from '../../config';
+import { clientConfig, type ClientConfig } from '../../config';
+import { clientDemoConfig } from '../../config/client.demo.config';
 import { getSimulatedNow, useDevSimStore } from '../../dev/simStore';
 import { useOutboxStore } from '../../dev/outboxStore';
 import { getFinancialYearCode, getIstDateString, getShopStatus } from '../../shared/calendar';
@@ -45,11 +46,8 @@ interface MockDb {
 }
 
 function createInitialDb(): MockDb {
-  const resolved = resolveClientConfig(typeof window !== 'undefined' ? window.location.search : '');
-  const baseCfg = resolved.ok ? structuredClone(resolved.config) : null;
-  if (!baseCfg) {
-    throw new AppError('SERVER', 'Invalid config', undefined, 500);
-  }
+  const isDemo = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('client') === 'demo';
+  const baseCfg = structuredClone(isDemo ? clientDemoConfig : clientConfig);
 
   // Seed one historical order so /track works immediately
   const sampleOrder: OrderRecord = {

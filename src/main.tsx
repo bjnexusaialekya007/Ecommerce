@@ -4,7 +4,12 @@ import App from './App';
 import { applyConfigThemeToRoot, resolveClientConfig } from './config';
 import './index.css';
 
-const resolved = resolveClientConfig(typeof window !== 'undefined' ? window.location.search : '');
+const search = typeof window !== 'undefined' ? window.location.search : '';
+// Production fast path skips zod; dev and the ?invalidConfig=1 QA flag validate at runtime.
+const resolved =
+  import.meta.env.DEV || search.includes('invalidConfig=1') || search.includes('client=demo')
+    ? (await import('./config/validate')).resolveClientConfigValidated(search)
+    : resolveClientConfig();
 
 const rootEl = document.getElementById('root')!;
 

@@ -1,9 +1,8 @@
-import { ClientConfigSchema, type ClientConfig } from './schema';
+import type { ClientConfig } from './schema';
 import { clientConfig } from './client.config';
-import { clientDemoConfig } from './client.demo.config';
 
 export type { ClientConfig };
-export { ClientConfigSchema, clientConfig, clientDemoConfig };
+export { clientConfig };
 
 export interface ResolvedConfigResult {
   ok: true;
@@ -16,23 +15,14 @@ export interface BrokenConfigResult {
   error: string;
 }
 
-export function resolveClientConfig(search = ''): ResolvedConfigResult | BrokenConfigResult {
-  const params = new URLSearchParams(search);
-  const clientParam = params.get('client');
-  const invalidFlag = params.get('invalidConfig') === '1';
-
-  const chosen = clientParam === 'demo' ? clientDemoConfig : clientConfig;
-  const candidate = invalidFlag
-    ? { ...chosen, contact: { ...chosen.contact, email: 'not-an-email' }, legal: { ...chosen.legal, stateCode: 'INVALID' } }
-    : chosen;
-
-  const parsed = ClientConfigSchema.safeParse(candidate);
-  if (!parsed.success) {
-    const details = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
-    return { ok: false, error: `Invalid client configuration: ${details}` };
-  }
-
-  return { ok: true, config: parsed.data, isDemo: clientParam === 'demo' };
+/**
+ * Fast boot path: the shipped client config, no runtime schema validation, no demo config,
+ * so zod and the demo config stay out of the main entry chunk. The shipped config is validated
+ * at build time (`npm run check:client`, `build:seo`). `?client=demo` and `?invalidConfig=1`
+ * use `./validate` (loaded on demand by main.tsx).
+ */
+export function resolveClientConfig(): ResolvedConfigResult {
+  return { ok: true, config: clientConfig, isDemo: false };
 }
 
 export function applyConfigThemeToRoot(config: ClientConfig): void {

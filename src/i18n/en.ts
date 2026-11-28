@@ -1,4 +1,9 @@
 export const en = {
+  hero: {
+    headline: 'Fresh small-batch namkeen, packed daily',
+    primaryCta: 'Shop now',
+    secondaryCta: 'Wholesale enquiries',
+  },
   nav: {
     home: 'Home',
     shop: 'Shop',

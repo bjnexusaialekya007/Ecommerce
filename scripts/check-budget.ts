@@ -88,7 +88,14 @@ const tier0CssRaw = fs.readFileSync(path.resolve(process.cwd(), 'src/experience/
 const tier0CssMin = await transform(tier0CssRaw, { loader: 'css', minify: true });
 const tier0CssGzKb = zlib.gzipSync(Buffer.from(tier0CssMin.code, 'utf-8')).byteLength / 1024;
 
-console.log(`\nMain entry JS gzip : ${mainEntryGzKb.toFixed(1)} KB (limit <= ${MAIN_ENTRY_LIMIT_KB} KB)`);
+// Honest metric: every JS file the home page loads up front (entry script + modulepreload links in dist/index.html).
+// Measuring only index-*.js is misleading once code is split into shared chunks that still load on first paint.
+const indexHtml = fs.readFileSync(path.resolve(process.cwd(), 'dist/index.html'), 'utf-8');
+const initialFiles = [...new Set([...indexHtml.matchAll(/(?:src|href)="\/assets\/([^"]+\.js)"/g)].map((m) => m[1]!))];
+const initialJsGzKb = initialFiles.reduce((sum, f) => sum + zlib.gzipSync(fs.readFileSync(path.join(DIST_ASSETS, f))).byteLength / 1024, 0);
+
+console.log(`\nInitial JS gzip    : ${initialJsGzKb.toFixed(1)} KB across ${initialFiles.length} files (limit <= ${MAIN_ENTRY_LIMIT_KB} KB)`);
+console.log(`Main entry JS gzip : ${mainEntryGzKb.toFixed(1)} KB (index-*.js only, informational)`);
 console.log(`Tier 0 JS gzip     : ${tier0JsGzKb.toFixed(2)} KB (limit <= ${TIER0_JS_LIMIT_KB} KB)`);
 console.log(`Tier 0 CSS gzip    : ${tier0CssGzKb.toFixed(2)} KB (limit <= ${TIER0_CSS_LIMIT_KB} KB)`);
 if (hero3dGzKb > 0) console.log(`3D Hero JS gzip    : ${hero3dGzKb.toFixed(1)} KB (limit <= ${HERO_3D_LIMIT_KB} KB)`);
@@ -100,8 +107,8 @@ if (mainEntryGzKb <= 0) {
   console.error('❌ Main entry JS chunk (index-*.js) not found in dist/assets.');
   process.exit(1);
 }
-if (mainEntryGzKb > MAIN_ENTRY_LIMIT_KB) {
-  console.error(`❌ Main entry JS (${mainEntryGzKb.toFixed(1)} KB) exceeds ${MAIN_ENTRY_LIMIT_KB} KB gzip budget.`);
+if (initialJsGzKb > MAIN_ENTRY_LIMIT_KB) {
+  console.error(`❌ Initial JS (${initialJsGzKb.toFixed(1)} KB) exceeds ${MAIN_ENTRY_LIMIT_KB} KB gzip budget.`);
   process.exit(1);
 }
 if (tier0JsGzKb > TIER0_JS_LIMIT_KB) {

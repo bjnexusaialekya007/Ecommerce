@@ -150,7 +150,7 @@ export function HomePage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Shop by Craft</p>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
-              {t('home.categories')}
+              {t('home.categoriesHeading')}
             </h2>
           </div>
           <PrefetchLink to="/shop" className="text-sm font-semibold text-[var(--primary)] hover:underline whitespace-nowrap shrink-0">
@@ -192,7 +192,7 @@ export function HomePage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Customer Favourites</p>
             <h2 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
-              {t('home.bestsellers')}
+              {t('home.bestSellersHeading')}
             </h2>
           </div>
           <PrefetchLink to="/shop" className="text-sm font-semibold text-[var(--primary)] hover:underline">
