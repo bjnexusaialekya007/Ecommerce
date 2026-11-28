@@ -7,7 +7,7 @@ import {
   RouterProvider,
   useRouteError,
 } from 'react-router-dom';
-import { domAnimation, LazyMotion, MotionConfig } from 'motion/react';
+import { LazyMotion, MotionConfig } from 'motion/react';
 import type { ClientConfig, ResolvedConfigResult } from './config';
 import { ExperienceProvider } from './experience';
 import { StoreProvider } from './stores/appContext';
@@ -194,7 +194,7 @@ export default function App({ resolved }: { resolved: ResolvedConfigResult }) {
   return (
     <AppErrorBoundary>
       <MotionConfig reducedMotion="user">
-        <LazyMotion features={domAnimation}>
+        <LazyMotion features={() => import('./motionFeatures').then((r) => r.default)}>
           <StoreProvider initialConfig={config} isDemo={isDemo}>
             <RouterProvider router={router} />
           </StoreProvider>
