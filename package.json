@@ -10,12 +10,14 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run src",
+    "test": "vitest run src worker",
     "check:client": "tsx scripts/check-client.ts",
     "check:boundaries": "tsx scripts/check-boundaries.ts",
     "check:budget": "tsx scripts/check-budget.ts",
     "prerender": "tsx scripts/prerender.ts",
-    "build:seo": "NODE_ENV=production vite build && tsx scripts/prerender.ts"
+    "build:seo": "NODE_ENV=production vite build && tsx scripts/prerender.ts",
+    "dev:worker": "wrangler dev",
+    "deploy:staging": "wrangler deploy --env staging"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -23,6 +25,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
     "gsap": "^3.15.1",
+    "hono": "4.13.23",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.1",
@@ -44,6 +47,7 @@
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",
     "vite-plugin-pwa": "^2.0.0",
-    "vitest": "^5.1.2"
+    "vitest": "^5.1.2",
+    "wrangler": "4.169.0"
   }
 }
