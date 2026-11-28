@@ -17,13 +17,17 @@
     "prerender": "tsx scripts/prerender.ts",
     "build:seo": "NODE_ENV=production vite build && tsx scripts/prerender.ts",
     "dev:worker": "wrangler dev",
-    "deploy:staging": "wrangler deploy --env staging"
+    "deploy:staging": "wrangler deploy --env staging",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:seed:local": "tsx scripts/seed-local.ts && wrangler d1 execute DB --local --file=.wrangler/seed.sql"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^7.0.9",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
+    "drizzle-orm": "0.45.2",
     "gsap": "^3.15.1",
     "hono": "4.13.23",
     "lucide-react": "^0.546.0",
@@ -38,11 +42,13 @@
     "zustand": "^5.1.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "5.20261127.1",
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/three": "^0.187.0",
     "autoprefixer": "^10.4.21",
+    "drizzle-kit": "0.31.10",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.21.0",
     "typescript": "^7.0.2",

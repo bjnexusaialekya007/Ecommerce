@@ -6,8 +6,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application", "run_worker_first": ["/api/*"] },
   "vars": { "ENVIRONMENT": "local" },
+  "d1_databases": [{ "binding": "DB", "database_name": "storefront", "database_id": "00000000-0000-0000-0000-000000000000", "migrations_dir": "migrations" }],
   "env": {
-    "staging": { "name": "storefront-staging", "vars": { "ENVIRONMENT": "staging" } },
-    "production": { "name": "storefront-production", "vars": { "ENVIRONMENT": "production" } }
+    "staging": { "name": "storefront-staging", "vars": { "ENVIRONMENT": "staging" }, "d1_databases": [{ "binding": "DB", "database_name": "storefront-staging", "database_id": "REPLACE_WITH_STAGING_D1_ID", "migrations_dir": "migrations" }] },
+    "production": { "name": "storefront-production", "vars": { "ENVIRONMENT": "production" }, "d1_databases": [{ "binding": "DB", "database_name": "storefront-production", "database_id": "REPLACE_WITH_PRODUCTION_D1_ID", "migrations_dir": "migrations" }] }
   }
 }
